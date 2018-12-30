@@ -29,21 +29,6 @@ public class GameBoard {
     
     public GameBoard(Pane pane){
         
-//        allBalls.addListener(new ListChangeListener<Ball>() {
-//            @Override
-//            public void onChanged(ListChangeListener.Change<? extends Ball> change) {
-//                while (change.next()) {
-//                    for (Ball b : change.getAddedSubList()) {System.out.println("sdjfksjf");
-////                        pane.getChildren().add(b.getSphere());
-//                    }
-////                    for (Ball b : change.getRemoved()) {
-////                        pane.getChildren().remove(b.getSphere());
-////                    }
-//                }
-//            }
-//        });
-        
-        
         this.pane = new Pane();
         this.pane = pane;
         pockets = new ArrayList<>();

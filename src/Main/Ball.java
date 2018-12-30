@@ -58,14 +58,10 @@ public class Ball extends Region{
     }
     public void move(long elapsedTime) {
         double elapsedSeconds = elapsedTime / 1_000_000_000.0; 
-//        if(velocityX < 0.01 && velocityY < 0.01) return ;
-        //velocity.sub(acceleration);
         positionX += (velocityX.get() * elapsedSeconds);
         positionY += (velocityY.get() * elapsedSeconds);
-//        ball.relocate(positionX,positionY);
         ball.setLayoutX(positionX);
         ball.setLayoutY(positionY);
-//        System.out.println(velocityY+" "+positionY+" "+ball.getLayoutY());
     }
     public Sphere getSphere(){
         return ball;
@@ -130,26 +126,5 @@ public class Ball extends Region{
         if((velocityY.get() > 0 && end.getY()-radius <= positionY)
                 || (velocityY.get() < 0 && start.getY()+radius >= positionY))
             velocityY.set(-velocityY.get());
-        
-//            if(boundaries.getPoint1().getX()==boundaries.getPoint2().getX() 
-//                    && boundaries.getPoint1().getX()==FixedValue.BOARD_POSITION_X
-//                    && boundaries.getPoint1().getX()+ball.getRadius() >= ball.getLayoutX()){
-//                velocityX = -velocityX;
-//            }
-//            else if(boundaries.getPoint1().getX()==boundaries.getPoint2().getX() 
-//                    && boundaries.getPoint1().getX()==FixedValue.BOARD_POSITION_X+FixedValue.BOARD_X
-//                    && boundaries.getPoint1().getX()-ball.getRadius() <= ball.getLayoutX()){
-//                velocityX = -velocityX;
-//            }
-//            else if(boundaries.getPoint1().getY()==boundaries.getPoint2().getY() 
-//                    && boundaries.getPoint1().getY()==FixedValue.BOARD_POSITION_Y
-//                    && boundaries.getPoint1().getY()+ball.getRadius() >= ball.getLayoutY()){
-//                velocityY = -velocityY;
-//            }
-//            else if(boundaries.getPoint1().getY()==boundaries.getPoint2().getY() 
-//                    && boundaries.getPoint1().getY()==FixedValue.BOARD_POSITION_Y+FixedValue.BOARD_Y
-//                    && boundaries.getPoint1().getY()-ball.getRadius() <= ball.getLayoutY()){
-//                velocityY = -velocityY;
-//            }
     }
 }

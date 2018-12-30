@@ -21,14 +21,7 @@ public class Collision {
         this.ball3 = ball3;
     }
     public boolean isContact(){
-//        double distance = Math.sqrt(
-//                 (ball1.getSphere().getLayoutX() - ball2.getSphere().getLayoutX())
-//                *(ball1.getSphere().getLayoutX() - ball2.getSphere().getLayoutX())
-//                +(ball1.getSphere().getLayoutY() - ball2.getSphere().getLayoutY())
-//                *(ball1.getSphere().getLayoutY() - ball2.getSphere().getLayoutY())
-//        );
-//        System.out.println(" ksdjflks "+distance);
-//        return Math.abs(distance - FixedValue.BALL_RADIUS*2)<25;
+
         double deltaX = ball2.getCenterX() - ball1.getCenterX();
         double deltaY = ball2.getCenterY() - ball1.getCenterY();
         double radiusSum = 2*FixedValue.BALL_RADIUS;
@@ -42,26 +35,6 @@ public class Collision {
         return false;
     }
     public void updateVelocity(){
-//        double angle = ball1.getVelocity().argument() - ball2.getVelocity().argument();
-//        double vX = 0;
-//        System.out.println(angle*180/Math.PI);
-//        System.out.println(ball1.getVelocity());
-//        
-//        double vY = ball1.getVelocity().mag()*Math.sin(angle);
-//        PVector p = new PVector(vX,vY);                        System.out.println(p);
-//        p.rotateBy(ball2.getVelocity().argument());            System.out.println(p);
-//        ball1.getVelocity().add(p);   
-//        
-//        vY = 0;
-//        vX = ball1.getVelocity().mag()*Math.cos(angle);
-//        p.set(vX,vY);
-//        p.rotateBy(ball2.getVelocity().argument());
-//        ball2.getVelocity().add(p);
-        
-//        Point2D p = new Point2D(ball1.getSphere().getLayoutX(), ball1.getSphere().getLayoutY());
-//        double angle = Math.atan((ball1.getSphere().getLayoutY()-ball2.getSphere().getLayoutY())/(ball1.getSphere().getLayoutX()-ball2.getSphere().getLayoutX()));
-
-
 
         double deltaX = ball2.getCenterX() - ball1.getCenterX();
         double deltaY = ball2.getCenterY() - ball1.getCenterY();
@@ -77,10 +50,7 @@ public class Collision {
 
         final double u1 = ball1VelocityX * unitContactX + ball1VelocityY * unitContactY ; // velocity of ball 1 parallel to contact vector
         final double u2 = ball2VelocityX * unitContactX + ball2VelocityY * unitContactY ; // same for ball 2
-        
-//        final double massSum = ball1.getMass() + ball2.getMass() ;
-//        final double massDiff = ball1.getMass() - ball2.getMass() ;
-//        
+
         final double v1 = u2 ; // These equations are derived for one-dimensional collision by
         final double v2 = u1 ; // solving equations for conservation of momentum and conservation of energy
 
