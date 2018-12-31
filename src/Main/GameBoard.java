@@ -120,7 +120,7 @@ public class GameBoard {
                         for(int j=0;j<FixedValue.BALL_TOTAL;j++){
                             if(i==j) continue;
                             Collision collision = new Collision(allBalls.get(i), allBalls.get(j));
-                            if(collision.isContact()){System.out.println("Colliding");      
+                            if(collision.isContact()){
                                   collision.updateVelocity();
                                   
                             }
