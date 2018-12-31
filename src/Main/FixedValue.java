@@ -19,7 +19,7 @@ public class FixedValue {
     public static double BOARD_POSITION_X =  SCENE_WIDTH/2-BOARD_X/2;
     public static double BOARD_POSITION_Y =  SCENE_HIGHT/2-BOARD_Y/2;
     
-    public static double BALL_RADIUS = 2.25/2*BOARD_SCALE*2;
+    public static double BALL_RADIUS = 2.25/2*BOARD_SCALE;
     public static double POCKET_RADIUS = 3.5*BOARD_SCALE;
     public static double CUE_LENGTH = 58.5*BOARD_SCALE;
     public static double BAULK_LINE = 29*BOARD_SCALE;
@@ -28,6 +28,8 @@ public class FixedValue {
     
     
     public static double CUE_BALL_MASS = 6;
+    public static double CUE_MAXIMUM_VELOCITY = 25;
+    public static double CUE_ANGLE = 40;
     public static double BALL_MASS = 5.5;
     public static double BOARD_FRICTION = 0.001 * SCALE;
     public static int BALL_TOTAL = 16;

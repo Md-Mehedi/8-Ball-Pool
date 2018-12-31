@@ -17,7 +17,8 @@ public class CueStick {
     public CueStick() {
         angle = 0;
         speed = 0;
-        velocity = new PVector(2,2);
+        velocity = new PVector();
+        velocity.changeToVector(FixedValue.CUE_MAXIMUM_VELOCITY, FixedValue.CUE_ANGLE);
     }
     public PVector getVelocity(){
         return velocity;
