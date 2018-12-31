@@ -1,5 +1,8 @@
 package Main;
 
+import static java.lang.Math.atan;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
@@ -21,7 +24,8 @@ public class Ball extends Region{
     double positionY;
     DoubleProperty velocityX;
     DoubleProperty velocityY;
-    double acceleration;
+    double accelerationX;
+    double accelerationY;
     double radius;
     Sphere ball;
     int id;
@@ -29,7 +33,6 @@ public class Ball extends Region{
     public Ball(Pane pane,int id){
         pocketed = false;
         this.id = id;
-        acceleration = -.01;
         radius = FixedValue.BALL_RADIUS;
         velocityX = new SimpleDoubleProperty(this, "velocityX", 0);
         velocityY = new SimpleDoubleProperty(this, "velocityY", 0);
@@ -58,6 +61,11 @@ public class Ball extends Region{
     }
     public void move(long elapsedTime) {
         double elapsedSeconds = elapsedTime / 1_000_000_000.0; 
+        
+        if(Math.abs(velocityX.get())<.01 && Math.abs(velocityY.get())<.01) return ;
+        updateAccleration();
+        velocityX.set(velocityX.get() - accelerationX * elapsedSeconds);
+        velocityY.set(velocityY.get() - accelerationY * elapsedSeconds);
         positionX += (velocityX.get() * elapsedSeconds);
         positionY += (velocityY.get() * elapsedSeconds);
         ball.setLayoutX(positionX);
@@ -99,12 +107,18 @@ public class Ball extends Region{
         this.velocityY.set(velocityY);
     }
 
-    public double getAcceleration() {
-        return acceleration;
+    public double getAccelerationX() {
+        return accelerationX;
+    }
+    public double getAccelerationY() {
+        return accelerationY;
     }
 
-    public void setAcceleration(double acceleration) {
-        this.acceleration = acceleration;
+    public void setAccelerationX(double accelerationX) {
+        this.accelerationX = accelerationX;
+    }
+    public void setAccelerationY(double accelerationY) {
+        this.accelerationY = accelerationY;
     }
     public double getRadius(){
         return radius;
@@ -126,5 +140,15 @@ public class Ball extends Region{
         if((velocityY.get() > 0 && end.getY()-radius <= positionY)
                 || (velocityY.get() < 0 && start.getY()+radius >= positionY))
             velocityY.set(-velocityY.get());
+    }
+
+    private void updateAccleration() {
+        double angle;
+//        if(velocityX.equals(0)) angle = PI/2;
+//        else if(velocityX.equals(0) && velocityY.equals(0)) angle = 0;
+        if(velocityX.get()<0) angle =Math.PI + atan(velocityY.get() / velocityX.get());
+        else angle = atan(velocityY.get() / velocityX.get());
+        accelerationX = FixedValue.BOARD_FRICTION * cos(angle);
+        accelerationY = FixedValue.BOARD_FRICTION * sin(angle);
     }
 }

@@ -37,6 +37,7 @@ public class PoolGame extends Application {
         new GameBoard(playfield);
     }
     
+    
 //    private void constrainBallsOnResize(final Pane ballContainer) {
 //        ballContainer.widthProperty().addListener(new ChangeListener<Number>() {
 //            @Override

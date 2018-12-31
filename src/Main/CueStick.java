@@ -23,7 +23,4 @@ public class CueStick {
     public PVector getVelocity(){
         return velocity;
     }
-    
-    
-    
 }
