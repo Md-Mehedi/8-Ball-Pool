@@ -5,7 +5,7 @@ package Main;
  * @author Md Mehedi Hasan
  */
 public class FixedValue {
-    public static double SCALE = 16;
+    public static double SCALE = 14 ;
     
     public static double SCENE_WIDTH = 1920;
     public static double SCENE_HIGHT = 800;
@@ -19,7 +19,7 @@ public class FixedValue {
     public static double BOARD_POSITION_X =  SCENE_WIDTH/2-BOARD_X/2;
     public static double BOARD_POSITION_Y =  SCENE_HIGHT/2-BOARD_Y/2;
     
-    public static double BALL_RADIUS = 2.25/2*BOARD_SCALE;
+    public static double BALL_RADIUS = 2.25/1.7*BOARD_SCALE;
     public static double POCKET_RADIUS = 3.5*BOARD_SCALE;
     public static double CUE_LENGTH = 58.5*BOARD_SCALE;
     public static double BAULK_LINE = 29*BOARD_SCALE;
