@@ -151,4 +151,9 @@ public class Ball extends Region{
         accelerationX = FixedValue.BOARD_FRICTION * cos(angle);
         accelerationY = FixedValue.BOARD_FRICTION * sin(angle);
     }
+
+    void layoutChange() {
+        ball.setLayoutX(ball.getLayoutX()+1);
+        System.out.println(ball.getLayoutX());
+    }
 }

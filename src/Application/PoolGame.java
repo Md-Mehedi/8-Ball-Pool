@@ -34,7 +34,7 @@ public class PoolGame extends Application {
         primaryStage.setTitle("8 Ball Pool Game");
         primaryStage.show();
         
-        new GameBoard(playfield);
+        new GameBoard(primaryStage, playfield);
     }
     
     

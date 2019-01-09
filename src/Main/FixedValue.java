@@ -28,8 +28,8 @@ public class FixedValue {
     
     
     public static double CUE_BALL_MASS = 6;
-    public static double CUE_MAXIMUM_VELOCITY = 20;
-    public static double CUE_ANGLE = 40;
+    public static double CUE_MAXIMUM_VELOCITY = 10;
+    public static double CUE_ANGLE = 0;
     public static double BALL_MASS = 5.5;
     public static double BOARD_FRICTION = .003 ;
     public static int BALL_TOTAL = 16;

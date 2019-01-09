@@ -11,10 +11,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.PointLight;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 /**
  *
@@ -28,9 +30,11 @@ public class GameBoard {
     AnimationTimer gameLoop;
     Point2D boardStart;
     Point2D boardEnd;
+    Stage curStage;
     
-    public GameBoard(Pane pane){
+    public GameBoard(Stage stage, Pane pane){
         
+        curStage = stage;
         this.pane = new Pane();
         this.pane = pane;
         pockets = new ArrayList<>();
@@ -60,7 +64,7 @@ public class GameBoard {
         
         preparePocket();
         
-        Line baulkLine = new Line(FixedValue.BOARD_POSITION_X+FixedValue.BOARD_X-FixedValue.BAULK_LINE, FixedValue.BOARD_POSITION_Y, FixedValue.BOARD_POSITION_X+FixedValue.BOARD_X-FixedValue.BAULK_LINE, FixedValue.BOARD_POSITION_Y+FixedValue.BOARD_Y);
+        Line baulkLine = new Line(FixedValue.BOARD_POSITION_X+FixedValue.BAULK_LINE, FixedValue.BOARD_POSITION_Y, FixedValue.BOARD_POSITION_X+FixedValue.BAULK_LINE, FixedValue.BOARD_POSITION_Y+FixedValue.BOARD_Y);
         baulkLine.setFill(Color.WHITE);
         pane.getChildren().add(baulkLine);
         baulkLine.setStyle("-fx-stroke: white;");
@@ -68,26 +72,40 @@ public class GameBoard {
 //        pane.getChildren().add(DBoard);
     }
     public void prepareBall() {
+        double posX = FixedValue.BOARD_POSITION_X+FixedValue.BOARD_X/4*3;
+        double posY = FixedValue.BOARD_POSITION_Y+FixedValue.BOARD_Y/2;
+        double difX = FixedValue.BALL_RADIUS*2*Math.cos(Math.PI/6);
+        double difY = FixedValue.BALL_RADIUS*2*Math.sin(Math.PI/6);
+        double radius = FixedValue.BALL_RADIUS;
+        
         for(int i=0;i<FixedValue.BALL_TOTAL;i++){
             allBalls.add(new Ball(pane,i));
         }
         allBalls.get(0).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_0.jpg");
-        allBalls.get(1).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_1.jpg");
-        allBalls.get(2).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*10, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_2.jpg");
-        allBalls.get(3).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*10, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_3.jpg");
-        allBalls.get(4).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*20, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_4.jpg");
-        allBalls.get(5).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*20, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_5.jpg");
-        allBalls.get(6).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*4, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_6.jpg");
-        allBalls.get(7).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*4, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_7.jpg");
-        allBalls.get(8).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*5, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_8.jpg");
-        allBalls.get(9).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*5, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_9.jpg");
-        allBalls.get(10).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*6, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_10.jpg");
-        allBalls.get(11).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*6, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_11.jpg");
-        allBalls.get(12).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*2, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_12.jpg");
-        allBalls.get(13).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*2, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_13.jpg");
-        allBalls.get(14).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2+FixedValue.BALL_RADIUS*2, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_14.jpg");
-        allBalls.get(15).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/4+FixedValue.BALL_RADIUS*2, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_15.jpg");
+        allBalls.get(1).setValue(pane, new Point2D(posX+difX, posY-difY), "/PictureBall/Ball_1.jpg");
+        allBalls.get(2).setValue(pane, new Point2D(posX+4*difX, posY-2*radius), "/PictureBall/Ball_2.jpg");
+        allBalls.get(3).setValue(pane, new Point2D(posX+3*difX, posY-difY), "/PictureBall/Ball_3.jpg");
+        allBalls.get(4).setValue(pane, new Point2D(posX+4*difX, posY+2*radius), "/PictureBall/Ball_4.jpg");
+        allBalls.get(5).setValue(pane, new Point2D(posX+4*difX, posY-4*radius), "/PictureBall/Ball_5.jpg");
+        allBalls.get(6).setValue(pane, new Point2D(posX+2*difX, posY-2*radius), "/PictureBall/Ball_6.jpg");
+        allBalls.get(7).setValue(pane, new Point2D(posX+2*difX, posY+2*radius), "/PictureBall/Ball_7.jpg");
+        allBalls.get(8).setValue(pane, new Point2D(posX+2*difX, posY), "/PictureBall/Ball_8.jpg");
+        allBalls.get(9).setValue(pane, new Point2D(posX+difX, posY+difY), "/PictureBall/Ball_9.jpg");
+        allBalls.get(10).setValue(pane, new Point2D(posX, posY), "/PictureBall/Ball_10.jpg");
+        allBalls.get(11).setValue(pane, new Point2D(posX+4*difX, posY+4*radius), "/PictureBall/Ball_11.jpg");
+        allBalls.get(12).setValue(pane, new Point2D(posX+4*difX, posY), "/PictureBall/Ball_12.jpg");
+        allBalls.get(13).setValue(pane, new Point2D(posX+3*difX, posY+difY+2*radius), "/PictureBall/Ball_13.jpg");
+        allBalls.get(14).setValue(pane, new Point2D(posX+3*difX, posY+difY), "/PictureBall/Ball_14.jpg");
+        allBalls.get(15).setValue(pane, new Point2D(posX+3*difX, posY-difY-2*radius), "/PictureBall/Ball_15.jpg");
         
+        
+        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->{
+            switch (event.getCode()) {
+            case L:
+                allBalls.get(1).layoutChange();
+                break;
+            }
+        });
         move();
     }
     private void preparePocket() {
@@ -143,9 +161,6 @@ light.setTranslateZ(-500);
 //                            allBalls.get(1).move(elapsedTime);
                         }
                     }
-//                    checkCollisions(ballContainer.getWidth(), ballContainer.getHeight());
-//                    updateWorld(elapsedTime);
-//                    frameStats.addFrame(elapsedTime);
                 }
                 lastUpdateTime.set(now);
                 
