@@ -21,17 +21,18 @@ public class FixedValue {
     
     public static double BALL_RADIUS = 2.25/1.7*BOARD_SCALE;
     public static double POCKET_RADIUS = 3.5*BOARD_SCALE;
-    public static double CUE_LENGTH = 58.5*BOARD_SCALE;
+    public static double CUE_LENGTH = 40*BOARD_SCALE;
+    public static double CUE_RADIUS = .3*BOARD_SCALE;
     public static double BAULK_LINE = 29*BOARD_SCALE;
     public static double D_RADIUS = 11.5*BOARD_SCALE;
     
     
     
     public static double CUE_BALL_MASS = 6;
-    public static double CUE_MAXIMUM_VELOCITY = 10;
+    public static double CUE_MAXIMUM_VELOCITY = 65;
     public static double CUE_ANGLE = 0;
     public static double BALL_MASS = 5.5;
-    public static double BOARD_FRICTION = .003 ;
+    public static double BOARD_FRICTION = .2 ;
     public static int BALL_TOTAL = 16;
     
     

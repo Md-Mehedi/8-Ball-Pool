@@ -20,8 +20,8 @@ import javafx.scene.transform.Rotate;
  */
 public class Ball extends Region{
     boolean pocketed;
-    double positionX;
-    double positionY;
+    DoubleProperty positionX;
+    DoubleProperty positionY;
     DoubleProperty velocityX;
     DoubleProperty velocityY;
     double accelerationX;
@@ -34,13 +34,20 @@ public class Ball extends Region{
         pocketed = false;
         this.id = id;
         radius = FixedValue.BALL_RADIUS;
+        positionX = new SimpleDoubleProperty(this, "positionX", 0);
+        positionY = new SimpleDoubleProperty(this, "positionY", 0);
         velocityX = new SimpleDoubleProperty(this, "velocityX", 0);
         velocityY = new SimpleDoubleProperty(this, "velocityY", 0);
         
         ball = new Sphere(radius);
         ball.setRotate(90);
         ball.setRotationAxis(Rotate.Y_AXIS);
+        
+        PhongMaterial material = new PhongMaterial();
+        material.setSelfIlluminationMap(new Image(getClass().getResourceAsStream("/PictureBall/Ball_Illumination_Map.jpg")));
+        ball.setMaterial(material);
         pane.getChildren().add(ball);
+        
     }
     public boolean isPocketed() {
         return pocketed;
@@ -49,46 +56,47 @@ public class Ball extends Region{
         this.pocketed = pocketed;
     }
     public void setValue(Pane pane, Point2D position, String imageLocation){
-        positionX = position.getX();
-        positionY = position.getY();
+        positionX.set(position.getX());
+        positionY.set(position.getY());
         
         Image image = new Image(getClass().getResourceAsStream(imageLocation));
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(image);
         ball.setMaterial(material);
-        ball.setLayoutX(positionX);
-        ball.setLayoutY(positionY);
+        ball.setLayoutX(positionX.get());
+        ball.setLayoutY(positionY.get());
+        
+        ball.layoutXProperty().bind(positionX);
+        ball.layoutYProperty().bind(positionY);
     }
     public void move(long elapsedTime) {
-        double elapsedSeconds = elapsedTime / 1_000_000_000.0; 
+        double elapsedSeconds = elapsedTime / 1_000_000_0000.0; 
         
         if(Math.abs(velocityX.get())<.01 && Math.abs(velocityY.get())<.01) return ;
         updateAccleration();
         velocityX.set(velocityX.get() - accelerationX * elapsedSeconds);
         velocityY.set(velocityY.get() - accelerationY * elapsedSeconds);
-        positionX += (velocityX.get() * elapsedSeconds);
-        positionY += (velocityY.get() * elapsedSeconds);
-        ball.setLayoutX(positionX);
-        ball.setLayoutY(positionY);
+        positionX.set(positionX.get()+(velocityX.get() * elapsedSeconds));
+        positionY.set(positionY.get()+(velocityY.get() * elapsedSeconds));
     }
     public Sphere getSphere(){
         return ball;
     }
 
-    public double getPositionX() {
+    public DoubleProperty getPositionX() {
         return positionX;
     }
 
     public void setPositionX(double positionX) {
-        this.positionX = positionX;
+        this.positionX.set(positionX);
     }
 
-    public double getPositionY() {
+    public DoubleProperty getPositionY() {
         return positionY;
     }
 
     public void setPositionY(double positionY) {
-        this.positionY = positionY;
+        this.positionY.set(positionY);
     }
 
     public double getVelocityX() {
@@ -133,12 +141,12 @@ public class Ball extends Region{
         return ball.getLayoutY();
     }
     void boundaryCollisionCheck(Point2D start, Point2D end) {
-        if((velocityX.get() > 0 && end.getX()-radius <= positionX)
-                || (velocityX.get() < 0 && start.getX()+radius >= positionX))
+        if((velocityX.get() > 0 && end.getX()-radius <= positionX.get())
+                || (velocityX.get() < 0 && start.getX()+radius >= positionX.get()))
             velocityX.set(-velocityX.get());
         
-        if((velocityY.get() > 0 && end.getY()-radius <= positionY)
-                || (velocityY.get() < 0 && start.getY()+radius >= positionY))
+        if((velocityY.get() > 0 && end.getY()-radius <= positionY.get())
+                || (velocityY.get() < 0 && start.getY()+radius >= positionY.get()))
             velocityY.set(-velocityY.get());
     }
 

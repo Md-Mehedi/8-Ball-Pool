@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 /**
@@ -42,12 +43,13 @@ public class GameBoard {
         boardEnd = new Point2D(FixedValue.BOARD_POSITION_X+FixedValue.BOARD_X,FixedValue.BOARD_POSITION_Y+FixedValue.BOARD_Y);
         
         //pane.getChildren().add(prepareLightSource());
-        
+        animation();
         prepareBoard();
     }
     public void prepareBoard(){
         drawBoard();
         prepareBall();
+        prepareCue();
     }
     public void drawBoard(){
         Rectangle back = new Rectangle(FixedValue.BOARD_X+FixedValue.CUTION_SIZE,FixedValue.BOARD_Y+FixedValue.CUTION_SIZE);
@@ -81,7 +83,7 @@ public class GameBoard {
         for(int i=0;i<FixedValue.BALL_TOTAL;i++){
             allBalls.add(new Ball(pane,i));
         }
-        allBalls.get(0).setValue(pane, new Point2D(FixedValue.SCENE_WIDTH/2, FixedValue.SCENE_HIGHT/2), "/PictureBall/Ball_0.jpg");
+        allBalls.get(0).setValue(pane, new Point2D(boardStart.getX()+FixedValue.BOARD_X/6, boardStart.getY()+FixedValue.BOARD_Y/2), "/PictureBall/Ball_0.jpg");
         allBalls.get(1).setValue(pane, new Point2D(posX+difX, posY-difY), "/PictureBall/Ball_1.jpg");
         allBalls.get(2).setValue(pane, new Point2D(posX+4*difX, posY-2*radius), "/PictureBall/Ball_2.jpg");
         allBalls.get(3).setValue(pane, new Point2D(posX+3*difX, posY-difY), "/PictureBall/Ball_3.jpg");
@@ -102,7 +104,7 @@ public class GameBoard {
         curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->{
             switch (event.getCode()) {
             case L:
-                allBalls.get(1).layoutChange();
+                prepareBall();
                 break;
             }
         });
@@ -126,7 +128,6 @@ public class GameBoard {
         allBalls.get(0).setVelocityX(cue.getVelocity().x);
         allBalls.get(0).setVelocityY(cue.getVelocity().y);
         
-        animation();
         
     }
     public Node prepareLightSource(){
@@ -169,5 +170,15 @@ light.setTranslateZ(-500);
         };
         gameLoop.start();
         //Editing is working
+    }
+
+    private void prepareCue() {
+        CueStick cue = new CueStick();
+        pane.getChildren().add(cue.getCue());
+        allBalls.get(0).getPositionX();
+        cue.getCue().setLayoutX(allBalls.get(0).positionX.get() - FixedValue.CUE_LENGTH/2 - FixedValue.BALL_RADIUS*2);
+        cue.getCue().setLayoutY(allBalls.get(0).positionY.get());
+        cue.getCue().setRotate(90);
+        cue.getCue().setRotationAxis(Rotate.Z_AXIS);
     }
 }
