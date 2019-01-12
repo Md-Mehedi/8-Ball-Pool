@@ -4,7 +4,7 @@ package Main;
  *
  * @author Md Mehedi Hasan
  */
-public class FixedValue {
+public class Value {
     public static double SCALE = 14 ;
     
     public static double SCENE_WIDTH = 1920;

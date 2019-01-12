@@ -8,14 +8,17 @@ import javafx.scene.layout.Pane;
  *
  * @author Md Mehedi Hasan
  */
-public class Slider {
+public class Slider extends SliderController{
+    SliderController slider;
     Pane pane = new Pane();
+    double size;
 
     public Slider(Pane pane) throws IOException {
         this.pane = FXMLLoader.load(getClass().getResource("Slider.fxml"));
         pane.getChildren().add(this.pane);
-        this.pane.setLayoutX(100);
-        this.pane.setLayoutY(100);
+        
+        slider = new SliderController();
+        size = slider.getSize();
     }
     public void setLayoutX(double x){
         pane.setLayoutX(x);
@@ -23,7 +26,35 @@ public class Slider {
     public void setLayoutY(double y){
         pane.setLayoutY(y);
     }
-    public double getSpeed(){
-        return SliderController.getRatio();
-    }
+//    public double getRatio(){
+//        return slider.getRatio();
+//    }
+//
+//    public int getHight() {
+//        return (int) size;
+//    }
+//
+//    public void setSlidable(boolean b) {
+//        slider.setSlidable(b);
+//    }
+//    public boolean isSlidable(){
+//        return slider.isSlidable();
+//    }
+//    
+//    public static double getReleasedRatio() {
+//        return slider.getreleasedRatio;
+//    }
+//
+//    public static void setReleasedRatio(double releasedRatio) {
+//        SliderController.releasedRatio = releasedRatio;
+//    }
+//
+//    public static boolean isIsReleased() {
+//        return isReleased;
+//    }
+//
+//    public static void setIsReleased(boolean isReleased) {
+//        SliderController.isReleased = isReleased;
+//    }
+    
 }

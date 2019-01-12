@@ -33,7 +33,7 @@ public class Ball extends Region{
     public Ball(Pane pane,int id){
         pocketed = false;
         this.id = id;
-        radius = FixedValue.BALL_RADIUS;
+        radius = Value.BALL_RADIUS;
         positionX = new SimpleDoubleProperty(this, "positionX", 0);
         positionY = new SimpleDoubleProperty(this, "positionY", 0);
         velocityX = new SimpleDoubleProperty(this, "velocityX", 0);
@@ -156,8 +156,8 @@ public class Ball extends Region{
 //        else if(velocityX.equals(0) && velocityY.equals(0)) angle = 0;
         if(velocityX.get()<0) angle =Math.PI + atan(velocityY.get() / velocityX.get());
         else angle = atan(velocityY.get() / velocityX.get());
-        accelerationX = FixedValue.BOARD_FRICTION * cos(angle);
-        accelerationY = FixedValue.BOARD_FRICTION * sin(angle);
+        accelerationX = Value.BOARD_FRICTION * cos(angle);
+        accelerationY = Value.BOARD_FRICTION * sin(angle);
     }
 
     void layoutChange() {

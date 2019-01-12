@@ -11,7 +11,7 @@ import javafx.scene.shape.Cylinder;
  * @author Md Mehedi Hasan
  */
 public class CueStick {
-    double length = FixedValue.CUE_LENGTH;
+    double length = Value.CUE_LENGTH;
     Point2D tipLocation = new Point2D(0,0);
     double angle;
     double speed;
@@ -22,8 +22,8 @@ public class CueStick {
         angle = 0;
         speed = 0;
         velocity = new PVector();
-        velocity.changeToVector(FixedValue.CUE_MAXIMUM_VELOCITY, FixedValue.CUE_ANGLE);
-        cue = new Cylinder(FixedValue.CUE_RADIUS, FixedValue.CUE_LENGTH);
+        velocity.changeToVector(0, 0);
+        cue = new Cylinder(Value.CUE_RADIUS, Value.CUE_LENGTH);
         
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image(getClass().getResourceAsStream("/PictureBall/Cue_Wood.jpg")));
@@ -34,5 +34,8 @@ public class CueStick {
     }
     public Cylinder getCue(){
         return cue;
+    }
+    public void setVelocity(double mag, double angle){
+        velocity.changeToVector(mag, angle);
     }
 }

@@ -43,15 +43,22 @@ public class SliderController implements Initializable {
     @FXML
     private AnchorPane container;
     
-    private ObservableList<Rectangle> rectangles;
-    private ObservableList<Color> colors;
+    static private ObservableList<Rectangle> rectangles;
+    static private ObservableList<Color> colors;
     int next=0;
     static double ratio;
-    double sliderSize;
+    static double releasedRatio;
+    static double sliderSize;
+    static boolean isSlidable;
+    static boolean isReleased;
     
 //    public SliderController(AnchorPane pane){
 //        root = pane;
 //    }
+
+    public SliderController() {}
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         rectangles = FXCollections.observableArrayList();
@@ -78,24 +85,28 @@ public class SliderController implements Initializable {
         colors.add(Color.rgb(249, 51, 15));
         colors.add(Color.rgb(253, 7, 4));
         
-        sliderSize = rec10.getLayoutY() - rec1.getLayoutY();
+        sliderSize = rec10.getLayoutY()+rec10.getHeight() - rec1.getLayoutY();
     }
 
     @FXML
     private void rec1MouseReleaseAction(MouseEvent event) {
         rectangles.forEach(r -> setNormal(r));
+        releasedRatio = ratio;
+        ratio = 0;
     }
 
 
     @FXML
     private void rec1MouseDragAction(MouseEvent event) {
-        next = 0;
-        rectangles.forEach((Rectangle r) -> {
-            if(r.getLayoutY() < event.getY() && r.getLayoutY()+r.getHeight()>event.getY()){
-                ratio = (r.getLayoutY() - rec1.getLayoutY())/sliderSize*1.0;
-            }
-            checkColors(event, r);
-        });
+        if(isSlidable){
+            next = 0;
+            rectangles.forEach((Rectangle r) -> {
+                if(r.getLayoutY() < event.getY() && r.getLayoutY()+r.getHeight()>event.getY()){
+                    ratio = (r.getLayoutY() - rec1.getLayoutY()+rec1.getHeight())/sliderSize*1.0;
+                }
+                checkColors(event, r);
+            });
+        }
     }
     void doGradient(Rectangle r, Color c1, Color c2){
         LinearGradient gradient = new LinearGradient(
@@ -124,7 +135,34 @@ public class SliderController implements Initializable {
         }
         else setNormal(rec);
     }
-    public static double getRatio(){System.out.println(ratio);
+    public double getRatio(){
         return ratio;
     }
+    public double getSize(){
+        return sliderSize;
+    }
+    public boolean isSlidable(){
+        return isSlidable;
+    }
+
+    public void setSlidable(boolean b) {
+        isSlidable = b;
+    }
+    
+    public static double getReleasedRatio() {
+        return releasedRatio;
+    }
+
+    public static void setReleasedRatio(double releasedRatio) {
+        SliderController.releasedRatio = releasedRatio;
+    }
+
+    public static boolean isIsReleased() {
+        return isReleased;
+    }
+
+    public static void setIsReleased(boolean isReleased) {
+        SliderController.isReleased = isReleased;
+    }
+    
 }

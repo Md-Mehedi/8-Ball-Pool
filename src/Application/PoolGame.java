@@ -25,10 +25,10 @@ public class PoolGame extends Application {
 //        constrainBalClsOnResize(root);
         StackPane layout = new StackPane(); 
         playfield = new Pane();
-        playfield.setPrefSize(FixedValue.SCENE_WIDTH,FixedValue.SCENE_HIGHT);
+        playfield.setPrefSize(Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         layout.getChildren().add(playfield);
         root.setCenter(layout);
-        scene = new Scene(root,FixedValue.SCENE_WIDTH,FixedValue.SCENE_HIGHT);
+        scene = new Scene(root,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         
         primaryStage.setScene(scene);
         primaryStage.setTitle("8 Ball Pool Game");

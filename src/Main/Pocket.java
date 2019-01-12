@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
  * @author Md Mehedi Hasan
  */
 public class Pocket {
-    double radius = FixedValue.POCKET_RADIUS;
+    double radius = Value.POCKET_RADIUS;
     Point2D location = new Point2D(0,0);
     Circle pocket;
     

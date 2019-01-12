@@ -24,7 +24,7 @@ public class Collision {
 
         double deltaX = ball2.getCenterX() - ball1.getCenterX();
         double deltaY = ball2.getCenterY() - ball1.getCenterY();
-        double radiusSum = 2*FixedValue.BALL_RADIUS;
+        double radiusSum = 2*Value.BALL_RADIUS;
         
         if (deltaX * deltaX + deltaY * deltaY <= radiusSum * radiusSum) {
             if ( deltaX * (ball2.getVelocityX() - ball1.getVelocityX()) 
