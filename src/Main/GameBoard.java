@@ -1,8 +1,12 @@
 package Main;
 
+import PowerSlider.Slider;
 import common.PVector;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -32,6 +36,7 @@ public class GameBoard {
     Point2D boardStart;
     Point2D boardEnd;
     Stage curStage;
+    Slider slider;
     
     public GameBoard(Stage stage, Pane pane){
         
@@ -45,6 +50,7 @@ public class GameBoard {
         //pane.getChildren().add(prepareLightSource());
         animation();
         prepareBoard();
+        addPowerSlider();
     }
     public void prepareBoard(){
         drawBoard();
@@ -147,7 +153,7 @@ light.setTranslateZ(-500);
             public void handle(long now) {
                 if (lastUpdateTime.get() > 0) {
                     long elapsedTime = now - lastUpdateTime.get();
-                    
+                    System.out.println(slider.getSpeed());
                     allBalls.forEach(ball -> ball.boundaryCollisionCheck(boardStart,boardEnd));
                     for(int i=0;i<FixedValue.BALL_TOTAL;i++){
                         for(int j=0;j<FixedValue.BALL_TOTAL;j++){
@@ -155,7 +161,6 @@ light.setTranslateZ(-500);
                             Collision collision = new Collision(allBalls.get(i), allBalls.get(j));
                             if(collision.isContact()){
                                   collision.updateVelocity();
-                                  
                             }
                             allBalls.forEach(ball -> ball.move(elapsedTime));
 //                            allBalls.get(0).move(elapsedTime);
@@ -180,5 +185,13 @@ light.setTranslateZ(-500);
         cue.getCue().setLayoutY(allBalls.get(0).positionY.get());
         cue.getCue().setRotate(90);
         cue.getCue().setRotationAxis(Rotate.Z_AXIS);
+    }
+
+    private void addPowerSlider(){
+        try {
+            slider = new Slider(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
