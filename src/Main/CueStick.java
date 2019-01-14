@@ -16,7 +16,7 @@ import javafx.scene.transform.Rotate;
  */
 public class CueStick{
     Pane pane;
-    double length = Value.CUE_LENGTH;
+    static double length = Value.CUE_LENGTH;
     Point2D cueBallLocation;
     double speed;
     PVector velocity;
@@ -49,8 +49,8 @@ public class CueStick{
     public void setVelocity(double mag, double angle){
         velocity.changeToVector(mag, angle);
     }
-    void setRotation() {
-        double dis = Value.CUE_LENGTH/2 + Value.BALL_RADIUS*2;
+    void updateRotation() {
+        double dis = length/2 + Value.BALL_RADIUS*2;
         double X = dis*Math.cos(Math.toRadians(cueAngle));
         double Y = dis*Math.sin(Math.toRadians(cueAngle));
         cue.setRotate(cueAngle-90);
@@ -62,7 +62,7 @@ public class CueStick{
         this.cueBallLocation = cueBallLocation;
         cue.setLayoutX(cueBallLocation.getX() - 2*Value.BALL_RADIUS - Value.CUE_LENGTH/2);
         cue.setLayoutY(cueBallLocation.getY());
-        setRotation();
+        updateRotation();
     }
     double distance(double x1, double y1, double x2, double y2){
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
@@ -81,7 +81,7 @@ public class CueStick{
                 if(cueAngle<=0) cueAngle = 360;
                 else if(cueAngle>=360) cueAngle = 0;
                 
-                setRotation();
+                updateRotation();
                 previousSceneX.set(newX);
                 previousSceneY.set(newY);
             }
@@ -101,5 +101,12 @@ public class CueStick{
     }
     double getVelocityY() {
         return velocity.y;
+    }
+    public void setLength(double proportion){
+        length = Value.CUE_LENGTH + proportion/2 * Value.CUE_LENGTH;
+        updateRotation();
+    }
+    public static double getLength(){
+        return length;
     }
 }

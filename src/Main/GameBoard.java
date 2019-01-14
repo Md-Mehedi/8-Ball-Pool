@@ -154,20 +154,13 @@ public class GameBoard {
             @Override
             public void handle(long now) {
                 if (lastUpdateTime.get() > 0) {
-                   // System.out.println(slider.getReleasedRatio());
                    cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(cue.getAngle()));
-                    //System.out.println(slider.getReleasedRatio());
                     if(slider.getReleasedRatio() > 0){
                         allBalls.get(0).setVelocityX(cue.getVelocity().x);
                         allBalls.get(0).setVelocityY(cue.getVelocity().y);
                         slider.setReleasedRatio(0);
-            
-//            if(slider.isReleased()){System.out.println(slider.isReleased());
-//                cue.setMoveable(true);
-//                allBalls.get(0).setVelocityX(cue.getVelocityX());
-//                allBalls.get(0).setVelocityY(cue.getVelocityY());
-//            }
-        }
+                    }         
+                    cue.setLength(slider.getRatio());
                     long elapsedTime = now - lastUpdateTime.get();
                     allBalls.forEach(ball -> ball.boundaryCollisionCheck(boardStart,boardEnd));
                     for(int i=0;i<Value.BALL_TOTAL;i++){

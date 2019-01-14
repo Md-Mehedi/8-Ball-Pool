@@ -29,7 +29,7 @@ public class Value {
     
     
     public static double CUE_BALL_MASS = 6;
-    public static double CUE_MAXIMUM_VELOCITY = 100;
+    public static double CUE_MAXIMUM_VELOCITY = 90;
     public static double CUE_ANGLE = 0;
     public static double BALL_MASS = 5.5;
     public static double BOARD_FRICTION = .2 ;

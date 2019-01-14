@@ -112,7 +112,6 @@ public class SliderController implements Initializable {
                     ratio = (r.getLayoutY() - rec1.getLayoutY()+rec1.getHeight())/sliderSize*1.0;
                 }
                 if(event.getY()<rec1.getLayoutY()) ratio = 0;
-                System.out.println(ratio);
                 checkColors(event, r);
             });
         }
