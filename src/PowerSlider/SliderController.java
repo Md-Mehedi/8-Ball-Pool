@@ -1,5 +1,6 @@
 package PowerSlider;
 
+import Main.CueStick;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -93,22 +94,25 @@ public class SliderController implements Initializable {
     @FXML
     private void rec1MouseReleaseAction(MouseEvent event) {
         rectangles.forEach(r -> setNormal(r));
-        releasedRatio = ratio;
+        releasedRatio = ratio;  //System.out.println(ratio);
         ratio = 0;
         isReleased = true;
-        Main.CueStick.setMoveable(false);
+        CueStick.setMoveable(true);
     }
 
 
     @FXML
     private void rec1MouseDragAction(MouseEvent event) {
         isReleased = false;
+        CueStick.setMoveable(false);
         if(isSlidable){
             next = 0;
             rectangles.forEach((Rectangle r) -> {
                 if(r.getLayoutY() < event.getY() && r.getLayoutY()+r.getHeight()>event.getY()){
                     ratio = (r.getLayoutY() - rec1.getLayoutY()+rec1.getHeight())/sliderSize*1.0;
                 }
+                if(event.getY()<rec1.getLayoutY()) ratio = 0;
+                System.out.println(ratio);
                 checkColors(event, r);
             });
         }

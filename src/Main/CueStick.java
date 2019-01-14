@@ -27,7 +27,7 @@ public class CueStick{
     public CueStick(Pane pane, Point2D cueBallLocation) {
         this.pane = pane;
         this.cueBallLocation = cueBallLocation;
-        moveable = false;
+        moveable = true;
         cueAngle = 180;
         speed = 0;
         velocity = new PVector();
@@ -71,18 +71,20 @@ public class CueStick{
         DoubleProperty previousSceneX = new SimpleDoubleProperty(0);
         DoubleProperty previousSceneY = new SimpleDoubleProperty(0);
         pane.getScene().setOnMouseDragged((event) -> {
-            double newX = event.getSceneX();
-            double newY = event.getSceneY();
-//            
-            if(newX > previousSceneX.get() || newY < previousSceneY.get()) cueAngle += 1;
-            else if(newX < previousSceneX.get() || newY > previousSceneY.get()) cueAngle -= 1;
-            //System.out.println(Math.toDegrees(Math.atan2(newY - allBalls.get(0).getCenterY(), newX - allBalls.get(0).getCenterX())));
-            //cue.setRotation(Math.toDegrees(Math.atan2(newY - allBalls.get(0).getCenterY(), newX - allBalls.get(0).getCenterX())));
-            if(cueAngle<=0) cueAngle = 360;
-            else if(cueAngle>=360) cueAngle = 0;
-            setRotation();
-            previousSceneX.set(newX);
-            previousSceneY.set(newY);
+            if(moveable){
+                double newX = event.getSceneX();
+                double newY = event.getSceneY();
+    //            
+                if(newX > previousSceneX.get() || newY < previousSceneY.get()) cueAngle += 1;
+                else if(newX < previousSceneX.get() || newY > previousSceneY.get()) cueAngle -= 1;
+                
+                if(cueAngle<=0) cueAngle = 360;
+                else if(cueAngle>=360) cueAngle = 0;
+                
+                setRotation();
+                previousSceneX.set(newX);
+                previousSceneY.set(newY);
+            }
         });
     }
     public static boolean isMoveable() {

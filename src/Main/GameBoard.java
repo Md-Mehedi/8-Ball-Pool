@@ -154,12 +154,13 @@ public class GameBoard {
             @Override
             public void handle(long now) {
                 if (lastUpdateTime.get() > 0) {
-                    
-                    cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, cue.getAngle());System.out.println(cue.getAngle());
-        if(slider.getReleasedRatio() > 0){
-            allBalls.get(0).setVelocityX(cue.getVelocity().x);
-            allBalls.get(0).setVelocityY(cue.getVelocity().y);
-            slider.setReleasedRatio(0);
+                   // System.out.println(slider.getReleasedRatio());
+                   cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(cue.getAngle()));
+                    //System.out.println(slider.getReleasedRatio());
+                    if(slider.getReleasedRatio() > 0){
+                        allBalls.get(0).setVelocityX(cue.getVelocity().x);
+                        allBalls.get(0).setVelocityY(cue.getVelocity().y);
+                        slider.setReleasedRatio(0);
             
 //            if(slider.isReleased()){System.out.println(slider.isReleased());
 //                cue.setMoveable(true);
@@ -194,7 +195,7 @@ public class GameBoard {
                 }
                 lastUpdateTime.set(now);
                 cueBallPosition = allBalls.get(0).getPosition();
-                if(allBalls.get(0).getVelocity() < 0.1 && !moving && !cue.isMoveable()){
+                if(allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()){
                     cue.setPosition(cueBallPosition);
                     cue.setMoveable(true);
                 }
