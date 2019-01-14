@@ -1,7 +1,6 @@
 package Application;
 
 import Main.*;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 public class PoolGame extends Application {
     
     Pane playfield;
-    AnimationTimer gameLoop;
     Scene scene;
 
     @Override
@@ -35,6 +33,12 @@ public class PoolGame extends Application {
         primaryStage.show();
         
         new GameBoard(primaryStage, playfield);
+    }
+    public Scene getScene(){
+        return scene;
+    }
+    public Pane getPlayField(){
+        return playfield;
     }
     
     

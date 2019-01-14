@@ -5,7 +5,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="142.0" prefWidth="43.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PowerSlider.SliderController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7ada92" height="188.0" stroke="BLACK" strokeType="INSIDE" width="43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#7ada92" height="188.0" stroke="BLACK" strokeType="INSIDE" width="43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane layoutX="4.0" layoutY="4.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
          <children>
             <Rectangle fx:id="rec1" arcHeight="5.0" arcWidth="5.0" fill="GREY" height="15.0" onMouseDragged="#rec1MouseDragAction" onMouseReleased="#rec1MouseReleaseAction" stroke="BLACK" strokeType="INSIDE" width="35.0" />

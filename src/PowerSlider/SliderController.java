@@ -51,6 +51,8 @@ public class SliderController implements Initializable {
     static double sliderSize;
     static boolean isSlidable;
     static boolean isReleased;
+    @FXML
+    public Rectangle background;
     
 //    public SliderController(AnchorPane pane){
 //        root = pane;
@@ -93,11 +95,14 @@ public class SliderController implements Initializable {
         rectangles.forEach(r -> setNormal(r));
         releasedRatio = ratio;
         ratio = 0;
+        isReleased = true;
+        Main.CueStick.setMoveable(false);
     }
 
 
     @FXML
     private void rec1MouseDragAction(MouseEvent event) {
+        isReleased = false;
         if(isSlidable){
             next = 0;
             rectangles.forEach((Rectangle r) -> {
@@ -164,5 +169,4 @@ public class SliderController implements Initializable {
     public static void setIsReleased(boolean isReleased) {
         SliderController.isReleased = isReleased;
     }
-    
 }

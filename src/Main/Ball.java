@@ -72,7 +72,7 @@ public class Ball extends Region{
     public void move(long elapsedTime) {
         double elapsedSeconds = elapsedTime / 1_000_000_0000.0; 
         
-        if(Math.abs(velocityX.get())<.01 && Math.abs(velocityY.get())<.01) return ;
+        if(Math.abs(velocityX.get())<0.0000001 && Math.abs(velocityY.get())< 0.0000001) return ;
         updateAccleration();
         velocityX.set(velocityX.get() - accelerationX * elapsedSeconds);
         velocityY.set(velocityY.get() - accelerationY * elapsedSeconds);
@@ -82,46 +82,39 @@ public class Ball extends Region{
     public Sphere getSphere(){
         return ball;
     }
-
+    public Point2D getPosition(){
+        return new Point2D(positionX.get(), positionY.get());
+    }
     public DoubleProperty getPositionX() {
         return positionX;
     }
-
     public void setPositionX(double positionX) {
         this.positionX.set(positionX);
     }
-
     public DoubleProperty getPositionY() {
         return positionY;
     }
-
     public void setPositionY(double positionY) {
         this.positionY.set(positionY);
     }
-
     public double getVelocityX() {
         return velocityX.get();
     }
-
     public void setVelocityX(double velocityX) {
         this.velocityX.set(velocityX);
     }
-
     public double getVelocityY() {
         return velocityY.get();
     }
-
     public void setVelocityY(double velocityY) {
         this.velocityY.set(velocityY);
     }
-
     public double getAccelerationX() {
         return accelerationX;
     }
     public double getAccelerationY() {
         return accelerationY;
     }
-
     public void setAccelerationX(double accelerationX) {
         this.accelerationX = accelerationX;
     }
@@ -140,6 +133,7 @@ public class Ball extends Region{
     public double getCenterY(){
         return ball.getLayoutY();
     }
+    
     void boundaryCollisionCheck(Point2D start, Point2D end) {
         if((velocityX.get() > 0 && end.getX()-radius <= positionX.get())
                 || (velocityX.get() < 0 && start.getX()+radius >= positionX.get()))
@@ -162,6 +156,14 @@ public class Ball extends Region{
 
     void layoutChange() {
         ball.setLayoutX(ball.getLayoutX()+1);
-        System.out.println(ball.getLayoutX());
+    }
+    DoubleProperty centerXProperty(){
+        return positionX;
+    }
+    DoubleProperty centerYProperty(){
+        return positionY;
+    }
+    double getVelocity() {
+        return Math.sqrt(velocityX.get()*velocityX.get() + velocityY.get()*velocityY.get());
     }
 }

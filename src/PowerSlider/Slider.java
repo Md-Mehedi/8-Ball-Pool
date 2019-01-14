@@ -9,16 +9,12 @@ import javafx.scene.layout.Pane;
  * @author Md Mehedi Hasan
  */
 public class Slider extends SliderController{
-    SliderController slider;
     Pane pane = new Pane();
     double size;
 
     public Slider(Pane pane) throws IOException {
         this.pane = FXMLLoader.load(getClass().getResource("Slider.fxml"));
         pane.getChildren().add(this.pane);
-        
-        slider = new SliderController();
-        size = slider.getSize();
     }
     public void setLayoutX(double x){
         pane.setLayoutX(x);
@@ -56,5 +52,10 @@ public class Slider extends SliderController{
 //    public static void setIsReleased(boolean isReleased) {
 //        SliderController.isReleased = isReleased;
 //    }
+
+    public boolean isReleased() {
+        return isReleased;
+    }
+
     
 }

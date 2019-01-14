@@ -5,10 +5,10 @@ package Main;
  * @author Md Mehedi Hasan
  */
 public class Value {
-    public static double SCALE = 14 ;
+    public static double SCALE = 14;
     
     public static double SCENE_WIDTH = 1920;
-    public static double SCENE_HIGHT = 800;
+    public static double SCENE_HIGHT = 700;
     public static double SCALE_X = 1;
     public static double SCALE_Y = 1;
     

@@ -1,7 +1,6 @@
 package Main;
 
 import PowerSlider.Slider;
-import common.PVector;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +12,11 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.PointLight;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 /**
@@ -35,9 +31,12 @@ public class GameBoard {
     AnimationTimer gameLoop;
     Point2D boardStart;
     Point2D boardEnd;
+    Point2D cueBallPosition;
     Stage curStage;
     Slider slider;
     CueStick cue;
+    int cueAngle;
+    boolean moving = false;
     
     public GameBoard(Stage stage, Pane pane){
         
@@ -47,8 +46,8 @@ public class GameBoard {
         pockets = new ArrayList<>();
         boardStart = new Point2D(Value.BOARD_POSITION_X,Value.BOARD_POSITION_Y);
         boardEnd = new Point2D(Value.BOARD_POSITION_X+Value.BOARD_X,Value.BOARD_POSITION_Y+Value.BOARD_Y);
-        cue = new CueStick();
-        //pane.getChildren().add(prepareLightSource());
+        cueBallPosition = new Point2D(boardStart.getX()+Value.BOARD_X/6, boardStart.getY()+Value.BOARD_Y/2);
+//pane.getChildren().add(prepareLightSource());
         addPowerSlider();
         animation();
         prepareBoard();
@@ -90,7 +89,7 @@ public class GameBoard {
         for(int i=0;i<Value.BALL_TOTAL;i++){
             allBalls.add(new Ball(pane,i));
         }
-        allBalls.get(0).setValue(pane, new Point2D(boardStart.getX()+Value.BOARD_X/6, boardStart.getY()+Value.BOARD_Y/2), "/PictureBall/Ball_0.jpg");
+        allBalls.get(0).setValue(pane, cueBallPosition, "/PictureBall/Ball_0.jpg");
         allBalls.get(1).setValue(pane, new Point2D(posX+difX, posY-difY), "/PictureBall/Ball_1.jpg");
         allBalls.get(2).setValue(pane, new Point2D(posX+4*difX, posY-2*radius), "/PictureBall/Ball_2.jpg");
         allBalls.get(3).setValue(pane, new Point2D(posX+3*difX, posY-difY), "/PictureBall/Ball_3.jpg");
@@ -115,7 +114,7 @@ public class GameBoard {
                 break;
             }
         });
-        move();
+        //move();
     }
     private void preparePocket() {
         for(int i=0;i<6;i++){
@@ -129,24 +128,24 @@ public class GameBoard {
         pockets.get(5).setLocation(new Point2D(Value.BOARD_POSITION_X + Value.BOARD_X, Value.BOARD_POSITION_Y + Value.BOARD_Y));
     }
 
-    public void move(){
-        PVector p = new PVector(10,1,0);
-        CueStick cue = new CueStick();
-        allBalls.get(0).setVelocityX(cue.getVelocity().x);
-        allBalls.get(0).setVelocityY(cue.getVelocity().y);
-        
-        
-    }
-    public Node prepareLightSource(){
-        PointLight light = new PointLight();
-//        light.setColor(Color.BLUE);
-light.setTranslateX(Value.SCENE_WIDTH/2);
-light.setTranslateY(Value.SCENE_HIGHT/2);
-light.setTranslateZ(-500);
-        return light;
+//    public void move(){
+//        PVector p = new PVector(10,1,0);
+//        CueStick cue = new CueStick();
+//        allBalls.get(0).setVelocityX(cue.getVelocity().x);
+//        allBalls.get(0).setVelocityY(cue.getVelocity().y);
+//        
+//        
+//    }
+//    public Node prepareLightSource(){
+//        PointLight light = new PointLight();
+////        light.setColor(Color.BLUE);
+//light.setTranslateX(Value.SCENE_WIDTH/2);
+//light.setTranslateY(Value.SCENE_HIGHT/2);
+//light.setTranslateZ(-500);
+//        return light;
 //        AmbientLight light = new AmbientLight();
 //        return light;
-    }
+//    }
     public void animation(){
         
         
@@ -156,41 +155,63 @@ light.setTranslateZ(-500);
             public void handle(long now) {
                 if (lastUpdateTime.get() > 0) {
                     
-        cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, 0);
+                    cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, cue.getAngle());System.out.println(cue.getAngle());
         if(slider.getReleasedRatio() > 0){
             allBalls.get(0).setVelocityX(cue.getVelocity().x);
             allBalls.get(0).setVelocityY(cue.getVelocity().y);
             slider.setReleasedRatio(0);
+            
+//            if(slider.isReleased()){System.out.println(slider.isReleased());
+//                cue.setMoveable(true);
+//                allBalls.get(0).setVelocityX(cue.getVelocityX());
+//                allBalls.get(0).setVelocityY(cue.getVelocityY());
+//            }
         }
                     long elapsedTime = now - lastUpdateTime.get();
                     allBalls.forEach(ball -> ball.boundaryCollisionCheck(boardStart,boardEnd));
                     for(int i=0;i<Value.BALL_TOTAL;i++){
-                        for(int j=0;j<Value.BALL_TOTAL;j++){
+                        for(int j=0;j < Value.BALL_TOTAL;j++){
                             if(i==j) continue;
                             Collision collision = new Collision(allBalls.get(i), allBalls.get(j));
                             if(collision.isContact()){
                                   collision.updateVelocity();
                             }
-                            allBalls.forEach(ball -> ball.move(elapsedTime));
-//                            allBalls.get(0).move(elapsedTime);
-//                            allBalls.get(1).move(elapsedTime);
+                            moving = false;
+                            allBalls.forEach(ball -> {
+                                ball.move(elapsedTime);
+                                if(ball.getVelocity()<0.001 && !moving) moving = false;
+                                else moving = true;
+                            });
                         }
                     }
                 }
+                if(moving) {
+                    cue.getCue().setLayoutX(3000);
+                    slider.setLayoutX(3000);
+                }
+                else {
+                    slider.setLayoutX(Value.SCENE_WIDTH/10*9);
+                }
                 lastUpdateTime.set(now);
+                cueBallPosition = allBalls.get(0).getPosition();
+                if(allBalls.get(0).getVelocity() < 0.1 && !moving && !cue.isMoveable()){
+                    cue.setPosition(cueBallPosition);
+                    cue.setMoveable(true);
+                }
             }
         };
         gameLoop.start();
-        //Editing is working
     }
 
     private void prepareCue() {
+        cue = new CueStick(pane,cueBallPosition);
         pane.getChildren().add(cue.getCue());
-        allBalls.get(0).getPositionX();
-        cue.getCue().setLayoutX(allBalls.get(0).positionX.get() - Value.CUE_LENGTH/2 - Value.BALL_RADIUS*2);
-        cue.getCue().setLayoutY(allBalls.get(0).positionY.get());
-        cue.getCue().setRotate(90);
-        cue.getCue().setRotationAxis(Rotate.Z_AXIS);
+//        cue.getCue().setLayoutX(allBalls.get(0).positionX.get() + Value.CUE_LENGTH/2 + Value.BALL_RADIUS*2);
+//        cue.getCue().setLayoutY(allBalls.get(0).positionY.get());
+//        cue.getCue().setRotationAxis(Rotate.Z_AXIS);
+        
+        cue.rotationEvent();
+        
     }
 
     private void addPowerSlider(){
