@@ -218,5 +218,6 @@ public class GameBoard {
         slider.setLayoutX(Value.SCENE_WIDTH/10*9);
         slider.setLayoutY(Value.SCENE_HIGHT/2 - slider.getSize()/2);
         slider.setSlidable(true);
+        slider.rotate(90);
     }
 }

@@ -57,5 +57,9 @@ public class Slider extends SliderController{
         return isReleased;
     }
 
+    public void rotate(int i) {
+        //container.setRotate(i);
+    }
+
     
 }

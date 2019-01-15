@@ -42,7 +42,7 @@ public class SliderController implements Initializable {
     @FXML
     private Rectangle rec10;
     @FXML
-    private AnchorPane container;
+    public AnchorPane container;
     
     static private ObservableList<Rectangle> rectangles;
     static private ObservableList<Color> colors;
@@ -89,6 +89,7 @@ public class SliderController implements Initializable {
         colors.add(Color.rgb(253, 7, 4));
         
         sliderSize = rec10.getLayoutY()+rec10.getHeight() - rec1.getLayoutY();
+        
     }
 
     @FXML

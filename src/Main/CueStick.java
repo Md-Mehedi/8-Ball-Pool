@@ -21,19 +21,19 @@ public class CueStick{
     double speed;
     PVector velocity;
     Cylinder cue;
-    static int cueAngle;
+    static int angle;
     static boolean moveable;
 
     public CueStick(Pane pane, Point2D cueBallLocation) {
         this.pane = pane;
         this.cueBallLocation = cueBallLocation;
         moveable = true;
-        cueAngle = 180;
+        angle = 180;
         speed = 0;
         velocity = new PVector();
         velocity.changeToVector(0, 0);
         cue = new Cylinder(Value.CUE_RADIUS, Value.CUE_LENGTH);
-        cue.setRotate(cueAngle);
+        cue.setRotate(angle);
         cue.setRotationAxis(Rotate.Z_AXIS);
         
         PhongMaterial material = new PhongMaterial();
@@ -51,9 +51,9 @@ public class CueStick{
     }
     void updateRotation() {
         double dis = length/2 + Value.BALL_RADIUS*2;
-        double X = dis*Math.cos(Math.toRadians(cueAngle));
-        double Y = dis*Math.sin(Math.toRadians(cueAngle));
-        cue.setRotate(cueAngle-90);
+        double X = dis*Math.cos(Math.toRadians(angle));
+        double Y = dis*Math.sin(Math.toRadians(angle));
+        cue.setRotate(angle-90);
         cue.setRotationAxis(Rotate.Z_AXIS);
         cue.setLayoutX(cueBallLocation.getX() + X);
         cue.setLayoutY(cueBallLocation.getY() + Y);
@@ -75,12 +75,7 @@ public class CueStick{
                 double newX = event.getSceneX();
                 double newY = event.getSceneY();
     //            
-                if(newX > previousSceneX.get() || newY < previousSceneY.get()) cueAngle += 1;
-                else if(newX < previousSceneX.get() || newY > previousSceneY.get()) cueAngle -= 1;
-                
-                if(cueAngle<=0) cueAngle = 360;
-                else if(cueAngle>=360) cueAngle = 0;
-                
+                updateAngle(previousSceneX, previousSceneY, newX, newY);
                 updateRotation();
                 previousSceneX.set(newX);
                 previousSceneY.set(newY);
@@ -94,7 +89,7 @@ public class CueStick{
         moveable = b;
     }
     double getAngle() {
-        return cueAngle-180; 
+        return angle-180; 
     }
     double getVelocityX() {
         return velocity.x;
@@ -108,5 +103,19 @@ public class CueStick{
     }
     public static double getLength(){
         return length;
+    }
+
+    private void updateAngle(DoubleProperty previousSceneX, DoubleProperty previousSceneY, double newX, double newY) {
+        double slopePreviouse = slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
+        double slopeNow = slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
+        
+        if(slopeNow < slopePreviouse) angle--;
+        else angle++;
+        
+        if(angle<=0) angle = 360;
+        else if(angle>=360) angle = 0;
+    }
+    private double slope(double x1, double y1, double x2, double y2){
+        return Math.toDegrees(Math.atan((y2-y1)/(x2-x1)));
     }
 }
