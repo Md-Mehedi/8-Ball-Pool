@@ -21,8 +21,10 @@ public class CueStick{
     double speed;
     PVector velocity;
     Cylinder cue;
-    static int angle;
+    static double angle;
     static boolean moveable;
+    static DoubleProperty previousSceneX = new SimpleDoubleProperty(0);
+    static DoubleProperty previousSceneY = new SimpleDoubleProperty(0);
 
     public CueStick(Pane pane, Point2D cueBallLocation) {
         this.pane = pane;
@@ -68,8 +70,6 @@ public class CueStick{
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
     }
     void rotationEvent() {
-        DoubleProperty previousSceneX = new SimpleDoubleProperty(0);
-        DoubleProperty previousSceneY = new SimpleDoubleProperty(0);
         pane.getScene().setOnMouseDragged((event) -> {
             if(moveable){
                 double newX = event.getSceneX();
@@ -111,11 +111,15 @@ public class CueStick{
         
         if(slopeNow < slopePreviouse) angle--;
         else angle++;
+//System.out.println("slopePreviouse"+slopePreviouse);
+//System.out.println(slopeNow);
+//angle = (angle + slopeNow - slopePreviouse);
         
         if(angle<=0) angle = 360;
         else if(angle>=360) angle = 0;
     }
     private double slope(double x1, double y1, double x2, double y2){
-        return Math.toDegrees(Math.atan((y2-y1)/(x2-x1)));
+        if(y1>=0) return Math.toDegrees(Math.atan((y2-y1)/(x2-x1)));
+        return 180 + Math.toDegrees(Math.atan((y2-y1)/(x2-x1)));
     }
 }

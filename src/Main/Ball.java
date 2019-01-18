@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
@@ -18,7 +17,7 @@ import javafx.scene.transform.Rotate;
  *
  * @author Md Mehedi Hasan
  */
-public class Ball extends Region{
+public class Ball{
     boolean pocketed;
     DoubleProperty positionX;
     DoubleProperty positionY;
@@ -29,6 +28,25 @@ public class Ball extends Region{
     double radius;
     Sphere ball;
     int id;
+    Image image;
+    private static boolean cueBallPotted;
+    private static boolean eightBallPotted;
+
+    public static boolean isCueBallPotted() {
+        return cueBallPotted;
+    }
+
+    public static void setCueBallPotted(boolean cueBallPotted) {
+        Ball.cueBallPotted = cueBallPotted;
+    }
+
+    public static boolean isEightBallPotted() {
+        return eightBallPotted;
+    }
+
+    public static void setEightBallPotted(boolean eightBallPotted) {
+        Ball.eightBallPotted = eightBallPotted;
+    }
     
     public Ball(Pane pane,int id){
         pocketed = false;
@@ -40,11 +58,12 @@ public class Ball extends Region{
         velocityY = new SimpleDoubleProperty(this, "velocityY", 0);
         
         ball = new Sphere(radius);
-        ball.setRotate(90);
+        if(id!=0) ball.setRotate(90);
         ball.setRotationAxis(Rotate.Y_AXIS);
         
+        image = new Image(getClass().getResourceAsStream("/PictureBall/Ball_Illumination_Map.jpg"));
         PhongMaterial material = new PhongMaterial();
-        material.setSelfIlluminationMap(new Image(getClass().getResourceAsStream("/PictureBall/Ball_Illumination_Map.jpg")));
+        material.setSelfIlluminationMap(image);
         ball.setMaterial(material);
         pane.getChildren().add(ball);
         
@@ -68,6 +87,14 @@ public class Ball extends Region{
         
         ball.layoutXProperty().bind(positionX);
         ball.layoutYProperty().bind(positionY);
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
     public void move(long elapsedTime) {
         double elapsedSeconds = elapsedTime / 1_000_000_0000.0; 
@@ -153,10 +180,6 @@ public class Ball extends Region{
         accelerationX = Value.BOARD_FRICTION * cos(angle);
         accelerationY = Value.BOARD_FRICTION * sin(angle);
     }
-
-    void layoutChange() {
-        ball.setLayoutX(ball.getLayoutX()+1);
-    }
     DoubleProperty centerXProperty(){
         return positionX;
     }
@@ -165,5 +188,13 @@ public class Ball extends Region{
     }
     double getVelocity() {
         return Math.sqrt(velocityX.get()*velocityX.get() + velocityY.get()*velocityY.get());
+    }
+
+    double getAngle() {
+        if(velocityX.get()>=0) return Math.atan(velocityY.get()/velocityX.get());
+        return Math.PI + Math.atan(velocityY.get()/velocityX.get());
+    }
+    void setOpacity(double value){
+        ball.setOpacity(value);
     }
 }

@@ -7,8 +7,8 @@ package Main;
 public class Value {
     public static double SCALE = 14;
     
-    public static double SCENE_WIDTH = 1920;
-    public static double SCENE_HIGHT = 1000;
+    public static double SCENE_WIDTH = 1600;
+    public static double SCENE_HIGHT = 700;
     public static double SCALE_X = 1;
     public static double SCALE_Y = 1;
     
@@ -26,16 +26,10 @@ public class Value {
     public static double BAULK_LINE = 29*BOARD_SCALE;
     public static double D_RADIUS = 11.5*BOARD_SCALE;
     
-    
-    
     public static double CUE_BALL_MASS = 6;
     public static double CUE_MAXIMUM_VELOCITY = 80;
     public static double CUE_ANGLE = 0;
     public static double BALL_MASS = 5.5;
     public static double BOARD_FRICTION = .2 ;
     public static int BALL_TOTAL = 16;
-    
-    
-    private double maximumCueVelocity;          
-    private double friction;
 }

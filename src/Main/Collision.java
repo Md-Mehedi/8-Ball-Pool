@@ -21,6 +21,8 @@ public class Collision {
         this.ball3 = ball3;
     }
     public boolean isContact(){
+        
+        if(ball1.isPocketed() || ball2.isPocketed()) return false;
 
         double deltaX = ball2.getCenterX() - ball1.getCenterX();
         double deltaY = ball2.getCenterY() - ball1.getCenterY();
