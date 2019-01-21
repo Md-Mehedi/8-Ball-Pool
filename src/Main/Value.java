@@ -5,10 +5,10 @@ package Main;
  * @author Md Mehedi Hasan
  */
 public class Value {
-    public static double SCALE = 14;
+    public static double SCALE = 10;
     
-    public static double SCENE_WIDTH = 1600;
-    public static double SCENE_HIGHT = 700;
+    public static double SCENE_WIDTH = 1350;
+    public static double SCENE_HIGHT = 675;
     public static double SCALE_X = 1;
     public static double SCALE_Y = 1;
     
@@ -19,7 +19,7 @@ public class Value {
     public static double BOARD_POSITION_X =  SCENE_WIDTH/2-BOARD_X/2;
     public static double BOARD_POSITION_Y =  SCENE_HIGHT/2-BOARD_Y/2;
     
-    public static double BALL_RADIUS = 2.25/1.7*BOARD_SCALE;
+    public static double BALL_RADIUS = 2.25/2*BOARD_SCALE;
     public static double POCKET_RADIUS = 3.5*BOARD_SCALE;
     public static double CUE_LENGTH = 40*BOARD_SCALE;
     public static double CUE_RADIUS = .3*BOARD_SCALE;

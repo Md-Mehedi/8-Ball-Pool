@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.net.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="675.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.SelectionPageController">
+   <children>
+      <AnchorPane focusTraversable="true" layoutX="496.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="362.0" style="-fx-background-color: #999999;" stylesheets="@../cssstylepackage/SelectionPage.css" AnchorPane.bottomAnchor="454.0" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="494.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <JFXButton fx:id="gameBoardTab" buttonType="RAISED" prefHeight="43.0" prefWidth="229.0" text="Table" />
+            <JFXButton fx:id="cueTab" buttonType="RAISED" layoutX="135.0" prefHeight="43.0" prefWidth="229.0" text="Cue">
+               <effect>
+                  <InnerShadow color="#182816" />
+               </effect>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="594.0" layoutY="361.0" prefHeight="330.0" prefWidth="1250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <children>
+            <HBox fx:id="hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#hboxDraggedAction" onMousePressed="#hboxPressAction" prefHeight="300.0" prefWidth="2750.0" spacing="50.0">
+               <children>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

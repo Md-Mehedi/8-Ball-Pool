@@ -1,0 +1,9 @@
+#gameBoardTab{
+    -fx-shape: "M 200 200 L 440 200 L 560 300 L 200 300 Z";
+    -fx-background-color: #FFFFFF;
+}
+#cueTab{
+    -fx-shape: "M 320 200 L 560 200 L 560 300 L 200 300 Z";
+    -fx-background-color: #FFFFFF;
+}
+

@@ -1,0 +1,32 @@
+.bodybg{
+    -fx-background-image: url("/picturepackage/ChooseMode.jpg");
+    -fx-background-size: 100% 100%;
+}
+.button{
+    -fx-font-weight: italic;
+    -fx-background-color: #ff7f50;
+    -fx-background-radius: 22;
+    -fx-font-size:36;
+    -fx-text-fill: #330000;  
+}
+.button:hover{
+    -fx-font-weight: italic;
+    -fx-background-color: #4B0082;
+    -fx-background-radius: 22;
+    -fx-font-size:36;
+    -fx-text-fill: #ffffff; 
+    -fx-border-color: #2196f3;
+    -fx-border-radius: 20;
+    -fx-border-width: 3
+}
+.button:pressed{
+    -fx-font-weight: italic;
+    -fx-background-color: #ADFF2F;
+    -fx-background-radius: 22;
+    -fx-font-size:36;
+    -fx-text-fill:  #330000; 
+    -fx-border-color: #2196f3;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+}
+
