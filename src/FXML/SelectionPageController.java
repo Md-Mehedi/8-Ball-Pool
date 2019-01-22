@@ -8,6 +8,7 @@ package FXML;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
@@ -42,8 +43,23 @@ public class SelectionPageController implements Initializable {
     }
 
     @FXML
-    private void hboxPressAction(MouseEvent event) {
+    private void hboxDragEnterAction(MouseEvent event) {
         anchorX = event.getSceneX();
+    }
+
+
+    @FXML
+    private void cueTabPressedAction(ActionEvent event) {
+        cueTab.toFront();
+    }
+
+    @FXML
+    private void gameBoardTabPressedAction(ActionEvent event){
+        gameBoardTab.toFront();
+    }
+
+    @FXML
+    private void hboxPressAction(MouseEvent event) {
     }
     
     
