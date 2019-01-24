@@ -11,7 +11,8 @@ import javafx.scene.layout.Pane;
 public class CueBall extends Ball{
     
     private static boolean draggable = true;
-    private static boolean hitTime = false;
+    private static boolean hitTime = true;
+    static boolean isDragging;
     private boolean possible = true;
 
     public static boolean isHitTime() {
@@ -40,9 +41,16 @@ public class CueBall extends Ball{
     }
 
     void makeHandler(ObservableList<Ball> allBalls) {
-        if(isDraggable()){
-            ball.setOnMouseDragged(event->{
-            possible = true;
+        
+        ball.setOnMouseReleased(event -> {
+            isDragging = false;
+        });
+        ball.setOnMousePressed(event -> {
+            isDragging = true;
+        });
+        ball.setOnMouseDragged(event->{
+            if(isDraggable()){
+                possible = true;
                 for(int i=1;i<16;i++){
                     Ball b = allBalls.get(i);
                     if(Point2D.distance(b.getPositionX().get(), b.getPositionY().get(), event.getSceneX(), event.getSceneY()) < 2*radius)
@@ -59,7 +67,6 @@ public class CueBall extends Ball{
                 if(Value.BOARD_POSITION_Y+radius < event.getSceneY()
                         && event.getSceneY()<Value.BOARD_POSITION_Y+Value.BOARD_Y-radius)
                     positionY.set(event.getSceneY());
-            }});
-        }
+        }}});
     }
 }

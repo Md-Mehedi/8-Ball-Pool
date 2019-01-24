@@ -29,7 +29,7 @@ public class Ball{
     Sphere ball;
     int id;
     Image image;
-    private static boolean cueBallPotted;
+    private static boolean cueBallPotted = true;
     private static boolean eightBallPotted;
 
     public static boolean isCueBallPotted() {
@@ -58,7 +58,9 @@ public class Ball{
         velocityY = new SimpleDoubleProperty(this, "velocityY", 0);
         
         ball = new Sphere(radius);
-        if(id!=0) ball.setRotate(90);
+        
+        
+        ball.setRotate(90);
         ball.setRotationAxis(Rotate.Y_AXIS);
         
         image = new Image(getClass().getResourceAsStream("/PictureBall/Ball_Illumination_Map.jpg"));

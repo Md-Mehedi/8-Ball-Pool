@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -29,7 +31,7 @@ public class GameBoard {
     Slider slider;
     CueStick cue;
     int cueAngle;
-    boolean moving = false;
+    static boolean moving = false;
     Board board;
     CueBall cueBall;
     
@@ -93,8 +95,6 @@ public class GameBoard {
         
         //move();
     }
-    private void preparePocket() {
-        }
 
 //    public void move(){
 //        PVector p = new PVector(10,1,0);
@@ -127,18 +127,17 @@ public class GameBoard {
                         allBalls.get(0).setVelocityX(cue.getVelocity().x);
                         allBalls.get(0).setVelocityY(cue.getVelocity().y);
                         slider.setReleasedRatio(0);
-                    }         
+                        CueBall.setHitTime(false);
+                        CueBall.setDraggable(false);
+                    }
                     cue.setLength(slider.getRatio());
                     long elapsedTime = now - lastUpdateTime.get();
                     makeCollision(elapsedTime);
                 }
-                if(moving) {
-                    cue.getCue().setLayoutX(3000);
-                    slider.setLayoutX(3000);
-                }
-                else {
-                    slider.setLayoutX(Value.SCENE_WIDTH/10*9);
-                }
+                cue.getCue().setVisible(!CueBall.isDragging && !moving);
+                if(moving) slider.setLayoutX(3000);
+                else slider.setLayoutX(Value.SCENE_WIDTH/10*9);
+
                 lastUpdateTime.set(now);
                 cueBallPosition = allBalls.get(0).getPosition();
                 if(allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()){
@@ -154,12 +153,21 @@ public class GameBoard {
     
     private void checkCueBallIsPotted() {
         if(Ball.isCueBallPotted()){
-            CueBall.setDraggable(true);
+            //CueBall.setDraggable(true);
             CueBall.setCueBallPotted(false);
-            cueBall = new CueBall(pane, 0);
-            cueBallPosition = new Point2D(Value.BOARD_POSITION_X+Value.BOARD_X/2, Value.BOARD_POSITION_Y+Value.BOARD_Y/2);
-            cueBall.setValue(pane, cueBallPosition, "/PictureBall/Ball_0.jpg");
-            allBalls.set(0, cueBall);
+            cueBall.setPocketed(false);
+            
+            ScaleTransition st = new ScaleTransition(Duration.seconds(1), cueBall.getSphere());
+            st.setFromZ(1);
+            st.setFromY(1);
+            st.setToZ(1);
+            st.setToY(1);
+            st.play();
+            
+            cueBall.setPositionX(Value.BOARD_POSITION_X+Value.BOARD_X/2);
+            cueBall.setPositionY(Value.BOARD_POSITION_Y+Value.BOARD_Y/2);
+            cueBallPosition = cueBall.getPosition();
+
         }
     }
     private void makeCollision(long elapsedTime) {
