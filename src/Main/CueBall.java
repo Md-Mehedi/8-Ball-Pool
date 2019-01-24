@@ -43,10 +43,10 @@ public class CueBall extends Ball{
     void makeHandler(ObservableList<Ball> allBalls) {
         
         ball.setOnMouseReleased(event -> {
-            isDragging = false;
+            if(isDraggable()) isDragging = false;
         });
         ball.setOnMousePressed(event -> {
-            isDragging = true;
+            if(isDraggable()) isDragging = true;
         });
         ball.setOnMouseDragged(event->{
             if(isDraggable()){

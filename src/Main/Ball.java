@@ -29,7 +29,7 @@ public class Ball{
     Sphere ball;
     int id;
     Image image;
-    private static boolean cueBallPotted = true;
+    private static boolean cueBallPotted;
     private static boolean eightBallPotted;
 
     public static boolean isCueBallPotted() {

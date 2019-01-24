@@ -71,7 +71,7 @@ public class CueStick{
     }
     void rotationEvent() {
         pane.getScene().setOnMouseDragged((event) -> {
-            if(moveable){
+            if(moveable && !CueBall.isDragging){
                 double newX = event.getSceneX();
                 double newY = event.getSceneY();
     //            

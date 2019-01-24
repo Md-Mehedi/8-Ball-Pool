@@ -153,7 +153,7 @@ public class GameBoard {
     
     private void checkCueBallIsPotted() {
         if(Ball.isCueBallPotted()){
-            //CueBall.setDraggable(true);
+            CueBall.setDraggable(true);
             CueBall.setCueBallPotted(false);
             cueBall.setPocketed(false);
             
