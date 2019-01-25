@@ -6,14 +6,8 @@ import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -73,55 +67,26 @@ public class Board {
         
         preparePocket();
     }
-    void drawBoard1() {
-        Image board = new Image(getClass().getResourceAsStream("/PictureBall/Board.png"));
-        
-        StackPane imageContainer = new StackPane();
-        imageContainer.setMaxSize(Value.BOARD_X, Value.BOARD_Y);
-        imageContainer.setPrefSize(Value.BOARD_X, Value.BOARD_Y);
-        imageContainer.setMinSize(Value.BOARD_X, Value.BOARD_Y);
-        imageContainer.setLayoutX(Value.BOARD_POSITION_CENTER_X);
-        imageContainer.setLayoutY(Value.BOARD_POSITION_CENTER_Y);
-        Rectangle back = new Rectangle(Value.BOARD_X+Value.CUTION_SIZE,Value.BOARD_Y+Value.CUTION_SIZE);
-        
-        Image image = new Image(getClass().getResourceAsStream("/PictureBall/Board/Board-1.png"));
-        ImageView imageView = new ImageView(image);
-        
-        imageContainer.getChildren().addAll(back,imageView);
-        
-        back.setFill(Color.BROWN);
-//        Rectangle front = new Rectangle(Value.BOARD_X,Value.BOARD_Y);
-//        front.setFill(Color.GREEN);
-        
-//        front.setLayoutX(Value.BOARD_POSITION_X);
-//        front.setLayoutY(Value.BOARD_POSITION_Y);
-        
-        back.setLayoutX(Value.BOARD_POSITION_CENTER_X-Value.CUTION_SIZE/2);
-        back.setLayoutY(Value.BOARD_POSITION_CENTER_Y-Value.CUTION_SIZE/2);
-        pane.getChildren().addAll(imageContainer);
-        
-//        PhongMaterial material = new PhongMaterial();
-//        material.setDiffuseMap(new Image(getClass().getResourceAsStream("/PictureBall/Board/Board-1.png")));
- 
-        
-        preparePocket();
-        
-        Line baulkLine = new Line(Value.BOARD_POSITION_CENTER_X+Value.BAULK_LINE, Value.BOARD_POSITION_CENTER_Y, Value.BOARD_POSITION_CENTER_X+Value.BAULK_LINE, Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y);
-        baulkLine.setFill(Color.WHITE);
-        pane.getChildren().add(baulkLine);
-        baulkLine.setStyle("-fx-stroke: white;");
-    }
-
+    
     private void preparePocket() {
         for(int i=0;i<6;i++){
             pockets.add(new Pocket(pane,new Point2D(0,0)));
         }
-        pockets.get(0).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X, Value.BOARD_POSITION_CENTER_Y));
-        pockets.get(1).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X, Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y));
-        pockets.get(2).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X/2, Value.BOARD_POSITION_CENTER_Y));
-        pockets.get(3).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X/2, Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y));
-        pockets.get(4).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X, Value.BOARD_POSITION_CENTER_Y));
-        pockets.get(5).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X, Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y));
+        double startX = start.getX()+Value.CUTION_SIZE/1.26;
+        double startY = start.getY()+Value.CUTION_SIZE/1.26;
+        double endX = end.getX()-Value.CUTION_SIZE/1.26;
+        double endY = end.getY()-Value.CUTION_SIZE/1.26;
+        pockets.get(0).setLayout(new Point2D(startX, startY));
+        pockets.get(1).setLayout(new Point2D((startX+endX)/2, startY*0.96));
+        pockets.get(2).setLayout(new Point2D(endX, startY));
+        pockets.get(3).setLayout(new Point2D(startX, endY));
+        pockets.get(4).setLayout(new Point2D((startX+endX)/2, endY*1.015));
+        pockets.get(5).setLayout(new Point2D(endX, endY));
+//        pockets.get(1).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X, Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y));
+//        pockets.get(2).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X/2, Value.BOARD_POSITION_CENTER_Y));
+//        pockets.get(3).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X/2, Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y));
+//        pockets.get(4).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X, Value.BOARD_POSITION_CENTER_Y));
+//        pockets.get(5).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X, Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y));
 //        pockets.get(0).setLayout(new Point2D(Value.BOARD_POSITION_X + Value.BOARD_X/2, Value.BOARD_POSITION_Y + Value.BOARD_Y/2));
     }
 }
