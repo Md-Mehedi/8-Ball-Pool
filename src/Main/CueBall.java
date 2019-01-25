@@ -57,15 +57,15 @@ public class CueBall extends Ball{
                         possible = false;
                 }
                 if(possible){
-                if(Value.BOARD_POSITION_X+radius<event.getSceneX()
-                        && event.getSceneX()<Value.BOARD_POSITION_X+Value.BOARD_X-radius)
+                if(Value.BOARD_POSITION_CENTER_X+radius<event.getSceneX()
+                        && event.getSceneX()<Value.BOARD_POSITION_CENTER_X+Value.BOARD_X-radius)
                     if(isHitTime()){
-                        if(event.getSceneX()<Value.BOARD_POSITION_X+Value.BAULK_LINE-radius)
+                        if(event.getSceneX()<Value.BOARD_POSITION_CENTER_X+Value.BAULK_LINE-radius)
                             positionX.set(event.getSceneX());
                     }
                     else positionX.set(event.getSceneX());
-                if(Value.BOARD_POSITION_Y+radius < event.getSceneY()
-                        && event.getSceneY()<Value.BOARD_POSITION_Y+Value.BOARD_Y-radius)
+                if(Value.BOARD_POSITION_CENTER_Y+radius < event.getSceneY()
+                        && event.getSceneY()<Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y-radius)
                     positionY.set(event.getSceneY());
         }}});
     }

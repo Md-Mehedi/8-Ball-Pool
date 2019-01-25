@@ -164,12 +164,12 @@ public class Ball{
     }
     
     void boundaryCollisionCheck(Point2D start, Point2D end) {
-        if((velocityX.get() > 0 && end.getX()-radius <= positionX.get())
-                || (velocityX.get() < 0 && start.getX()+radius >= positionX.get()))
+        if((velocityX.get() > 0 && end.getX()-radius - Value.CUTION_SIZE <= positionX.get())
+                || (velocityX.get() < 0 && start.getX()+radius+Value.CUTION_SIZE >= positionX.get()))
             velocityX.set(-velocityX.get());
         
-        if((velocityY.get() > 0 && end.getY()-radius <= positionY.get())
-                || (velocityY.get() < 0 && start.getY()+radius >= positionY.get()))
+        if((velocityY.get() > 0 && end.getY()-radius-Value.CUTION_SIZE <= positionY.get())
+                || (velocityY.get() < 0 && start.getY()+radius+Value.CUTION_SIZE >= positionY.get()))
             velocityY.set(-velocityY.get());
     }
 

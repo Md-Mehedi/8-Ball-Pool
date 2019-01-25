@@ -35,7 +35,7 @@ public class GameBoard {
     Board board;
     CueBall cueBall;
     
-    public GameBoard(Stage stage, Pane pane){
+    public GameBoard(Stage stage, Pane pane) throws IOException{
         
         curStage = stage;
         this.pane = new Pane();
@@ -50,21 +50,27 @@ public class GameBoard {
             switch (event.getCode()) {
             case L:
                 gameLoop.stop();
-                new GameBoard(curStage, pane);
+            {
+                try {
+                    new GameBoard(curStage, pane);
+                } catch (IOException ex) {
+                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
                 prepareBall();
                 break;
             }
         });
     }
-    public void prepareBoard(){
+    public void prepareBoard() throws IOException{
         board.drawBoard();
         prepareBall();
         prepareCue();
         cueBall.makeHandler(allBalls);
     }
     public void prepareBall() {
-        double posX = Value.BOARD_POSITION_X+Value.BOARD_X/4*3;
-        double posY = Value.BOARD_POSITION_Y+Value.BOARD_Y/2;
+        double posX = Value.BOARD_POSITION_CENTER_X+Value.BOARD_X/4*3;
+        double posY = Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y/2;
         double difX = Value.BALL_RADIUS*2*Math.cos(Math.PI/6);
         double difY = Value.BALL_RADIUS*2*Math.sin(Math.PI/6);
         double radius = Value.BALL_RADIUS;
@@ -164,8 +170,8 @@ public class GameBoard {
             st.setToY(1);
             st.play();
             
-            cueBall.setPositionX(Value.BOARD_POSITION_X+Value.BOARD_X/2);
-            cueBall.setPositionY(Value.BOARD_POSITION_Y+Value.BOARD_Y/2);
+            cueBall.setPositionX(Value.BOARD_POSITION_CENTER_X+Value.BOARD_X/2);
+            cueBall.setPositionY(Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y/2);
             cueBallPosition = cueBall.getPosition();
 
         }
