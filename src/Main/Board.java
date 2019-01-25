@@ -82,11 +82,5 @@ public class Board {
         pockets.get(3).setLayout(new Point2D(startX, endY));
         pockets.get(4).setLayout(new Point2D((startX+endX)/2, endY*1.015));
         pockets.get(5).setLayout(new Point2D(endX, endY));
-//        pockets.get(1).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X, Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y));
-//        pockets.get(2).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X/2, Value.BOARD_POSITION_CENTER_Y));
-//        pockets.get(3).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X/2, Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y));
-//        pockets.get(4).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X, Value.BOARD_POSITION_CENTER_Y));
-//        pockets.get(5).setLayout(new Point2D(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X, Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y));
-//        pockets.get(0).setLayout(new Point2D(Value.BOARD_POSITION_X + Value.BOARD_X/2, Value.BOARD_POSITION_Y + Value.BOARD_Y/2));
     }
 }

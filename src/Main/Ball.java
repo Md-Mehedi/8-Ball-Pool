@@ -166,11 +166,14 @@ public class Ball{
     void boundaryCollisionCheck(Point2D start, Point2D end) {
         if((velocityX.get() > 0 && end.getX()-radius - Value.CUTION_SIZE <= positionX.get())
                 || (velocityX.get() < 0 && start.getX()+radius+Value.CUTION_SIZE >= positionX.get()))
-            velocityX.set(-velocityX.get());
+            if(positionY.get()>Value.pocketY1 && positionY.get()<Value.pocketY2)
+                velocityX.set(-velocityX.get());
         
         if((velocityY.get() > 0 && end.getY()-radius-Value.CUTION_SIZE <= positionY.get())
                 || (velocityY.get() < 0 && start.getY()+radius+Value.CUTION_SIZE >= positionY.get()))
-            velocityY.set(-velocityY.get());
+            if((Value.pocketX1<positionX.get() && positionX.get()<Value.pocketX2) ||
+                    (Value.pocketX3<positionX.get() && positionX.get()<Value.pocketX4))
+                velocityY.set(-velocityY.get());
     }
 
     private void updateAccleration() {

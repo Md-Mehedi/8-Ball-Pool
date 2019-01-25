@@ -88,7 +88,7 @@ public class CueStick{
     public static void setMoveable(boolean b) {
         moveable = b;
     }
-    double getAngle() {
+    public static double getAngle() {
         return angle-180; 
     }
     double getVelocityX() {

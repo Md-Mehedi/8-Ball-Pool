@@ -5,7 +5,7 @@ package Main;
  * @author Md Mehedi Hasan
  */
 public class Value {
-    public static double SCALE = 14;
+    public static double SCALE = 18;
     
     public static double SCENE_WIDTH = 1920;
     public static double SCENE_HIGHT = 1000;
@@ -32,4 +32,12 @@ public class Value {
     public static double BOARD_FRICTION = .2 ;
     public static int BALL_TOTAL = 16;
     public static String BOARD_PICTURE_LOCATION = "/PictureBall/Board/Board-1.png";
+    
+    public static double pocketX1 = 410*SCALE/18;
+    public static double pocketX2 = 930*SCALE/18;
+    public static double pocketX3 = 988*SCALE/18;
+    public static double pocketX4 = 1512*SCALE/18;
+    public static double pocketY1 = 243*SCALE/18;
+    public static double pocketY2 = 750*SCALE/18;
+    
 }

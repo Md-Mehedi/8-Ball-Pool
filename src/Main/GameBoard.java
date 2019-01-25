@@ -69,7 +69,7 @@ public class GameBoard {
         cueBall.makeHandler(allBalls);
     }
     public void prepareBall() {
-        double posX = Value.BOARD_POSITION_CENTER_X+Value.BOARD_X/4*3;
+        double posX = Value.BOARD_POSITION_CENTER_X+Value.BOARD_X/10*7;
         double posY = Value.BOARD_POSITION_CENTER_Y+Value.BOARD_Y/2;
         double difX = Value.BALL_RADIUS*2*Math.cos(Math.PI/6);
         double difY = Value.BALL_RADIUS*2*Math.sin(Math.PI/6);
@@ -128,7 +128,7 @@ public class GameBoard {
             @Override
             public void handle(long now) {
                 if (lastUpdateTime.get() > 0) {
-                   cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(cue.getAngle()));
+                   cue.setVelocity(slider.getReleasedRatio()*Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(CueStick.getAngle()));
                     if(slider.getReleasedRatio() > 0){
                         allBalls.get(0).setVelocityX(cue.getVelocity().x);
                         allBalls.get(0).setVelocityY(cue.getVelocity().y);
@@ -141,6 +141,8 @@ public class GameBoard {
                     makeCollision(elapsedTime);
                 }
                 cue.getCue().setVisible(!CueBall.isDragging && !moving);
+                cueBall.getLine().setVisible(!CueBall.isDragging && !moving);
+                cueBall.makeHintLine(pane);
                 if(moving) slider.setLayoutX(3000);
                 else slider.setLayoutX(Value.SCENE_WIDTH/10*9);
 
