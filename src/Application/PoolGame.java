@@ -1,6 +1,7 @@
 package Application;
 
 import Main.*;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +18,7 @@ public class PoolGame extends Application {
     Scene scene;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         
         BorderPane root = new BorderPane();
 //        constrainBalClsOnResize(root);

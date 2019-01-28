@@ -136,7 +136,7 @@ public class GameBoard {
                         CueBall.setHitTime(false);
                         CueBall.setDraggable(false);
                     }
-                    cue.setLength(slider.getRatio());
+                    if(slider.getRatio()>0) cue.updateLength(slider.getRatio());
                     long elapsedTime = now - lastUpdateTime.get();
                     makeCollision(elapsedTime);
                 }
@@ -150,6 +150,8 @@ public class GameBoard {
                 cueBallPosition = allBalls.get(0).getPosition();
                 if(allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()){
                     checkCueBallIsPotted();
+//                    System.out.println(cueBall.getPosition()+" "+
+//                            cue.getCue().getLayoutX()+" "+cue.getCue().getLayoutY());
                     cue.setPosition(cueBallPosition);
                     cue.setMoveable(true);
                 }
@@ -204,9 +206,8 @@ public class GameBoard {
         });
     }
 }
-    private void prepareCue() {
+    private void prepareCue() throws IOException {
         cue = new CueStick(pane,cueBallPosition);
-        pane.getChildren().add(cue.getCue());
 //        cue.getCue().setLayoutX(allBalls.get(0).positionX.get() + Value.CUE_LENGTH/2 + Value.BALL_RADIUS*2);
 //        cue.getCue().setLayoutY(allBalls.get(0).positionY.get());
 //        cue.getCue().setRotationAxis(Rotate.Z_AXIS);
