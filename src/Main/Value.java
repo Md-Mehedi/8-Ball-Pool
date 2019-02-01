@@ -7,8 +7,8 @@ package Main;
 public class Value {
     public static double SCALE = 18;
     
-    public static double SCENE_WIDTH = 1920*SCALE/14;
-    public static double SCENE_HIGHT = 1000*SCALE/14;
+    public static double SCENE_WIDTH = 1920;
+    public static double SCENE_HIGHT = 1000;
     public static double SCALE_X = 1;
     public static double SCALE_Y = 1;
     
