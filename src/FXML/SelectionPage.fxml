@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.net.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="selectionPagePane" prefHeight="700.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.SelectionPageController">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1395.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../picturepackage/SelectonPageImage.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane focusTraversable="true" layoutX="494.0" layoutY="116.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="362.0" stylesheets="@../cssstylepackage/SelectionPage.css" AnchorPane.bottomAnchor="554.0" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="539.0" AnchorPane.topAnchor="116.0">
+         <children>
+            <JFXButton fx:id="gameBoardTab" buttonType="RAISED" onAction="#gameBoardTabPressedAction" prefHeight="50.0" prefWidth="220.0" text="Table" />
+            <JFXButton fx:id="cueTab" buttonType="RAISED" layoutX="135.0" onAction="#cueTabPressedAction" prefHeight="50.0" prefWidth="220.0" text="Cue">
+               <effect>
+                  <InnerShadow color="#182816" />
+               </effect>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <ScrollPane fx:id="tablePane" hbarPolicy="NEVER" layoutY="250.0" pannable="true" prefHeight="330.0" prefWidth="1395.0" vbarPolicy="NEVER">
+         <content>
+            <AnchorPane layoutX="50.0" layoutY="5.0" prefHeight="330.0" prefWidth="2750.0">
+               <children>
+                  <ImageView fitHeight="340.0" fitWidth="2750.0" layoutY="-10.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/tablebackground.p.png" />
+                     </image>
+                  </ImageView>
+                  <HBox layoutX="20.0" prefHeight="330.0" prefWidth="2750.0" spacing="50.0">
+                     <children>
+                        <AnchorPane prefHeight="330.0" prefWidth="400.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="board1" fitHeight="230.0" fitWidth="400.0" onMouseClicked="#board1SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Board-1.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="330.0" prefWidth="400.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="board2" fitHeight="230.0" fitWidth="400.0" onMouseClicked="#board2SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Table-2.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="330.0" prefWidth="400.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="board3" fitHeight="230.0" fitWidth="400.0" onMouseClicked="#board3SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Board-3.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="330.0" prefWidth="400.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="board4" fitHeight="230.0" fitWidth="400.0" onMouseClicked="#board4SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Board-4.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="330.0" prefWidth="400.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="board5" fitHeight="230.0" fitWidth="400.0" onMouseClicked="#board5SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Board-5.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="330.0" prefWidth="400.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                                 <font>
+                                    <Font size="27.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="board6" fitHeight="230.0" fitWidth="400.0" onMouseClicked="#board6SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Board-6.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <ScrollPane fx:id="cuePane" hbarPolicy="NEVER" layoutX="240.0" layoutY="220.0" pannable="true" prefHeight="500.0" prefWidth="1000.0" vbarPolicy="NEVER">
+         <content>
+            <AnchorPane prefHeight="1450.0" prefWidth="1000.0">
+               <children>
+                  <ImageView fitHeight="1450.0" fitWidth="1005.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/cueBoardBackground.jpg" />
+                     </image></ImageView>
+                  <VBox prefHeight="1450.0" prefWidth="1005.0" spacing="20.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue1" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue1SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-1.jpg" />
+                                 </image></ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue2" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue2SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-2.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue3" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue3SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-3.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue4" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue4SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-4.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue5" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue5SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-5.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue6" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue6SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-6.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="1005.0">
+                           <children>
+                              <ImageView fx:id="cue7" fitHeight="120.0" fitWidth="800.0" layoutX="90.0" layoutY="14.0" onMouseClicked="#cue7SelectAction" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../picturepackage/Cue-7.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <JFXButton fx:id="backButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="19.0" layoutY="618.0" onAction="#backAction" prefHeight="77.0" prefWidth="154.0" ripplerFill="#80b907" style="-fx-background-color: #73c8a9;" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Back" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Italic" size="36.0" />
+         </font>
+         <styleClass>
+            <String fx:value=".button:hover" />
+            <String fx:value=".button:pressed" />
+         </styleClass>
+      </JFXButton>
+   </children>
+</AnchorPane>
