@@ -10,27 +10,32 @@ import java.net.Socket;
  */
 public class Server {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws IOException {
-        createNetwork();
-    }
+      public static Socket remainSocket = null;
 
-    private static void createNetwork() throws IOException {
-        ServerSocket ss = new ServerSocket(13019);
-        int id = 0;
-        
-        while(true){
-            Socket conectionSocket = ss.accept();
+      /**
+       * @param args the command line arguments
+       */
+      public static void main(String[] args) throws IOException {
+            Pair pare = new Pair();
+            System.out.println("Map is ready.");
+            createNetwork();
             
-            WorkThread wr = new WorkThread(conectionSocket,id);
-            Thread t = new Thread(wr);
-            t.start();
-            
-            System.out.println("Client "+id+" is connected.\n");
-            id++;
-        }
-    }
+      }
 
+      private static void createNetwork() throws IOException {
+            ServerSocket ss = new ServerSocket(13019);
+            int clientId = 0;
+
+            while (true) {
+                  System.out.println("Waiting for next client.");
+                  Socket conectionSocket = ss.accept();
+
+                  ServerThread wr = new ServerThread(conectionSocket, clientId);
+                  Thread t = new Thread(wr);
+                  t.start();
+
+                  System.out.println("Client " + clientId + " is connected");
+                  clientId++;
+            }
+      }
 }

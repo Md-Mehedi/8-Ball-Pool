@@ -4,6 +4,7 @@ import Main.*;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -27,6 +28,8 @@ public class PoolGame extends Application {
         playfield.setPrefSize(Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         layout.getChildren().add(playfield);
         root.setCenter(layout);
+        AnchorPane hh = new AnchorPane();
+        //scene = new Scene(hh,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         scene = new Scene(root,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         
         primaryStage.setScene(scene);
@@ -87,6 +90,7 @@ public class PoolGame extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+//           ServerConnection.ConnectServer.main();
         launch(args);
     }
 

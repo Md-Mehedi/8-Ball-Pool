@@ -5,10 +5,10 @@ package Main;
  * @author Md Mehedi Hasan
  */
 public class Value {
-    public static double SCALE = 18;
+    public static double SCALE = 8;
     
-    public static double SCENE_WIDTH = 1920;
-    public static double SCENE_HIGHT = 1000;
+    public static double SCENE_WIDTH = 1920/2;
+    public static double SCENE_HIGHT = 1000/2;
     public static double SCALE_X = 1;
     public static double SCALE_Y = 1;
     
@@ -26,7 +26,7 @@ public class Value {
     public static double D_RADIUS = 11.5*SCALE;
     
     public static double CUE_BALL_MASS = 6;
-    public static double CUE_MAXIMUM_VELOCITY = 60;
+    public static double CUE_MAXIMUM_VELOCITY = 80;
     public static double CUE_ANGLE = 0;
     public static double BALL_MASS = 5.5;
     public static double BOARD_FRICTION = .2 ;
