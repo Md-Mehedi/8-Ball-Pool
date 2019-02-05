@@ -35,7 +35,23 @@ public class GameBoard {
       Board board;
       CueBall cueBall;
       DataManager dataManager;
-      ConnectServer connection;
+      //ConnectServer connection;
+
+      public ArrayList<Ball> getAllBalls() {
+            return allBalls;
+      }
+
+      public void setAllBalls(ArrayList<Ball> allBalls) {
+            this.allBalls = allBalls;
+      }
+
+      public CueStick getCue() {
+            return cue;
+      }
+
+      public void setCue(CueStick cue) {
+            this.cue = cue;
+      }
 
       public GameBoard(Stage stage, Pane pane) throws IOException {
             allBalls = new ArrayList<>();
@@ -47,10 +63,10 @@ public class GameBoard {
 //pane.getChildren().add(prepareLightSource());
             prepareBoard();
             addPowerSlider();
+            //connection = new ConnectServer(allBalls, cue);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
 
-            connection = new ConnectServer(allBalls, cue);
       }
 
       public void prepareBoard() throws IOException {
@@ -150,9 +166,10 @@ public class GameBoard {
                                     cue.setPosition(cueBallPosition);
                                     cue.setMoveable(true);
                               }
-                              connection.sendData(allBalls, cue);
+                              //connection.sendData(allBalls, cue);
                         } else {
-                              
+                              gameLoop.stop();
+                              //connection.updateData(allBalls, cue);
                         }
                   }
 

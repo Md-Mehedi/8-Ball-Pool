@@ -1,6 +1,7 @@
 package Application;
 
 import Main.*;
+import ServerConnection.ConnectServer;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -36,7 +37,8 @@ public class PoolGame extends Application {
         primaryStage.setTitle("8 Ball Pool Game");
         primaryStage.show();
         
-        new GameBoard(primaryStage, playfield);
+        GameBoard gb = new GameBoard(primaryStage, playfield);
+        ConnectServer connection = new ConnectServer(gb);
     }
     public Scene getScene(){
         return scene;

@@ -45,9 +45,9 @@ public class DataManager implements Serializable {
                   i++;
             }
             
-            System.out.println("all data holder is ready");
-            System.out.println(sendingDataHolder);
-            System.out.println(recievedDataHolder);
+//            System.out.println("all data holder is ready");
+//            System.out.println(sendingDataHolder);
+//            System.out.println(recievedDataHolder);
 //            allBallsPosition = new ArrayList<>();
 //            cuePosition = new Point2D(0.0, 0.0);
 //            cueAngle = 0.0;

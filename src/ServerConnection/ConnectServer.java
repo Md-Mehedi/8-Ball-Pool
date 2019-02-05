@@ -2,6 +2,7 @@ package ServerConnection;
 
 import Main.Ball;
 import Main.CueStick;
+import Main.GameBoard;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,6 +31,10 @@ public class ConnectServer {
       }
 
       public ConnectServer(ArrayList<Ball> allBalls, CueStick cue) {
+            
+      }
+
+      public ConnectServer(GameBoard gb) {
             try {
                   socket = new Socket("localhost", 13019);
             } catch (IOException ex) {
@@ -42,12 +47,16 @@ public class ConnectServer {
             } catch (IOException ex) {
                   Logger.getLogger(ConnectServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            wt = new ClientThread(socket, allBalls, cue);
+            wt = new ClientThread(socket, gb);
             Thread t = new Thread(wt);
             t.start();
       }
 
       public void sendData(ArrayList<Ball> allBalls, CueStick cue) {
-            wt.sendData(allBalls, cue);
+            //wt.sendData(allBalls, cue);
+      }
+
+      public void updateData(ArrayList<Ball> allBalls, CueStick cue) {
+            wt.updateData(allBalls, cue);
       }
 }

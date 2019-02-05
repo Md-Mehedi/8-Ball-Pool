@@ -5,10 +5,10 @@ package Main;
  * @author Md Mehedi Hasan
  */
 public class Value {
-    public static double SCALE = 8;
+    public static double SCALE = 11;
     
-    public static double SCENE_WIDTH = 1920/2;
-    public static double SCENE_HIGHT = 1000/2;
+    public static double SCENE_WIDTH = 1920/1.3;
+    public static double SCENE_HIGHT = 1000/1.3;
     public static double SCALE_X = 1;
     public static double SCALE_Y = 1;
     
@@ -39,6 +39,12 @@ public class Value {
     public static double pocketX4 = 1512*SCALE/18;
     public static double pocketY1 = 243*SCALE/18;
     public static double pocketY2 = 750*SCALE/18;
+//    public static double pocketX1 = 0;
+//    public static double pocketX2 = 0;
+//    public static double pocketX3 = 0;
+//    public static double pocketX4 = 0;
+//    public static double pocketY1 = 0;
+//    public static double pocketY2 = 0;
     public static String CUE_PICTURE_LOCATION = "/PictureBall/Cue/Cue-4.png";
     
 }
