@@ -7,12 +7,12 @@ package Main;
 public class Value {
 
       public static boolean MY_TURN = true;
-      public static boolean DEBUG = false;
+      public static boolean WORK_WITH_NETWORK = true;
       
-      public static double SCALE = 17;
+      public static double SCALE = 12;
 
-      public static double SCENE_WIDTH = 1910;
-      public static double SCENE_HIGHT = 990;
+      public static double SCENE_WIDTH = 1910/1.5;
+      public static double SCENE_HIGHT = 990/1.5;
       public static double SCALE_X = 1;
       public static double SCALE_Y = 1;
 

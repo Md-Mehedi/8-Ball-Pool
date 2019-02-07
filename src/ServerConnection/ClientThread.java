@@ -34,9 +34,11 @@ class ClientThread implements Runnable {
       DataManager dataManager;
       DataHolder dataHolder;
       boolean pairFound;
+      String[] splitString;
 
 
       ClientThread(Socket socket, GameBoard gb) {
+            splitString = new String[35];
             this.socket = socket;
             gameBoard = gb;
             try {
@@ -59,17 +61,19 @@ class ClientThread implements Runnable {
                   }
 
                   //System.out.println("message: " + messageFromServer);
-
+                  
+                  splitString = messageFromServer.split("#");
                   checkMessage();
             }
             }
       }
 
       private void checkMessage() {//System.out.println(messageFromServer);
-            switch (messageFromServer.split("#")[0]) {
-                  case "updateCueLength": gameBoard.getCue().updateLength(Double.parseDouble(messageFromServer.split("#")[1])); break;
-                  case "setReleasedRatio": gameBoard.getSlider().setReleasedRatio(Double.parseDouble(messageFromServer.split("#")[1])); break;
+            switch (splitString[0]) {
+                  case "updateCueLength": gameBoard.getCue().updateLength(Double.parseDouble(splitString[1])); break;
+                  case "setReleasedRatio": gameBoard.getSlider().setReleasedRatio(Double.parseDouble(splitString[1])); break;
                   case "setCueBallPosition": setCueBallPosition(); break;
+                  case "setBallPostion": setBallPosition();
                   case "CuePreviousScene": 
                   case "CueEventScene": setCueDragEvent(); break;
                   case "test": test(); break;
@@ -98,9 +102,9 @@ class ClientThread implements Runnable {
       }
 
       private void setCueDragEvent() {
-            Double x = Double.parseDouble(messageFromServer.split("#")[1]);
-            Double y = Double.parseDouble(messageFromServer.split("#")[2]);
-            if(messageFromServer.split("#")[0].equals("CueEventScene")) gameBoard.getCue().setData(x, y);
+            Double x = Double.parseDouble(splitString[1]);
+            Double y = Double.parseDouble(splitString[2]);
+            if(splitString[0].equals("CueEventScene")) gameBoard.getCue().setData(x, y);
             else gameBoard.getCue().setPreviousScene(x, y);
             
       }
@@ -108,22 +112,39 @@ class ClientThread implements Runnable {
       private void test() {
             System.out.println(messageFromServer);
             gameBoard.getCue().label.setText(messageFromServer);
-            Rotate rotate = new Rotate(Double.parseDouble(messageFromServer.split("#")[1]), Rotate.Z_AXIS);
+            Rotate rotate = new Rotate(Double.parseDouble(splitString[1]), Rotate.Z_AXIS);
             
             gameBoard.getCue().getCue().getTransforms().add(rotate);
       }
 
       private void setCueBallPosition() {
-            Double x =  Double.valueOf(messageFromServer.split("#")[1]);
-            Double y =  Double.valueOf(messageFromServer.split("#")[2]);
-
+            Double x =  Double.valueOf(splitString[1]);
+            Double y =  Double.valueOf(splitString[2]);
             
-//            gameBoard.getCueBall().setPositionX(x.doubleValue());
-//            gameBoard.getCueBall().setPositionY(y.doubleValue());
+            gameBoard.getCueBall().setPositionX(x.doubleValue());
+            gameBoard.getCueBall().setPositionY(y.doubleValue());
       }
 
       private void print() {
-            System.out.println(messageFromServer.split("#")[1]);
+            System.out.println(splitString[1]);
+      }
+
+      void sendAllBallData() {
+            String s = "setBallPosition";
+            for(int i=0;i<16;i++){
+                  s = s+ "#" + gameBoard.getAllBalls().get(i).getPositionX().get()+"#"+gameBoard.getAllBalls().get(i).getPositionY().get();
+            }
+            writeToServer.println(s);
+            
+      }
+
+      private void setBallPosition() {
+            for(int i=0;i<16;i++){
+                  double x = Double.parseDouble(splitString[2*i+1]);
+                  double y = Double.parseDouble(splitString[2*(i+1)]);
+                  gameBoard.getAllBalls().get(i).setPositionX(x);
+                  gameBoard.getAllBalls().get(i).setPositionY(y);
+            }
       }
 
 

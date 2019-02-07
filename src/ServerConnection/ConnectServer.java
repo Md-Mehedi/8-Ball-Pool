@@ -36,4 +36,8 @@ public class ConnectServer {
             wt.sendMessage(message);
       }
 
+      public void sendAllBallData() {
+            wt.sendAllBallData();
+      }
+
 }

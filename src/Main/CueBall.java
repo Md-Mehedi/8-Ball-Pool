@@ -82,7 +82,7 @@ public class CueBall extends Ball{
                                     && event.getSceneY() < Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y - Value.CUTION_SIZE - radius) {
                                     positionY.set(event.getSceneY());
                               }
-                              if(Value.DEBUG) PoolGame.connection.sendData("setCueBallPosition#"+positionX.get()+"#"+positionY.get());
+                              if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("setCueBallPosition#"+positionX.get()+"#"+positionY.get());
                         }
                   }
             });

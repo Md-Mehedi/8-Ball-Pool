@@ -40,7 +40,8 @@ public class PoolGame extends Application{
         System.out.println(Value.BOARD_POSITION_CENTER_X);
         System.out.println(Value.BOARD_POSITION_CENTER_Y);
         GameBoard gb = new GameBoard(primaryStage, playfield);
-        //connection = new ConnectServer(gb);
+        Value.WORK_WITH_NETWORK = true;
+        connection = new ConnectServer(gb);
     }
     public Scene getScene(){
         return scene;

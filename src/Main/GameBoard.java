@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -39,6 +40,7 @@ public class GameBoard{
       CueBall cueBall;
       DataManager dataManager;
       SliderController slider;
+      boolean finalBallPositionSend = true;
       //ConnectServer connection;
 
       public ArrayList<Ball> getAllBalls() {
@@ -70,6 +72,14 @@ public class GameBoard{
             //connection = new ConnectServer(allBalls, cue);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
+
+            Button bt = new Button("Enter");
+            pane.getChildren().add(bt);
+            bt.setLayoutX(1700/1.5);
+            bt.setLayoutY(100/1.5);
+            bt.setOnAction(event ->{
+                  System.out.println(allBalls);
+            });
 
       }
 
@@ -144,16 +154,17 @@ public class GameBoard{
                               if (lastUpdateTime.get() > 0) {
                                     cue.setVelocity(slider.getReleasedRatio() *  Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(CueStick.getAngle()));
                                     if (slider.getReleasedRatio() > 0) {System.out.println(slider.getReleasedRatio());
-                                          if(Value.DEBUG) PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
+                                          if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
                                           allBalls.get(0).setVelocityX(cue.getVelocity().x);
                                           allBalls.get(0).setVelocityY(cue.getVelocity().y);
                                           slider.setReleasedRatio(0);
                                           CueBall.setHitTime(false);
                                           CueBall.setDraggable(false);
+                                          finalBallPositionSend = false;
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
-                                          if(Value.DEBUG) PoolGame.connection.sendData("updateCueLength#"+slider.getRatio());
+                                          if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("updateCueLength#"+slider.getRatio());
                                     }
                                     long elapsedTime = now - lastUpdateTime.get();
                                     
@@ -174,6 +185,8 @@ public class GameBoard{
 //                            cue.getCue().getLayoutX()+" "+cue.getCue().getLayoutY());
                                     cue.setPosition(cueBallPosition);
                                     cue.setMoveable(true);
+                                    if(!finalBallPositionSend) PoolGame.connection.sendAllBallData();
+                                    finalBallPositionSend = true;
                               }
                               //connection.sendData(allBalls, cue);
                         } 
@@ -219,6 +232,8 @@ public class GameBoard{
                         allBalls.forEach(ball -> {
                               ball.move(elapsedTime);
                               if (ball.getVelocity() < 0.001 && !moving) {
+                                    ball.setVelocity(0);
+                                    ball.setAcceleration(0);
                                     moving = false;
                               } else {
                                     moving = true;

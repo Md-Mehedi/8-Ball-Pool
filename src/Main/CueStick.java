@@ -103,7 +103,7 @@ public class CueStick{
                   if (Value.MY_TURN) {
                         previousSceneX.set(event.getSceneX());
                         previousSceneY.set(event.getSceneY());
-                        if(Value.DEBUG) PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
+                        if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
                   }
             });
             pane.getScene().setOnMouseExited(event -> {
@@ -116,7 +116,7 @@ public class CueStick{
                         if (Value.MY_TURN) {
                               newX = event.getSceneX();
                               newY = event.getSceneY();
-                              if(Value.DEBUG) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
+                              if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
                         }
                         createRotation(newX, newY);
                   }

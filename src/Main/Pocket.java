@@ -1,7 +1,6 @@
 package Main;
 
 import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -58,17 +57,11 @@ public class Pocket {
                 ball.setVelocityX(4*Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
                 ball.setVelocityY(4*Math.sin(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
                 
-                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), ball.getSphere());
-//                translateTransition.setFromX(ball.getSphere().getLayoutX());
-//                translateTransition.setFromY(ball.getSphere().getLayoutY());
-                translateTransition.setToX(pocket.getPocket().getLayoutX() - ball.getSphere().getLayoutX());
-                translateTransition.setToY(pocket.getPocket().getLayoutY() - ball.getSphere().getLayoutY());
-                
-                System.out.println("Postion:");
-                System.out.println(ball.getSphere().getLayoutX());
-                System.out.println(ball.getSphere().getLayoutY());
-                System.out.println(pocket.getPocket().getCenterX());
-                System.out.println( + pocket.getPocket().getLayoutX());
+//                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), ball.getSphere());
+////                translateTransition.setFromX(ball.getSphere().getLayoutX());
+////                translateTransition.setFromY(ball.getSphere().getLayoutY());
+//                translateTransition.setToX(pocket.getPocket().getLayoutX() - ball.getSphere().getLayoutX());
+//                translateTransition.setToY(pocket.getPocket().getLayoutY() - ball.getSphere().getLayoutY());
                 
                 ScaleTransition transition = new ScaleTransition(Duration.seconds(1),ball.getSphere());
                 transition.setFromZ(1);

@@ -203,4 +203,20 @@ public class Ball{
     void setOpacity(double value){
         ball.setOpacity(value);
     }
+
+      @Override
+      public String toString() {
+            return "Ball{" + "positionX=" + positionX.get() + ", positionY=" + positionY.get() + ", velocityX=" + velocityX.get() + ", velocityY=" + velocityY.get() + ", accelerationX=" + accelerationX + ", accelerationY=" + accelerationY + ", id=" + id + '}';
+      }
+
+      void setVelocity(int i) {
+            velocityX.set(0);
+            velocityY.set(0);
+      }
+
+      void setAcceleration(int i) {
+            accelerationX = 0;
+            accelerationY = 0;
+      }
+    
 }
