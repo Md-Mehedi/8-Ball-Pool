@@ -1,11 +1,12 @@
 package Main;
 
-import ServerConnection.ConnectServer;
+import Application.PoolGame;
 import common.PVector;
 import java.io.IOException;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -15,7 +16,8 @@ import javafx.scene.transform.Rotate;
  *
  * @author Md Mehedi Hasan
  */
-public class CueStick {
+public class CueStick implements Value {
+      public static Label label = new Label();
 
       Pane pane;
       static double length = Value.CUE_LENGTH;
@@ -43,6 +45,11 @@ public class CueStick {
             cue.setLayoutY(cueBallLocation.getY());
 
             pane.getChildren().add(cue);
+            
+            label.setLayoutX(500);
+            label.setLayoutY(50);
+            label.setText("At first...");
+            pane.getChildren().add(label);
 
 //        Rectangle rec = new Rectangle(Value.CUE_LENGTH, Value.CUE_RADIUS*2);
 //        rec.setLayoutX(cue.getLayoutX());
@@ -93,42 +100,25 @@ public class CueStick {
 
       void rotationEvent() {
             pane.getScene().setOnMousePressed(event -> {
-                  if (ConnectServer.dataSending) {
+                  if (MY_TURN) {
                         previousSceneX.set(event.getSceneX());
                         previousSceneY.set(event.getSceneY());
+                        PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
                   }
             });
             pane.getScene().setOnMouseExited(event -> {
             });
             pane.getScene().setOnMouseDragged((event) -> {
-                  if (moveable && !CueBall.isDragging && ConnectServer.dataSending) {
-                        double newX = event.getSceneX();
-                        double newY = event.getSceneY();
 
-                        previousAngle = slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
-                        newAngle = slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
-                        angleDifference = newAngle - previousAngle;
-                        if (Math.abs(angleDifference) < 0.01) {
-                              angleDifference = 0;
+                  if (moveable && !CueBall.isDragging) {
+                        double newX;
+                        double newY;
+                        if (MY_TURN) {
+                              newX = event.getSceneX();
+                              newY = event.getSceneY();
+                              PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
                         }
-
-                        Rotate rotate = new Rotate(angleDifference);
-                        rotate.pivotXProperty().bind(new SimpleDoubleProperty(cue.getFitWidth()));
-                        rotate.pivotYProperty().bind(new SimpleDoubleProperty(cue.getFitHeight() / 2));
-                        cue.getTransforms().add(rotate);
-
-                        double dis = 2 * Value.BALL_RADIUS;
-                        setLayout(dis, cueBallLocation.getX(), cueBallLocation.getY());
-
-                        angle += angleDifference;
-                        if (angle > 360) {
-                              angle -= 360;
-                        } else if (angle < -360) {
-                              angle += 360;
-                        }
-
-                        previousSceneX.set(newX);
-                        previousSceneY.set(newY);
+                        createRotation(newX, newY);
                   }
             });
       }
@@ -163,12 +153,6 @@ public class CueStick {
             return length;
       }
 
-      private void updateAngle(DoubleProperty previousSceneX, DoubleProperty previousSceneY, double newX, double newY) {
-            previousAngle = slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
-            newAngle = slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
-
-      }
-
       private double slope(double x1, double y1, double x2, double y2) {
             if (x2 - x1 >= 0) {
                   return Math.toDegrees(Math.atan((y2 - y1) / (x2 - x1)));
@@ -180,12 +164,12 @@ public class CueStick {
             cue.setLayoutX(offsetX + distance * Math.cos(Math.toRadians(angle)));
             cue.setLayoutY(offsetY + distance * Math.sin(Math.toRadians(angle)));
       }
-      
-      public double getPositionX(){
+
+      public double getPositionX() {
             return cue.getLayoutX();
       }
-      
-      public double getPositionY(){
+
+      public double getPositionY() {
             return cue.getLayoutY();
       }
 
@@ -197,4 +181,41 @@ public class CueStick {
             cue.setLayoutX(x);
             cue.setLayoutY(y);
       }
+
+
+      private void createRotation(double newX, double newY) {
+
+            previousAngle = slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
+            newAngle = slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
+            angleDifference = newAngle - previousAngle;
+//            if (Math.abs(angleDifference) < 0.00000001) {
+//                  angleDifference = 0;
+//            }
+            Rotate rotate = new Rotate(angleDifference);
+            rotate.pivotXProperty().bind(new SimpleDoubleProperty(cue.getFitWidth()));
+            rotate.pivotYProperty().bind(new SimpleDoubleProperty(cue.getFitHeight() / 2));
+            cue.getTransforms().add(rotate);
+
+            double dis = 2 * Value.BALL_RADIUS;
+            setLayout(dis, cueBallLocation.getX(), cueBallLocation.getY());
+
+            angle += angleDifference;
+            if (angle > 360) {
+                  angle -= 360;
+            } else if (angle < -360) {
+                  angle += 360;
+            }
+            previousSceneX.set(newX);
+            previousSceneY.set(newY);
+      }
+
+      public void setData(double x, double y) {
+            createRotation(x, y);
+      }
+
+      public void setPreviousScene(double x, double y) {
+            previousSceneX.set(x);
+            previousSceneY.set(y);
+      }
+
 }

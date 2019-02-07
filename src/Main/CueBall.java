@@ -1,6 +1,5 @@
 package Main;
 
-import ServerConnection.ConnectServer;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,17 +49,17 @@ public class CueBall extends Ball  implements Serializable{
       void makeHandler(ArrayList<Ball> allBalls) {
 
             ball.setOnMouseReleased(event -> {
-                  if (isDraggable() && ConnectServer.dataSending) {
+                  if (isDraggable()) {
                         isDragging = false;
                   }
             });
             ball.setOnMousePressed(event -> {
-                  if (isDraggable() && ConnectServer.dataSending) {
+                  if (isDraggable()) {
                         isDragging = true;
                   }
             });
             ball.setOnMouseDragged(event -> {
-                  if (isDraggable() && ConnectServer.dataSending) {
+                  if (isDraggable()) {
                         possible = true;
                         for (int i = 1; i < 16; i++) {
                               Ball b = allBalls.get(i);

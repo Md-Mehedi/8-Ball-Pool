@@ -100,6 +100,7 @@ public class Ball{
     }
     public void move(long elapsedTime) {
         double elapsedSeconds = elapsedTime / 1_000_000_0000.0; 
+//        System.out.println(elapsedSeconds);
         
         if(Math.abs(velocityX.get())<0.0000001 && Math.abs(velocityY.get())< 0.0000001) return ;
         updateAccleration();

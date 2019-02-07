@@ -14,10 +14,12 @@ import javafx.stage.Stage;
  *
  * @author Md Mehedi Hasan
  */
-public class PoolGame extends Application {
+
+public class PoolGame extends Application implements Value{
     
     Pane playfield;
     Scene scene;
+    public static ConnectServer connection;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -35,10 +37,14 @@ public class PoolGame extends Application {
         
         primaryStage.setScene(scene);
         primaryStage.setTitle("8 Ball Pool Game");
+        primaryStage.setResizable(false);
+//        primaryStage.setAlwaysOnTop(true);
+        primaryStage.setX(0);
+        primaryStage.setY(0);
         primaryStage.show();
         
         GameBoard gb = new GameBoard(primaryStage, playfield);
-        ConnectServer connection = new ConnectServer(gb);
+        connection = new ConnectServer(gb);
     }
     public Scene getScene(){
         return scene;
