@@ -16,7 +16,7 @@ import javafx.scene.transform.Rotate;
  *
  * @author Md Mehedi Hasan
  */
-public class CueStick implements Value {
+public class CueStick{
       public static Label label = new Label();
 
       Pane pane;
@@ -100,10 +100,10 @@ public class CueStick implements Value {
 
       void rotationEvent() {
             pane.getScene().setOnMousePressed(event -> {
-                  if (MY_TURN) {
+                  if (Value.MY_TURN) {
                         previousSceneX.set(event.getSceneX());
                         previousSceneY.set(event.getSceneY());
-                        PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
+                        if(Value.DEBUG) PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
                   }
             });
             pane.getScene().setOnMouseExited(event -> {
@@ -111,12 +111,12 @@ public class CueStick implements Value {
             pane.getScene().setOnMouseDragged((event) -> {
 
                   if (moveable && !CueBall.isDragging) {
-                        double newX;
-                        double newY;
-                        if (MY_TURN) {
+                        double newX = 0;
+                        double newY = 0;
+                        if (Value.MY_TURN) {
                               newX = event.getSceneX();
                               newY = event.getSceneY();
-                              PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
+                              if(Value.DEBUG) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
                         }
                         createRotation(newX, newY);
                   }
@@ -153,12 +153,6 @@ public class CueStick implements Value {
             return length;
       }
 
-      private double slope(double x1, double y1, double x2, double y2) {
-            if (x2 - x1 >= 0) {
-                  return Math.toDegrees(Math.atan((y2 - y1) / (x2 - x1)));
-            }
-            return 180 + Math.toDegrees(Math.atan((y2 - y1) / (x2 - x1)));
-      }
 
       public void setLayout(double distance, double offsetX, double offsetY) {
             cue.setLayoutX(offsetX + distance * Math.cos(Math.toRadians(angle)));
@@ -185,8 +179,8 @@ public class CueStick implements Value {
 
       private void createRotation(double newX, double newY) {
 
-            previousAngle = slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
-            newAngle = slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
+            previousAngle = Value.slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
+            newAngle = Value.slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
             angleDifference = newAngle - previousAngle;
 //            if (Math.abs(angleDifference) < 0.00000001) {
 //                  angleDifference = 0;

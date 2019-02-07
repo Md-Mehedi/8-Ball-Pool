@@ -22,7 +22,8 @@ import javafx.util.Duration;
  *
  * @author Md Mehedi Hasan
  */
-public class GameBoard implements Value{
+public class GameBoard{
+      
       static boolean myTurn;
 
       ArrayList<Ball> allBalls;
@@ -62,7 +63,7 @@ public class GameBoard implements Value{
             this.pane = new Pane();
             this.pane = pane;
             board = new Board(pane);
-            cueBallPosition = new Point2D(board.getStart().getX() +  BOARD_X / 6, board.getStart().getY() +  BOARD_Y / 2);
+            cueBallPosition = new Point2D(board.getStart().getX() +  Value.BOARD_X / 6, board.getStart().getY() +  Value.BOARD_Y / 2);
 //pane.getChildren().add(prepareLightSource());
             addPowerSlider();
             prepareBoard();
@@ -80,15 +81,15 @@ public class GameBoard implements Value{
       }
 
       public void prepareBall() {
-            double posX =  BOARD_POSITION_CENTER_X +  BOARD_X / 10 * 7;
-            double posY =  BOARD_POSITION_CENTER_Y +  BOARD_Y / 2;
-            double difX =  BALL_RADIUS * 2 * Math.cos(Math.PI / 6);
-            double difY =  BALL_RADIUS * 2 * Math.sin(Math.PI / 6);
-            double radius =  BALL_RADIUS;
+            double posX =  Value.BOARD_POSITION_CENTER_X +  Value.BOARD_X / 10 * 7;
+            double posY =  Value.BOARD_POSITION_CENTER_Y +  Value.BOARD_Y / 2;
+            double difX =  Value.BALL_RADIUS * 2 * Math.cos(Math.PI / 6);
+            double difY =  Value.BALL_RADIUS * 2 * Math.sin(Math.PI / 6);
+            double radius =  Value.BALL_RADIUS;
 
             cueBall = new CueBall(pane, 0);
             allBalls.add(cueBall);
-            for (int i = 1; i <  BALL_TOTAL; i++) {
+            for (int i = 1; i <  Value.BALL_TOTAL; i++) {
                   allBalls.add(new Ball(pane, i));
             }
             allBalls.get(0).setValue(pane, cueBallPosition, "/PictureBall/Ball_0.jpg");
@@ -141,9 +142,9 @@ public class GameBoard implements Value{
                         
                         if (true) {
                               if (lastUpdateTime.get() > 0) {
-                                    cue.setVelocity(slider.getReleasedRatio() *  CUE_MAXIMUM_VELOCITY, Math.toRadians(CueStick.getAngle()));
+                                    cue.setVelocity(slider.getReleasedRatio() *  Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(CueStick.getAngle()));
                                     if (slider.getReleasedRatio() > 0) {System.out.println(slider.getReleasedRatio());
-                                          PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
+                                          if(Value.DEBUG) PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
                                           allBalls.get(0).setVelocityX(cue.getVelocity().x);
                                           allBalls.get(0).setVelocityY(cue.getVelocity().y);
                                           slider.setReleasedRatio(0);
@@ -152,7 +153,7 @@ public class GameBoard implements Value{
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
-                                          PoolGame.connection.sendData("updateCueLength#"+slider.getRatio());
+                                          if(Value.DEBUG) PoolGame.connection.sendData("updateCueLength#"+slider.getRatio());
                                     }
                                     long elapsedTime = now - lastUpdateTime.get();
                                     
@@ -195,8 +196,8 @@ public class GameBoard implements Value{
                   st.setToY(1);
                   st.play();
 
-                  cueBall.setPositionX( BOARD_POSITION_CENTER_X +  BOARD_X / 2);
-                  cueBall.setPositionY( BOARD_POSITION_CENTER_Y +  BOARD_Y / 2);
+                  cueBall.setPositionX( Value.BOARD_POSITION_CENTER_X +  Value.BOARD_X / 2);
+                  cueBall.setPositionY( Value.BOARD_POSITION_CENTER_Y +  Value.BOARD_Y / 2);
                   cueBallPosition = cueBall.getPosition();
             }
       }
@@ -205,8 +206,8 @@ public class GameBoard implements Value{
 
             allBalls.forEach(ball -> ball.boundaryCollisionCheck(board.getStart(), board.getEnd()));
 
-            for (int i = 0; i <  BALL_TOTAL; i++) {
-                  for (int j = 0; j <  BALL_TOTAL; j++) {
+            for (int i = 0; i <  Value.BALL_TOTAL; i++) {
+                  for (int j = 0; j <  Value.BALL_TOTAL; j++) {
                         if (i == j) {
                               continue;
                         }
@@ -225,11 +226,12 @@ public class GameBoard implements Value{
                         });
                   }
                   //if(allBalls.get(0).isPocketed()) cueBall.makeUnpotted();
-                  allBalls.forEach(b -> {
-                        board.getPockets().forEach(p -> {
-                              p.checkPocketed(b);
+                  if(!cueBall.isDragging) 
+                        allBalls.forEach(b -> {
+                              board.getPockets().forEach(p -> {
+                                    p.checkPocketed(b, p);
+                              });
                         });
-                  });
             }
       }
 
@@ -250,8 +252,8 @@ public class GameBoard implements Value{
                   Parent sliderPane = (AnchorPane)sliderLoader.load();
                   pane.getChildren().add(sliderPane);
                   slider = sliderLoader.getController();
-                  sliderPane.setLayoutX( SCENE_WIDTH / 10 * 9);
-                  sliderPane.setLayoutY( SCENE_HIGHT / 2 - slider.getSize() / 2);
+                  sliderPane.setLayoutX( Value.SCENE_WIDTH / 10 * 9);
+                  sliderPane.setLayoutY( Value.SCENE_HIGHT / 2 - slider.getSize() / 2);
                   slider.setContainerYPosition(sliderPane.getLayoutY());
                   
             } catch (IOException ex) {
@@ -267,5 +269,9 @@ public class GameBoard implements Value{
 
       public void setSlider(SliderController slider) {
             this.slider = slider;
+      }
+
+      public CueBall getCueBall() {
+            return cueBall;
       }
 }

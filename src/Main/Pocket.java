@@ -1,6 +1,7 @@
 package Main;
 
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -33,20 +34,41 @@ public class Pocket {
         this.pocket.setLayoutX(location.getX());
         this.pocket.setLayoutY(location.getY());
     }
+
+      public Circle getPocket() {
+            return pocket;
+      }
+
+      public void setPocket(Circle pocket) {
+            this.pocket = pocket;
+      }
+    
     public boolean checkPocketedValidity(Ball ball){
 //        System.out.println("Pocket: "+pocket.getLayoutX()+" "+pocket.getLayoutY());
 //        System.out.println("Ball: "+ball.getPositionX().get()+" "+ball.getPositionY().get());
-        return pocket.getLayoutX()-radius < ball.getPositionX().get()
+        return pocket.getLayoutX()-radius < ball.getPositionX().get() 
                 && ball.getPositionX().get()< pocket.getLayoutX()+radius
                 && pocket.getLayoutY()-radius < ball.getPositionY().get()
                 && ball.getPositionY().get() < pocket.getLayoutY()+radius;
     }
-    public void checkPocketed(Ball ball){
+    public void checkPocketed(Ball ball , Pocket pocket){
         if(checkPocketedValidity(ball)){
             if(!ball.isPocketed()){
                 ball.setPocketed(true);
-                ball.setVelocityX(3*Math.cos(ball.getAngle()));
-                ball.setVelocityY(3*Math.sin(ball.getAngle()));
+                ball.setVelocityX(4*Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
+                ball.setVelocityY(4*Math.sin(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
+                
+                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), ball.getSphere());
+//                translateTransition.setFromX(ball.getSphere().getLayoutX());
+//                translateTransition.setFromY(ball.getSphere().getLayoutY());
+                translateTransition.setToX(pocket.getPocket().getLayoutX() - ball.getSphere().getLayoutX());
+                translateTransition.setToY(pocket.getPocket().getLayoutY() - ball.getSphere().getLayoutY());
+                
+                System.out.println("Postion:");
+                System.out.println(ball.getSphere().getLayoutX());
+                System.out.println(ball.getSphere().getLayoutY());
+                System.out.println(pocket.getPocket().getCenterX());
+                System.out.println( + pocket.getPocket().getLayoutX());
                 
                 ScaleTransition transition = new ScaleTransition(Duration.seconds(1),ball.getSphere());
                 transition.setFromZ(1);
@@ -54,6 +76,12 @@ public class Pocket {
                 transition.setFromY(1);
                 transition.setToY(0);
                 transition.play();
+                transition.setOnFinished(event ->{
+                      ball.setVelocityX(0);
+                      ball.setVelocityY(0);
+                });
+                //translateTransition.play();
+                
                 if(ball.getID() == 0){
                     ball.setCueBallPotted(true);
                 }

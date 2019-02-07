@@ -69,9 +69,11 @@ class ClientThread implements Runnable {
             switch (messageFromServer.split("#")[0]) {
                   case "updateCueLength": gameBoard.getCue().updateLength(Double.parseDouble(messageFromServer.split("#")[1])); break;
                   case "setReleasedRatio": gameBoard.getSlider().setReleasedRatio(Double.parseDouble(messageFromServer.split("#")[1])); break;
+                  case "setCueBallPosition": setCueBallPosition(); break;
                   case "CuePreviousScene": 
                   case "CueEventScene": setCueDragEvent(); break;
                   case "test": test(); break;
+                  case "print": print(); break;
                   default:
                         System.out.println("Unknown message");
             }
@@ -96,8 +98,8 @@ class ClientThread implements Runnable {
       }
 
       private void setCueDragEvent() {
-            double x = Double.parseDouble(messageFromServer.split("#")[1]);
-            double y = Double.parseDouble(messageFromServer.split("#")[2]);
+            Double x = Double.parseDouble(messageFromServer.split("#")[1]);
+            Double y = Double.parseDouble(messageFromServer.split("#")[2]);
             if(messageFromServer.split("#")[0].equals("CueEventScene")) gameBoard.getCue().setData(x, y);
             else gameBoard.getCue().setPreviousScene(x, y);
             
@@ -109,6 +111,19 @@ class ClientThread implements Runnable {
             Rotate rotate = new Rotate(Double.parseDouble(messageFromServer.split("#")[1]), Rotate.Z_AXIS);
             
             gameBoard.getCue().getCue().getTransforms().add(rotate);
+      }
+
+      private void setCueBallPosition() {
+            Double x =  Double.valueOf(messageFromServer.split("#")[1]);
+            Double y =  Double.valueOf(messageFromServer.split("#")[2]);
+
+            
+//            gameBoard.getCueBall().setPositionX(x.doubleValue());
+//            gameBoard.getCueBall().setPositionY(y.doubleValue());
+      }
+
+      private void print() {
+            System.out.println(messageFromServer.split("#")[1]);
       }
 
 

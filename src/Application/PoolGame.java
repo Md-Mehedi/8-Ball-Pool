@@ -6,16 +6,14 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 /**
  *
  * @author Md Mehedi Hasan
  */
 
-public class PoolGame extends Application implements Value{
+public class PoolGame extends Application{
     
     Pane playfield;
     Scene scene;
@@ -24,15 +22,11 @@ public class PoolGame extends Application implements Value{
     @Override
     public void start(Stage primaryStage) throws IOException {
         
-        BorderPane root = new BorderPane();
-//        constrainBalClsOnResize(root);
-        StackPane layout = new StackPane(); 
+        AnchorPane root = new AnchorPane(); 
         playfield = new Pane();
         playfield.setPrefSize(Value.SCENE_WIDTH,Value.SCENE_HIGHT);
-        layout.getChildren().add(playfield);
-        root.setCenter(layout);
-        AnchorPane hh = new AnchorPane();
-        //scene = new Scene(hh,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
+        root.getChildren().add(playfield);
+        
         scene = new Scene(root,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         
         primaryStage.setScene(scene);
@@ -43,8 +37,10 @@ public class PoolGame extends Application implements Value{
         primaryStage.setY(0);
         primaryStage.show();
         
+        System.out.println(Value.BOARD_POSITION_CENTER_X);
+        System.out.println(Value.BOARD_POSITION_CENTER_Y);
         GameBoard gb = new GameBoard(primaryStage, playfield);
-        connection = new ConnectServer(gb);
+        //connection = new ConnectServer(gb);
     }
     public Scene getScene(){
         return scene;

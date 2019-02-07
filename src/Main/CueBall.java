@@ -1,7 +1,7 @@
 package Main;
 
+import Application.PoolGame;
 import java.awt.geom.Point2D;
-import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -10,7 +10,7 @@ import javafx.scene.shape.Line;
  *
  * @author Md Mehedi Hasan
  */
-public class CueBall extends Ball  implements Serializable{
+public class CueBall extends Ball{
 
       private static boolean draggable = true;
       private static boolean hitTime = true;
@@ -49,17 +49,17 @@ public class CueBall extends Ball  implements Serializable{
       void makeHandler(ArrayList<Ball> allBalls) {
 
             ball.setOnMouseReleased(event -> {
-                  if (isDraggable()) {
+                  if (isDraggable() && Value.MY_TURN) {
                         isDragging = false;
                   }
             });
             ball.setOnMousePressed(event -> {
-                  if (isDraggable()) {
+                  if (isDraggable() && Value.MY_TURN) {
                         isDragging = true;
                   }
             });
             ball.setOnMouseDragged(event -> {
-                  if (isDraggable()) {
+                  if (isDraggable() && Value.MY_TURN) {
                         possible = true;
                         for (int i = 1; i < 16; i++) {
                               Ball b = allBalls.get(i);
@@ -68,8 +68,8 @@ public class CueBall extends Ball  implements Serializable{
                               }
                         }
                         if (possible) {
-                              if (Value.BOARD_POSITION_CENTER_X + radius < event.getSceneX()
-                                    && event.getSceneX() < Value.BOARD_POSITION_CENTER_X + Value.BOARD_X - radius) {
+                              if (Value.BOARD_POSITION_CENTER_X + radius + Value.CUTION_SIZE < event.getSceneX()
+                                    && event.getSceneX() < Value.BOARD_POSITION_CENTER_X + Value.BOARD_X - Value.CUTION_SIZE - radius) {
                                     if (isHitTime()) {
                                           if (event.getSceneX() < Value.BOARD_POSITION_CENTER_X + Value.BAULK_LINE - radius) {
                                                 positionX.set(event.getSceneX());
@@ -78,10 +78,11 @@ public class CueBall extends Ball  implements Serializable{
                                           positionX.set(event.getSceneX());
                                     }
                               }
-                              if (Value.BOARD_POSITION_CENTER_Y + radius < event.getSceneY()
-                                    && event.getSceneY() < Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y - radius) {
+                              if (Value.BOARD_POSITION_CENTER_Y + Value.CUTION_SIZE + radius < event.getSceneY()
+                                    && event.getSceneY() < Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y - Value.CUTION_SIZE - radius) {
                                     positionY.set(event.getSceneY());
                               }
+                              if(Value.DEBUG) PoolGame.connection.sendData("setCueBallPosition#"+positionX.get()+"#"+positionY.get());
                         }
                   }
             });
