@@ -109,12 +109,12 @@ public class CueStick{
             });
             pane.getScene().setOnMouseDragged((event) -> {
 
-                  if (moveable && !CueBall.isDragging && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
+                  if (moveable && !CueBall.isDragging && (GameBoard.offline || GameBoard.practice || (GameBoard.online && GameBoard.player1.getTurn()))) {
                         double newX = 0;
                         double newY = 0;
                         newX = event.getSceneX();
                         newY = event.getSceneY();
-                        if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
+                        if(GameBoard.online && GameBoard.player1.getTurn()) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
                         createRotation(newX, newY);
                   }
             });

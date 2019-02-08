@@ -68,8 +68,16 @@ class ClientThread implements Runnable {
 
       private void checkMessage() {//System.out.println(messageFromServer);
             switch (splitString[0]) {
-                  case "hitTheBall!!!": gameBoard.getPlayer1().setTurn(true); gameBoard.getPlayer2().setTurn(false); break;
-                  case "seeTheTurn": gameBoard.getPlayer1().setTurn(false); gameBoard.getPlayer2().setTurn(true);  break;
+                  case "hitTheBall!!!": 
+                        gameBoard.getRules().getPlayer1().setTurn(true); 
+                        gameBoard.getRules().getPlayer2().setTurn(false);
+                        gameBoard.getRules().updateTurner();
+                        break;
+                  case "seeTheTurn": 
+                        gameBoard.getRules().getPlayer1().setTurn(false); 
+                        gameBoard.getRules().getPlayer2().setTurn(true);
+                        gameBoard.getRules().updateTurner();
+                        break;
                   case "updateCueLength": gameBoard.getCue().updateLength(Double.parseDouble(splitString[1])); break;
                   case "setReleasedRatio": gameBoard.getSlider().setReleasedRatio(Double.parseDouble(splitString[1])); break;
                   case "setCueBallPosition": setCueBallPosition(); break;

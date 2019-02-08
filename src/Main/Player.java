@@ -18,6 +18,17 @@ public class Player {
       private ArrayList<Ball> remainingBalls = new ArrayList<>();
       private boolean canPocketEightBall;
       private boolean eightBallPocketed;
+      
+      
+
+      public Player() {
+            canPocketEightBall = true;
+            eightBallPocketed = false;
+            ballType = null;
+            firstBallNumber = 1;
+            lastBallNumber = 15;
+      }
+      
 
       public boolean getTurn() {
             return turn;
@@ -90,15 +101,6 @@ public class Player {
       public void setEightBallPocketed(boolean eightBallPocketed) {
             this.eightBallPocketed = eightBallPocketed;
       }
-
-      public Player() {
-            canPocketEightBall = true;
-            eightBallPocketed = false;
-            ballType = null;
-            firstBallNumber = 1;
-            lastBallNumber = 15;
-      }
-      
       public boolean isFirstHitBallValid(int id){
             if(firstBallNumber<=id && id<=lastBallNumber) return true;
             return false;

@@ -23,7 +23,7 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = false;
+      public static boolean online = true;
       static boolean offline = !online;
       static boolean practice;
       
@@ -42,8 +42,8 @@ public class GameBoard{
       SliderController slider;
       boolean pocketingStatus = true;
       static boolean checkedRule = true;
-      static Player player1;
-      static Player player2;
+      public static Player player1;
+      public static Player player2;
       Rules rules;
       //ConnectServer connection;
 
@@ -75,8 +75,8 @@ public class GameBoard{
 //pane.getChildren().add(prepareLightSource());
             addPowerSlider();
             prepareBoard();
-            //connection = new ConnectServer(allBalls, cue);
             rules = new Rules(player1, player2, cueBall);
+            //connection = new ConnectServer(allBalls, cue);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
 
@@ -88,6 +88,10 @@ public class GameBoard{
                   System.out.println(allBalls);
             });
             
+      }
+
+      public Rules getRules() {
+            return rules;
       }
 
       public Player getPlayer1() {
@@ -206,7 +210,7 @@ public class GameBoard{
                               lastUpdateTime.set(now);
                               cueBallPosition = allBalls.get(0).getPosition();
                               if (allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()) {
-                                    if((offline ||  (online && player1.getTurn())) && !checkedRule) rules.checkRule();
+                                    if((offline ||  online ) && !checkedRule) rules.checkRule();
                                     checkedRule = true;
                                     checkCueBallIsPotted();
                                     cue.setPosition(cueBallPosition);
