@@ -7,6 +7,8 @@
 package Main;
 
 import Application.PoolGame;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,7 @@ import java.util.logging.Logger;
  * @author Md Mehedi Hasan
  */
 public class Rules {
+      static List<Integer> pocketedBallNum;
 
       
       Player player1;
@@ -24,16 +27,27 @@ public class Rules {
       CueBall cueBall;
       static boolean secondHitDone;
       static boolean cutionHit;
+      boolean pocketedBallFound;
+      boolean wrongHit;
       static int firstHitBallNum = -1;
       static int firstPottedBallNo = -1;
       
       
       public Rules(Player player1 , Player player2, CueBall cueBall) {
+            pocketedBallNum = new ArrayList<>();
             turner = new Player();
             viewer = new Player();
             this.player1 = player1;
             this.player2 = player2;
             this.cueBall = cueBall;
+      }
+
+      public static List<Integer> getPocketedBallNum() {
+            return pocketedBallNum;
+      }
+
+      public void setPocketedBallNum(List<Integer> pocketedBallNum) {
+            this.pocketedBallNum = pocketedBallNum;
       }
 
       void checkRule() {
@@ -45,6 +59,7 @@ public class Rules {
 //            if(!cutionHit && (offline || online && player1.isTurn())) PoolGame.connection.sendData("cutionIsNotHitted");
             setBallType();
             checkValidHitting();
+            checkPocketedBall();
             
             
             try {
@@ -83,12 +98,22 @@ public class Rules {
 
       private void checkValidHitting() {
             System.out.println(firstHitBallNum);
-            if(firstPottedBallNo==-2 && (turner.getFirstBallNumber()>firstHitBallNum
-                  || turner.getLastBallNumber()<firstHitBallNum) && firstHitBallNum!=-1){
+//            if(firstPottedBallNo==-2 && (turner.getFirstBallNumber()>firstHitBallNum
+//                  || turner.getLastBallNumber()<firstHitBallNum) && firstHitBallNum!=-1){
+//                  swapTurn();
+//                  System.out.println("Wrong hit");
+//            }
+            if(firstPottedBallNo==-2 && firstHitBallNum!=1 && !isContain(firstHitBallNum)){
                   swapTurn();
+                  wrongHit = true;
                   System.out.println("Wrong hit");
             }
             firstHitBallNum = -1;
+      }
+      
+      private boolean isContain(int ballNum){
+            if(turner.getFirstBallNumber()<=ballNum && ballNum<=turner.getLastBallNumber()) return true;
+            return false;
       }
 
       public Player getPlayer1() {
@@ -131,5 +156,16 @@ public class Rules {
             System.out.println(player1.getTurn()+" "+player2.getTurn());
             turner = player1.getTurn() ? player1 : player2;
             viewer = player1.getTurn() ? player2 : player1;
+      }
+
+      private void checkPocketedBall() {
+            for(Integer num : pocketedBallNum){
+                  System.out.println("Pocketed: "+num);
+                  if(isContain(num)) pocketedBallFound = true;
+            }
+            if(!pocketedBallFound && !CueBall.isCueBallPotted() && !wrongHit) swapTurn();
+            pocketedBallFound = false;
+            wrongHit = false;
+            pocketedBallNum.clear();
       }
 }

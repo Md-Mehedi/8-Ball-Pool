@@ -59,6 +59,7 @@ public class Pocket {
             if (checkPocketedValidity(ball)) {
                   if (!ball.isPocketed()) {
                         if(Rules.firstPottedBallNo == -1 && ball.getID()!=0) Rules.firstPottedBallNo = ball.getID();
+                        Rules.getPocketedBallNum().add(ball.getID());
                         
                         ball.setPocketed(true);
                         ball.setVelocityX(4 * Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
