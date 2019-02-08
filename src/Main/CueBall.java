@@ -10,7 +10,7 @@ import javafx.scene.shape.Line;
  *
  * @author Md Mehedi Hasan
  */
-public class CueBall extends Ball{
+public class CueBall extends Ball {
 
       private static boolean draggable = true;
       private static boolean hitTime = true;
@@ -49,17 +49,19 @@ public class CueBall extends Ball{
       void makeHandler(ArrayList<Ball> allBalls) {
 
             ball.setOnMouseReleased(event -> {
-                  if (isDraggable() && Value.MY_TURN) {
+                  if (isDraggable() && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
                         isDragging = false;
+                        //PoolGame.connection.sendData("cueBallNotDragging");
                   }
             });
             ball.setOnMousePressed(event -> {
-                  if (isDraggable() && Value.MY_TURN) {
+                  if (isDraggable() && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
                         isDragging = true;
+                        //PoolGame.connection.sendData("cueBallIsDragging");
                   }
             });
             ball.setOnMouseDragged(event -> {
-                  if (isDraggable() && Value.MY_TURN) {
+                  if (isDraggable() && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
                         possible = true;
                         for (int i = 1; i < 16; i++) {
                               Ball b = allBalls.get(i);
@@ -82,13 +84,15 @@ public class CueBall extends Ball{
                                     && event.getSceneY() < Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y - Value.CUTION_SIZE - radius) {
                                     positionY.set(event.getSceneY());
                               }
-                              if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("setCueBallPosition#"+positionX.get()+"#"+positionY.get());
+                              if (GameBoard.online && GameBoard.player1.getTurn()) {
+                                    PoolGame.connection.sendData("setCueBallPosition#" + positionX.get() + "#" + positionY.get());
+                              }
                         }
                   }
             });
       }
 
-      public void makeHintLine(Pane pane) {
+      public void updateHintLine() {
             line.setStartX(positionX.get());
             line.setStartY(positionY.get());
             line.setEndX(positionX.get() + 1000 * Math.cos(Math.toRadians(CueStick.getAngle())));
@@ -102,4 +106,13 @@ public class CueBall extends Ball{
       public Line getLine() {
             return line;
       }
+
+      public static boolean isDragging() {
+            return isDragging;
+      }
+
+      public static void setDragging(boolean isDragging) {
+            CueBall.isDragging = isDragging;
+      }
+
 }

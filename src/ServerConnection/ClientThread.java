@@ -31,8 +31,6 @@ class ClientThread implements Runnable {
       PrintWriter writeToServer;
       String messageFromServer;
       String[] splitStrings;
-      DataManager dataManager;
-      DataHolder dataHolder;
       boolean pairFound;
       String[] splitString;
 
@@ -70,12 +68,17 @@ class ClientThread implements Runnable {
 
       private void checkMessage() {//System.out.println(messageFromServer);
             switch (splitString[0]) {
+                  case "hitTheBall!!!": gameBoard.getPlayer1().setTurn(true); gameBoard.getPlayer2().setTurn(false); break;
+                  case "seeTheTurn": gameBoard.getPlayer1().setTurn(false); gameBoard.getPlayer2().setTurn(true);  break;
                   case "updateCueLength": gameBoard.getCue().updateLength(Double.parseDouble(splitString[1])); break;
                   case "setReleasedRatio": gameBoard.getSlider().setReleasedRatio(Double.parseDouble(splitString[1])); break;
                   case "setCueBallPosition": setCueBallPosition(); break;
                   case "setBallPostion": setBallPosition();
                   case "CuePreviousScene": 
                   case "CueEventScene": setCueDragEvent(); break;
+                  case "cueBallIsDragging": gameBoard.getCueBall().setDragging(true); break;
+                  case "cueBallNotDragging": gameBoard.getCueBall().setDragging(false); break;
+                  case "cueBallIsPotted": break;
                   case "test": test(); break;
                   case "print": print(); break;
                   default:

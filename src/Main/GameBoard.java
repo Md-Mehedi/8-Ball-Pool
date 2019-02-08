@@ -1,7 +1,6 @@
 package Main;
 
 import Application.PoolGame;
-import ServerConnection.DataManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,8 +23,10 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
+      public static boolean online = false;
+      static boolean offline = !online;
+      static boolean practice;
       
-      static boolean myTurn;
 
       ArrayList<Ball> allBalls;
 
@@ -38,9 +39,12 @@ public class GameBoard{
       static boolean moving = false;
       Board board;
       CueBall cueBall;
-      DataManager dataManager;
       SliderController slider;
-      boolean finalBallPositionSend = true;
+      boolean pocketingStatus = true;
+      static boolean checkedRule = true;
+      static Player player1;
+      static Player player2;
+      Rules rules;
       //ConnectServer connection;
 
       public ArrayList<Ball> getAllBalls() {
@@ -60,6 +64,8 @@ public class GameBoard{
       }
 
       public GameBoard(Stage stage, Pane pane) throws IOException {
+            player1 = new Player();
+            player2 = new Player();
             allBalls = new ArrayList<>();
             curStage = stage;
             this.pane = new Pane();
@@ -70,6 +76,7 @@ public class GameBoard{
             addPowerSlider();
             prepareBoard();
             //connection = new ConnectServer(allBalls, cue);
+            rules = new Rules(player1, player2, cueBall);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
 
@@ -80,7 +87,23 @@ public class GameBoard{
             bt.setOnAction(event ->{
                   System.out.println(allBalls);
             });
+            
+      }
 
+      public Player getPlayer1() {
+            return player1;
+      }
+
+      public void setPlayer1(Player player1) {
+            this.player1 = player1;
+      }
+
+      public Player getPlayer2() {
+            return player2;
+      }
+
+      public void setPlayer2(Player player2) {
+            this.player2 = player2;
       }
 
       public void prepareBoard() throws IOException {
@@ -153,51 +176,51 @@ public class GameBoard{
                         if (true) {
                               if (lastUpdateTime.get() > 0) {
                                     cue.setVelocity(slider.getReleasedRatio() *  Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(CueStick.getAngle()));
-                                    if (slider.getReleasedRatio() > 0) {System.out.println(slider.getReleasedRatio());
-                                          if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
+                                    if (slider.getReleasedRatio() > 0) {
+                                          if(online && player1.getTurn()) PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
                                           allBalls.get(0).setVelocityX(cue.getVelocity().x);
                                           allBalls.get(0).setVelocityY(cue.getVelocity().y);
                                           slider.setReleasedRatio(0);
+                                          if(!CueBall.isHitTime()) Rules.secondHitDone = true;
+                                          pocketingStatus = true;
                                           CueBall.setHitTime(false);
                                           CueBall.setDraggable(false);
-                                          finalBallPositionSend = false;
+                                          Rules.cutionHit = false;
+                                          checkedRule = false;
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
-                                          if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("updateCueLength#"+slider.getRatio());
+                                          if(Value.WORK_WITH_NETWORK && online && player1.getTurn()) PoolGame.connection.sendCueLength(slider.getRatio());
                                     }
                                     long elapsedTime = now - lastUpdateTime.get();
                                     
                                     elapsedTime = 15000000;
-                                    //System.out.println(elapsedTime);
                                     makeCollision(elapsedTime);
                               }
+                              
                               cue.getCue().setVisible(!CueBall.isDragging && !moving);
-                              slider.setVisible(!CueBall.isDragging && !moving);
+                              slider.setVisible(!CueBall.isDragging && !moving && (offline || practice || (online && player1.getTurn())));
                               cueBall.getLine().setVisible(!CueBall.isDragging && !moving);
-                              cueBall.makeHintLine(pane);
+                              cueBall.updateHintLine();
 
                               lastUpdateTime.set(now);
                               cueBallPosition = allBalls.get(0).getPosition();
                               if (allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()) {
+                                    if((offline ||  (online && player1.getTurn())) && !checkedRule) rules.checkRule();
+                                    checkedRule = true;
                                     checkCueBallIsPotted();
-//                    System.out.println(cueBall.getPosition()+" "+
-//                            cue.getCue().getLayoutX()+" "+cue.getCue().getLayoutY());
                                     cue.setPosition(cueBallPosition);
                                     cue.setMoveable(true);
-                                    if(!finalBallPositionSend) PoolGame.connection.sendAllBallData();
-                                    finalBallPositionSend = true;
+                                    
                               }
-                              //connection.sendData(allBalls, cue);
                         } 
                   }
-
             };
             gameLoop.start();
       }
-
       private void checkCueBallIsPotted() {
             if (Ball.isCueBallPotted()) {
+                  pocketingStatus = false;
                   CueBall.setDraggable(true);
                   CueBall.setCueBallPotted(false);
                   cueBall.setPocketed(false);
@@ -209,10 +232,11 @@ public class GameBoard{
                   st.setToY(1);
                   st.play();
 
-                  cueBall.setPositionX( Value.BOARD_POSITION_CENTER_X +  Value.BOARD_X / 2);
-                  cueBall.setPositionY( Value.BOARD_POSITION_CENTER_Y +  Value.BOARD_Y / 2);
+                  cueBall.setPositionX(Value.BOARD_POSITION_CENTER_X + Value.BOARD_X / 2);
+                  cueBall.setPositionY(Value.BOARD_POSITION_CENTER_Y + Value.BOARD_Y / 2);
                   cueBallPosition = cueBall.getPosition();
             }
+            //System.out.println(validHitCount);
       }
 
       private void makeCollision(long elapsedTime) {
@@ -241,7 +265,7 @@ public class GameBoard{
                         });
                   }
                   //if(allBalls.get(0).isPocketed()) cueBall.makeUnpotted();
-                  if(!cueBall.isDragging) 
+                  if(pocketingStatus) 
                         allBalls.forEach(b -> {
                               board.getPockets().forEach(p -> {
                                     p.checkPocketed(b, p);

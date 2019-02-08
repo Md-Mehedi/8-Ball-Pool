@@ -30,18 +30,17 @@ public class PoolGame extends Application{
         scene = new Scene(root,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         
         primaryStage.setScene(scene);
-        primaryStage.setTitle("8 Ball Pool Game");
+        primaryStage.setTitle("8 Ball   Game");
         primaryStage.setResizable(false);
 //        primaryStage.setAlwaysOnTop(true);
-        primaryStage.setX(0);
+        primaryStage.setX(400);
         primaryStage.setY(0);
         primaryStage.show();
         
         System.out.println(Value.BOARD_POSITION_CENTER_X);
         System.out.println(Value.BOARD_POSITION_CENTER_Y);
         GameBoard gb = new GameBoard(primaryStage, playfield);
-        Value.WORK_WITH_NETWORK = true;
-        connection = new ConnectServer(gb);
+        if(GameBoard.online) connection = new ConnectServer(gb);
     }
     public Scene getScene(){
         return scene;

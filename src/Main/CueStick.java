@@ -100,24 +100,21 @@ public class CueStick{
 
       void rotationEvent() {
             pane.getScene().setOnMousePressed(event -> {
-                  if (Value.MY_TURN) {
                         previousSceneX.set(event.getSceneX());
                         previousSceneY.set(event.getSceneY());
-                        if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
-                  }
+                        if(GameBoard.online && GameBoard.player1.getTurn()) PoolGame.connection.sendData("CuePreviousScene#" + event.getSceneX() + "#" + event.getSceneY());
+                  
             });
             pane.getScene().setOnMouseExited(event -> {
             });
             pane.getScene().setOnMouseDragged((event) -> {
 
-                  if (moveable && !CueBall.isDragging) {
+                  if (moveable && !CueBall.isDragging && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
                         double newX = 0;
                         double newY = 0;
-                        if (Value.MY_TURN) {
-                              newX = event.getSceneX();
-                              newY = event.getSceneY();
-                              if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
-                        }
+                        newX = event.getSceneX();
+                        newY = event.getSceneY();
+                        if(Value.WORK_WITH_NETWORK) PoolGame.connection.sendData("CueEventScene#" + newX + "#" + newY);
                         createRotation(newX, newY);
                   }
             });

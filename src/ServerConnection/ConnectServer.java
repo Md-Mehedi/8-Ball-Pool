@@ -19,6 +19,7 @@ public class ConnectServer {
       PrintWriter writeToServer;
       String messageFromServer;
       ClientThread wt;
+      double cueRatio = 0;
 
       public ConnectServer(GameBoard gb) {
             try {
@@ -38,6 +39,13 @@ public class ConnectServer {
 
       public void sendAllBallData() {
             wt.sendAllBallData();
+      }
+
+      public void sendCueLength(double ratio) {
+            if(cueRatio != ratio){
+                  wt.sendMessage("updateCueLength#"+ratio);
+                  cueRatio = ratio;
+            }
       }
 
 }
