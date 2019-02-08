@@ -19,7 +19,7 @@ public class Board {
     Point2D start;
     Point2D end;
 
-    public Board(Pane pane){
+    public Board(Pane pane) {
         this.pane = pane;
         pockets = new ArrayList<>();
         start = new Point2D(Value.BOARD_POSITION_CENTER_X,Value.BOARD_POSITION_CENTER_Y);
@@ -63,7 +63,8 @@ public class Board {
         Parent board = (AnchorPane)FXMLLoader.load(getClass().getResource("Board.fxml"));  
         pane.getChildren().add(board);
         board.setLayoutX(Value.BOARD_POSITION_CENTER_X);
-        board.setLayoutY(Value.BOARD_POSITION_CENTER_Y);  
+        board.setLayoutY(Value.BOARD_POSITION_CENTER_Y);
+        
         preparePocket();
     }
     
