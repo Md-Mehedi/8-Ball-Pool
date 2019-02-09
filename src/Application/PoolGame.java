@@ -27,12 +27,22 @@ public class PoolGame extends Application{
         playfield.setPrefSize(Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         root.getChildren().add(playfield);
         
+//        playfield.setBackground(new Background(new BackgroundImage(new Image(getClass().getResourceAsStream("picturepackage/Lether Bluish.jpg")), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        
+//Box box = new Box(Value.SCENE_WIDTH, Value.SCENE_HIGHT, 3);
+//box.setLayoutX(Value.SCENE_WIDTH/2);
+//box.setLayoutY(Value.SCENE_HIGHT/2);
+//box.setTranslateZ(-500);
+//box.setMaterial(new PhongMaterial(Color.ROYALBLUE));
+//playfield.getChildren().add(box);
         scene = new Scene(root,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
+        
         
         primaryStage.setScene(scene);
         primaryStage.setTitle("8 Ball   Game");
         primaryStage.setResizable(false);
 //        primaryStage.setAlwaysOnTop(true);
+            
         primaryStage.setX(400);
         primaryStage.setY(0);
         primaryStage.show();

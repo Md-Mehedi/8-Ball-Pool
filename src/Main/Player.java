@@ -1,7 +1,5 @@
 package Main;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Md Mehedi Hasan
@@ -14,8 +12,7 @@ public class Player {
       private String ballType; //1 if striped, 0 if solid, null otherwise (if not set yet)
       private int firstBallNumber;
       private int lastBallNumber;
-      private ArrayList<Ball> pocketedBalls = new ArrayList<>();
-      private ArrayList<Ball> remainingBalls = new ArrayList<>();
+      private int pottedBallCount = 0;
       private boolean canPocketEightBall;
       private boolean eightBallPocketed;
       
@@ -70,22 +67,6 @@ public class Player {
             this.lastBallNumber = lastBallNumber;
       }
 
-      public ArrayList<Ball> getPocketedBalls() {
-            return pocketedBalls;
-      }
-
-      public void setPocketedBalls(ArrayList<Ball> pocketedBalls) {
-            this.pocketedBalls = pocketedBalls;
-      }
-
-      public ArrayList<Ball> getRemainingBalls() {
-            return remainingBalls;
-      }
-
-      public void setRemainingBalls(ArrayList<Ball> remainingBalls) {
-            this.remainingBalls = remainingBalls;
-      }
-
       public boolean isCanPocketEightBall() {
             return canPocketEightBall;
       }
@@ -105,4 +86,5 @@ public class Player {
             if(firstBallNumber<=id && id<=lastBallNumber) return true;
             return false;
       }
+
 }

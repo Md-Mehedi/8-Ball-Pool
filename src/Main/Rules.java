@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class Rules {
       static List<Integer> pocketedBallNum;
+      ArrayList<Ball> allBalls;
 
       
       Player player1;
@@ -28,12 +29,14 @@ public class Rules {
       static boolean secondHitDone;
       static boolean cutionHit;
       boolean pocketedBallFound;
+      boolean isBallTypeSelected;
       boolean wrongHit;
       static int firstHitBallNum = -1;
       static int firstPottedBallNo = -1;
       
       
-      public Rules(Player player1 , Player player2, CueBall cueBall) {
+      public Rules(Player player1 , Player player2, CueBall cueBall, ArrayList<Ball> allBalls) {
+            this.allBalls = allBalls;
             pocketedBallNum = new ArrayList<>();
             turner = new Player();
             viewer = new Player();
@@ -55,10 +58,12 @@ public class Rules {
             if(cueBall.pocketed || !cutionHit){
                   swapTurn();
             }
-//            if(cueBall.pocketed && (offline || online && player1.isTurn())) PoolGame.connection.sendData("cueBallIsPotted");
-//            if(!cutionHit && (offline || online && player1.isTurn())) PoolGame.connection.sendData("cutionIsNotHitted");
-            setBallType();
+            
+//            addPottedBall();
+//            checkIfGameOver();
+            
             checkValidHitting();
+            setBallType();
             checkPocketedBall();
             
             
@@ -81,17 +86,20 @@ public class Rules {
 
       private void setBallType() {
             if(CueBall.isCueBallPotted()) secondHitDone = false;
-            if(secondHitDone && firstPottedBallNo != -2 && firstPottedBallNo!=-1){
+            if(secondHitDone && !isBallTypeSelected && firstPottedBallNo!=-1){
                   if(1<=firstPottedBallNo && firstPottedBallNo<=7){
                         turner.setBallType("solid");
                         viewer.setBallType("stripe");
                   }
-                  if(9<=firstPottedBallNo && firstPottedBallNo<=15){
+                  else if(9<=firstPottedBallNo && firstPottedBallNo<=15){
                         turner.setBallType("stripe");
                         viewer.setBallType("solid");
                   }
                   System.out.println("p1: "+player1.getBallType()+" p2: "+player2.getBallType());
                   firstPottedBallNo = -2;
+                  isBallTypeSelected=true;
+//                  player1.printRemaingBall();
+                  
             }
             else if(!secondHitDone) firstPottedBallNo = -1;
       }
@@ -168,4 +176,26 @@ public class Rules {
             wrongHit = false;
             pocketedBallNum.clear();
       }
+
+//      private void addPottedBall() {
+//            for(Integer num : pocketedBallNum){
+//                  if(!isBallTypeSelected){
+//                        turner.getRemainingBalls().remove(num);
+//                        viewer.getRemainingBalls().remove(num);
+//                  }
+//                  else if(isContain(num)) turner.getRemainingBalls().remove(num);
+//                  else viewer.getRemainingBalls().remove(num);
+//                  if(num == 8) turner.setEightBallPocketed(true);
+//            }
+//      }
+
+//      private void checkIfGameOver() {
+//            if(player1.getRemainingBalls().size() == 0) player1.setCanPocketEightBall(true);
+//            if(player1.isCanPocketEightBall() && player1.isEightBallPocketed() && !CueBall.isCueBallPotted()){
+//                  System.out.println("You won!!!");
+//            }
+//            else if(player1.isEightBallPocketed()){
+//                  System.out.println("You loss.");
+//            }
+//      }
 }

@@ -23,7 +23,7 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = true;
+      public static boolean online = true  ;
       static boolean offline = !online;
       static boolean practice;
       
@@ -75,7 +75,7 @@ public class GameBoard{
 //pane.getChildren().add(prepareLightSource());
             addPowerSlider();
             prepareBoard();
-            rules = new Rules(player1, player2, cueBall);
+            rules = new Rules(player1, player2, cueBall, allBalls);
             //connection = new ConnectServer(allBalls, cue);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
