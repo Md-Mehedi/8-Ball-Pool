@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="675.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.GamePageController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="750.0" layoutX="338.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="338.0" AnchorPane.rightAnchor="316.34783935546875" AnchorPane.topAnchor="311.0">
+         <image>
+            <Image url="@../picturepackage/Board-4.jpg" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="67.0" prefHeight="77.0" prefWidth="150.0" text="Vs" AnchorPane.bottomAnchor="620.0" AnchorPane.leftAnchor="595.0" AnchorPane.rightAnchor="605.0" AnchorPane.topAnchor="67.0">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="249.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="605.1666641235352" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="901.0" AnchorPane.topAnchor="13.0">
+         <image>
+            <Image url="@../picturepackage/player1.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="918.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="603.3913116455078" AnchorPane.leftAnchor="918.0" AnchorPane.rightAnchor="232.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@../picturepackage/player2.jpg" />
+         </image>
+      </ImageView>
+      <HBox fx:id="player1BallBox" alignment="CENTER" layoutX="102.0" layoutY="165.0" prefHeight="85.0" prefWidth="500.0" style="-fx-background-color: #ece6ee;" AnchorPane.bottomAnchor="495.0" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="748.0" AnchorPane.topAnchor="165.0" />
+      <HBox fx:id="player2BallBox" alignment="CENTER" layoutX="771.0" layoutY="169.0" prefHeight="85.0" prefWidth="500.0" style="-fx-background-color: #ece6ee;" AnchorPane.bottomAnchor="491.0" AnchorPane.leftAnchor="771.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="169.0" />
+      <Button fx:id="btn1" layoutX="67.0" layoutY="299.0" mnemonicParsing="false" onAction="#upperBall1Action" text="Button" textFill="#111010" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="1197.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="271.0" />
+      <Button fx:id="btn2" layoutX="156.0" layoutY="283.0" mnemonicParsing="false" onAction="#upperBall2Action" prefHeight="28.0" prefWidth="52.0" text="Button" AnchorPane.bottomAnchor="435.0" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="1142.0" AnchorPane.topAnchor="283.0" />
+   </children>
+</AnchorPane>

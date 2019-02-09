@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         if(Configure.musicMode) SoundmusicPlayer.setMusic(true);
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/StartPage.fxml"));        
+        Parent root = FXMLLoader.load(getClass().getResource("/FXML/GamePage.fxml"));        
         Scene scene = new Scene(root);        
         stage.setScene(scene);
         stage.show();

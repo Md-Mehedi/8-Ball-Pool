@@ -11,6 +11,9 @@
     -fx-background-radius: 22;
     -fx-font-size:36;
     -fx-text-fill: #330000;  
+    -fx-border-width:3;
+    -fx-border-radius:20;
+    -fx-border-color:maroon;
 }
 .button:hover{
     -fx-font-weight: italic;
@@ -31,5 +34,8 @@
     -fx-border-color: #2196f3;
     -fx-border-radius: 20;
     -fx-border-width: 3;
+}
+#hbox{
+    -fx-background-color: transparent;
 }
 

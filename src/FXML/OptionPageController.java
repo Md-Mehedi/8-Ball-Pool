@@ -3,6 +3,7 @@ package FXML;
 
 import Others.Configure;
 import Others.SoundmusicPlayer;
+import Others.Transition;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.IOException;
@@ -10,13 +11,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 
 public class OptionPageController implements Initializable {
@@ -31,6 +29,8 @@ public class OptionPageController implements Initializable {
     private JFXButton backButton;
     @FXML
     private JFXToggleButton musicButton;
+    
+    private ImageView parentBackImageView;
     
     
     @Override
@@ -64,10 +64,8 @@ public class OptionPageController implements Initializable {
        if(Configure.soundMode==true){
             player.setSoundClick(true);
         }
-       Parent pane = (AnchorPane)FXMLLoader.load(getClass().getResource("StartPage.fxml"));  
-       Scene scene = new Scene(pane);    
-       Stage curStage = (Stage) settingpane.getScene().getWindow();
-       curStage.setScene(scene);
+       parentBackImageView.setEffect(new BoxBlur(0,0,0));
+       Transition.scaleTransition(settingpane, .9, 0);
     }
 
     @FXML
@@ -83,6 +81,10 @@ public class OptionPageController implements Initializable {
             Configure.musicMode = false;
         }
     }
+
+      void setParentBackground(ImageView backgroundImage) {
+            parentBackImageView=backgroundImage;
+      }
     
    
 }

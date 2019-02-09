@@ -24,7 +24,7 @@ import javafx.util.Duration;
  */
 public class GameBoard{
       public static boolean online = true  ;
-      static boolean offline = !online;
+      public static boolean offline = !online;
       static boolean practice;
       
 

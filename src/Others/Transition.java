@@ -6,6 +6,7 @@
 package Others;
 
 import javafx.animation.ScaleTransition;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -15,12 +16,15 @@ import javafx.util.Duration;
  */
 public class Transition {
    
-    public static void scaleTransition(Pane pane){
-        ScaleTransition scale = new ScaleTransition(Duration.seconds(1), pane);
-        scale.setFromX(.01);
-        scale.setFromY(.01);
-        scale.setToX(.9);
-        scale.setToY(.9);
+    public static void scaleTransition(Pane pane, double FromValue, double ToValue){
+        ScaleTransition scale = new ScaleTransition(Duration.seconds(.5), pane);
+        scale.setFromX(FromValue);
+        scale.setFromY(FromValue);
+        scale.setToX(ToValue);
+        scale.setToY(ToValue);
         scale.play();
+    }
+    public static void RotateTransition(ImageView imageView,double angle,double Duration){
+        
     }
 }

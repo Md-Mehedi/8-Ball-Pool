@@ -2,7 +2,6 @@
 package Others;
 
 import java.io.File;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -15,11 +14,11 @@ public class SoundmusicPlayer extends BorderPane{
     static MediaPlayer musicMediaPlayer=new MediaPlayer(musicMedia);
     static MediaView musicMediaView=new MediaView(musicMediaPlayer);
     
-    File soundFile=new File("ButtonClickSound.mp3");
-    String soundName=soundFile.toURI().toString();
-    Media soundMedia=new Media(soundName);
-    MediaPlayer  soundMediaPlayer=new MediaPlayer(soundMedia);
-    MediaView souMediaView=new MediaView(soundMediaPlayer);
+     File soundFile=new File("ButtonClickSound.mp3");
+     String soundName=soundFile.toURI().toString();
+     Media soundMedia=new Media(soundName);
+     MediaPlayer  soundMediaPlayer=new MediaPlayer(soundMedia);
+     MediaView souMediaView=new MediaView(soundMediaPlayer);
     public static void setMusic(boolean condition){
         if(condition==true){
             musicMediaPlayer.play();
@@ -33,9 +32,14 @@ public class SoundmusicPlayer extends BorderPane{
         if(condition==true){
             soundMediaPlayer.play();
         }
-        else{
-            soundMediaPlayer.stop();
-        }
+        
+//        soundMediaPlayer.stop();
+//        else{
+//            soundMediaPlayer.stop();
+//        }
+    }
+    public void setSoundStop(){
+        //soundMediaPlayer.stop();
     }
 }
      

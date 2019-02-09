@@ -76,6 +76,7 @@ public class Rules {
 
       private void swapTurn() {
             if(GameBoard.online && player1.getTurn()) PoolGame.connection.sendData("swapClient");
+            System.out.println(player1.getTurn()? "player1 loss turn\nplayer2's turn now.": "player2 loss turn\nplayer1's turn now.");
             player1.setTurn(!player1.getTurn());
             player2.setTurn(!player2.getTurn());
             updateTurner();

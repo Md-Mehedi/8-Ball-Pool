@@ -3,7 +3,6 @@ package Application;
 import Main.*;
 import ServerConnection.ConnectServer;
 import java.io.IOException;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -13,14 +12,13 @@ import javafx.stage.Stage;
  * @author Md Mehedi Hasan
  */
 
-public class PoolGame extends Application{
+public class PoolGame{
     
-    Pane playfield;
-    Scene scene;
+    public static Pane playfield;
+    public static Scene scene;
     public static ConnectServer connection;
 
-    @Override
-    public void start(Stage primaryStage) throws IOException {
+    public static void start(Stage primaryStage) throws IOException {
         
         AnchorPane root = new AnchorPane(); 
         playfield = new Pane();
@@ -43,12 +41,8 @@ public class PoolGame extends Application{
         primaryStage.setResizable(false);
 //        primaryStage.setAlwaysOnTop(true);
             
-        primaryStage.setX(400);
-        primaryStage.setY(0);
         primaryStage.show();
         
-        System.out.println(Value.BOARD_POSITION_CENTER_X);
-        System.out.println(Value.BOARD_POSITION_CENTER_Y);
         GameBoard gb = new GameBoard(primaryStage, playfield);
         if(GameBoard.online) connection = new ConnectServer(gb);
     }
@@ -105,7 +99,7 @@ public class PoolGame extends Application{
      */
     public static void main(String[] args) {
 //           ServerConnection.ConnectServer.main();
-        launch(args);
+        //launch(args);
     }
 
 }

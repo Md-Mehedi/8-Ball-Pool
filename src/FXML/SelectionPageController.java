@@ -1,24 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FXML;
 
+import Application.PoolGame;
+import Others.Configure;
+import Others.SoundmusicPlayer;
+import Others.Transition;
 import com.jfoenix.controls.JFXButton;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author user
- */
 public class SelectionPageController implements Initializable {
 
     @FXML
@@ -26,41 +27,198 @@ public class SelectionPageController implements Initializable {
     @FXML
     private JFXButton cueTab;
     @FXML
-    private HBox hbox;
-    private  double anchorX;
-    /**
-     * Initializes the controller class.
-     */
+    private ScrollPane tablePane;
+    @FXML
+    private ImageView board1;
+    @FXML
+    private ImageView board2;
+    @FXML
+    private ImageView board3;
+    @FXML
+    private ImageView board4;
+    @FXML
+    private ImageView board5;
+    @FXML
+    private ImageView board6;
+    @FXML
+    private ScrollPane cuePane;
+    @FXML
+    private ImageView cue1;
+    @FXML
+    private ImageView cue2;
+    @FXML
+    private ImageView cue3;
+    @FXML
+    private ImageView cue4;
+    @FXML
+    private ImageView cue5;
+    @FXML
+    private ImageView cue6;
+    @FXML
+    private ImageView cue7;
+    @FXML
+    private JFXButton backButton;
+    @FXML
+    private AnchorPane selectionPagePane;
+    SoundmusicPlayer player=new SoundmusicPlayer();
+      @FXML
+      private JFXButton playButton;
+      
+      private ImageView parentBackImageView;
+      private ImageView backGroundImage;
+      private GamePageController gamePageController;
+      private Parent gamePage;
+    
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        tablePane.setVisible(true);
+        cuePane.setVisible(false);
     }    
-
-    @FXML
-    private void hboxDraggedAction(MouseEvent event) {
-        hbox.setLayoutX(hbox.getLayoutX()-(anchorX-event.getSceneX()));
-        anchorX = event.getSceneX();
-    }
-
-    @FXML
-    private void hboxDragEnterAction(MouseEvent event) {
-        anchorX = event.getSceneX();
-    }
-
-
-    @FXML
-    private void cueTabPressedAction(ActionEvent event) {
-        cueTab.toFront();
-    }
-
     @FXML
     private void gameBoardTabPressedAction(ActionEvent event){
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
         gameBoardTab.toFront();
+        tablePane.setVisible(true);
+        cuePane.setVisible(false);
+    }
+    @FXML
+    private void cueTabPressedAction(ActionEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        cueTab.toFront();
+        cuePane.setVisible(true);
+        tablePane.setVisible(false);
+    }
+    @FXML
+    private void board1SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Board 1 selected");
     }
 
     @FXML
-    private void hboxPressAction(MouseEvent event) {
+    private void board2SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Board 2 selected");
+    }
+
+    @FXML
+    private void board3SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Board 3 selected");
+    }
+
+    @FXML
+    private void board4SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Board 4 selected");
+    }
+
+    @FXML
+    private void board5SelectAction(MouseEvent event){ 
+            if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Board 5 selected");
+    }
+
+    @FXML
+    private void board6SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Board 6 selected");
+    }
+
+    @FXML
+    private void cue1SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 1 Selected");
+    }
+
+    @FXML
+    private void cue2SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 2 Selected");
+    }
+
+    @FXML
+    private void cue3SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 3 Selected");
+    }
+
+    @FXML
+    private void cue4SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 4 Selected");
+    }
+
+    @FXML
+    private void cue5SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 5 Selected");
+    }
+
+    @FXML
+    private void cue6SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 6 Selected");
     }
     
-    
+    @FXML
+    private void cue7SelectAction(MouseEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+        System.out.println("Cue 7 Selected");
+    }
+
+    @FXML
+    private void backAction(ActionEvent event) {
+        if(Configure.soundMode==true){
+            player.setSoundClick(true);
+        }
+       parentBackImageView.setEffect(new BoxBlur(0,0,0));
+       Transition.scaleTransition(selectionPagePane, .9, 0);
+        //selectionPagePane.setVisible(false);
+    }
+
+      @FXML
+      private void playAction(ActionEvent event) throws IOException {
+            if (Configure.soundMode == true) {
+                  player.setSoundClick(true);
+            }
+            Configure.musicMode = false;
+            PoolGame.start((Stage)selectionPagePane.getScene().getWindow());
+            
+      }
+
+      void setParentBackground(ImageView backGroundImage) {
+             parentBackImageView=backGroundImage;
+      }
+        
 }

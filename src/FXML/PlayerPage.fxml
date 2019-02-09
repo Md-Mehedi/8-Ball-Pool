@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="playerPagePane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.PlayerPageController">
+   <children>
+      <ImageView fx:id="backGroundImage" fitHeight="800.0" fitWidth="1500.0" pickOnBounds="true">
+         <image>
+            <Image url="@../picturepackage/PlayerPage.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="176.0" fitWidth="230.0" layoutX="585.0" layoutY="400.0" pickOnBounds="true">
+         <image>
+            <Image url="@../picturepackage/VsImage.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Player1Image" fitHeight="186.0" fitWidth="234.0" layoutX="299.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="player2Image" fitHeight="186.0" fitWidth="234.0" layoutX="905.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="348.0" layoutY="602.0" prefHeight="57.0" prefWidth="126.0">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="971.0" layoutY="602.0" prefHeight="57.0" prefWidth="126.0">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="351.0" layoutY="319.0" prefHeight="45.0" prefWidth="126.0" style="-fx-background-color: #32c224;" text="Player 1" textFill="#6b4d3d">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="backButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="14.0" layoutY="684.0" onAction="#backAction" onMouseReleased="#backReleasedAction" prefHeight="77.0" prefWidth="154.0" ripplerFill="#80b907" style="-fx-background-color: #73c8a9;" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Back" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Italic" size="36.0" />
+         </font>
+         <styleClass>
+            <String fx:value=".button:hover" />
+            <String fx:value=".button:pressed" />
+         </styleClass>
+      </JFXButton>
+      <JFXButton fx:id="startButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="1247.0" layoutY="684.0" onAction="#startAction" onMouseReleased="#backReleasedAction" prefHeight="77.0" prefWidth="154.0" ripplerFill="#80b907" style="-fx-background-color: #73c8a9;" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Start" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Italic" size="36.0" />
+         </font>
+         <styleClass>
+            <String fx:value=".button:hover" />
+            <String fx:value=".button:pressed" />
+         </styleClass>
+      </JFXButton>
+      <Label fx:id="player1Name" alignment="CENTER" contentDisplay="CENTER" layoutX="332.0" layoutY="602.0" prefHeight="45.0" prefWidth="175.0" style="-fx-background-color: #cc9d24;" textFill="#36332e">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2Name" alignment="CENTER" contentDisplay="CENTER" layoutX="935.0" layoutY="602.0" prefHeight="45.0" prefWidth="175.0" style="-fx-background-color: #cc9d24;" textFill="#36332e">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="945.0" layoutY="319.0" prefHeight="45.0" prefWidth="126.0" style="-fx-background-color: #32c224;" text="Player 2" textFill="#6b4d3d">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
