@@ -1,5 +1,6 @@
 package Main;
 
+import Main.GameComponent.Ball.Ball;
 import static java.lang.Math.sqrt;
 
 /**

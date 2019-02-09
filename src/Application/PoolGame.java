@@ -39,6 +39,8 @@ public class PoolGame{
         primaryStage.setScene(scene);
         primaryStage.setTitle("8 Ball   Game");
         primaryStage.setResizable(false);
+        primaryStage.setX(0);
+        primaryStage.setY(0);
 //        primaryStage.setAlwaysOnTop(true);
             
         primaryStage.show();

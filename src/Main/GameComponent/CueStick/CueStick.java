@@ -1,6 +1,9 @@
-package Main;
+package Main.GameComponent.CueStick;
 
 import Application.PoolGame;
+import Main.GameBoard;
+import Main.GameComponent.Ball.CueBall;
+import Main.Value;
 import common.PVector;
 import java.io.IOException;
 import javafx.beans.property.DoubleProperty;
@@ -26,7 +29,7 @@ public class CueStick{
       PVector velocity;
 //    Cylinder cue;
       ImageView cue;
-      static double angle;
+      public static double angle;
       static boolean moveable;
       static DoubleProperty previousSceneX = new SimpleDoubleProperty(0);
       static DoubleProperty previousSceneY = new SimpleDoubleProperty(0);
@@ -89,16 +92,16 @@ public class CueStick{
 ////
 //    }
 
-      void setPosition(Point2D cueBallLocation) {
+      public void setPosition(Point2D cueBallLocation) {
             this.cueBallLocation = cueBallLocation;
             setLayout(2 * Value.BALL_RADIUS, cueBallLocation.getX(), cueBallLocation.getY());
       }
 
-      double distance(double x1, double y1, double x2, double y2) {
+      public double distance(double x1, double y1, double x2, double y2) {
             return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
       }
 
-      void rotationEvent() {
+      public void rotationEvent() {
             pane.getScene().setOnMousePressed(event -> {
                         previousSceneX.set(event.getSceneX());
                         previousSceneY.set(event.getSceneY());
@@ -109,7 +112,7 @@ public class CueStick{
             });
             pane.getScene().setOnMouseDragged((event) -> {
 
-                  if (moveable && !CueBall.isDragging && (GameBoard.offline || GameBoard.practice || (GameBoard.online && GameBoard.player1.getTurn()))) {
+                  if (moveable && !CueBall.isDragging() && (GameBoard.offline || GameBoard.practice || (GameBoard.online && GameBoard.player1.getTurn()))) {
                         double newX = 0;
                         double newY = 0;
                         newX = event.getSceneX();
@@ -132,11 +135,11 @@ public class CueStick{
             return angle - 180;
       }
 
-      double getVelocityX() {
+      public double getVelocityX() {
             return velocity.x;
       }
 
-      double getVelocityY() {
+      public double getVelocityY() {
             return velocity.y;
       }
 

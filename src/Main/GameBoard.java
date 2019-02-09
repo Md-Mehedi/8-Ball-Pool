@@ -1,6 +1,11 @@
 package Main;
 
 import Application.PoolGame;
+import Main.GameComponent.Ball.Ball;
+import Main.GameComponent.Ball.CueBall;
+import Main.GameComponent.Board.Board;
+import Main.GameComponent.CueStick.CueStick;
+import Main.GameComponent.Slider.SliderController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,12 +28,12 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = true  ;
+      public static boolean online = false  ;
       public static boolean offline = !online;
-      static boolean practice;
+      public static boolean practice;
       
 
-      ArrayList<Ball> allBalls;
+      public ArrayList<Ball> allBalls;
 
       Pane pane;
       AnimationTimer gameLoop;
@@ -36,7 +41,7 @@ public class GameBoard{
       Stage curStage;
       CueStick cue;
       int cueAngle;
-      static boolean moving = false;
+      public static boolean moving = false;
       Board board;
       CueBall cueBall;
       SliderController slider;
@@ -73,7 +78,7 @@ public class GameBoard{
             board = new Board(pane);
             cueBallPosition = new Point2D(board.getStart().getX() +  Value.BOARD_X / 6, board.getStart().getY() +  Value.BOARD_Y / 2);
 //pane.getChildren().add(prepareLightSource());
-            addPowerSlider();
+            addPowerSlider();System.out.println("Checked");
             prepareBoard();
             rules = new Rules(player1, player2, cueBall, allBalls);
             //connection = new ConnectServer(allBalls, cue);
@@ -202,9 +207,9 @@ public class GameBoard{
                                     makeCollision(elapsedTime);
                               }
                               
-                              cue.getCue().setVisible(!CueBall.isDragging && !moving);
-                              slider.setVisible(!CueBall.isDragging && !moving && (offline || practice || (online && player1.getTurn())));
-                              cueBall.getLine().setVisible(!CueBall.isDragging && !moving);
+                              cue.getCue().setVisible(!CueBall.isDragging() && !moving);
+                              slider.setVisible(!CueBall.isDragging() && !moving && (offline || practice || (online && player1.getTurn())));
+                              cueBall.getLine().setVisible(!CueBall.isDragging() && !moving);
                               cueBall.updateHintLine();
 
                               lastUpdateTime.set(now);
@@ -257,7 +262,7 @@ public class GameBoard{
                               collision.updateVelocity();
                         }
                         moving = false;
-                        allBalls.forEach(ball -> {
+                        allBalls.forEach((Ball ball) -> {
                               ball.move(elapsedTime);
                               if (ball.getVelocity() < 0.001 && !moving) {
                                     ball.setVelocity(0);
@@ -289,7 +294,7 @@ public class GameBoard{
       }
 
       private void addPowerSlider() {
-            FXMLLoader sliderLoader = new FXMLLoader(getClass().getResource("Slider.fxml"));
+            FXMLLoader sliderLoader = new FXMLLoader(getClass().getResource("GameComponent/Slider/Slider.fxml"));
             
             try {
                   Parent sliderPane = (AnchorPane)sliderLoader.load();

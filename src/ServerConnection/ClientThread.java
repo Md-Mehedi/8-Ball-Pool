@@ -5,8 +5,8 @@
  */
 package ServerConnection;
 
-import Main.Ball;
-import Main.CueStick;
+import Main.GameComponent.Ball.Ball;
+import Main.GameComponent.CueStick.CueStick;
 import Main.GameBoard;
 import java.io.BufferedReader;
 import java.io.IOException;

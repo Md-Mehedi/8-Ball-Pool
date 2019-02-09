@@ -1,5 +1,6 @@
-package Main;
+package Main.GameComponent.Slider;
 
+import Main.GameComponent.CueStick.CueStick;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -185,7 +186,7 @@ public class SliderController implements Initializable {
             this.isReleased = isReleased;
       }
 
-      void setVisible(boolean b) {
+      public void setVisible(boolean b) {
             container.setVisible(b);
       }
       

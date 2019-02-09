@@ -7,6 +7,8 @@
 package Main;
 
 import Application.PoolGame;
+import Main.GameComponent.Ball.Ball;
+import Main.GameComponent.Ball.CueBall;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,9 +55,9 @@ public class Rules {
             this.pocketedBallNum = pocketedBallNum;
       }
 
-      void checkRule() {
-            if(cueBall.pocketed) secondHitDone = false;
-            if(cueBall.pocketed || !cutionHit){
+      public void checkRule() {
+            if(cueBall.isPocketed()) secondHitDone = false;
+            if(cueBall.isPocketed() || !cutionHit){
                   swapTurn();
             }
             
@@ -199,4 +201,49 @@ public class Rules {
 //                  System.out.println("You loss.");
 //            }
 //      }
+
+      public ArrayList<Ball> getAllBalls() {
+            return allBalls;
+      }
+
+      public void setAllBalls(ArrayList<Ball> allBalls) {
+            this.allBalls = allBalls;
+      }
+
+      public boolean isPocketedBallFound() {
+            return pocketedBallFound;
+      }
+
+      public void setPocketedBallFound(boolean pocketedBallFound) {
+            this.pocketedBallFound = pocketedBallFound;
+      }
+
+      public boolean isIsBallTypeSelected() {
+            return isBallTypeSelected;
+      }
+
+      public void setIsBallTypeSelected(boolean isBallTypeSelected) {
+            this.isBallTypeSelected = isBallTypeSelected;
+      }
+
+      public boolean isWrongHit() {
+            return wrongHit;
+      }
+
+      public void setWrongHit(boolean wrongHit) {
+            this.wrongHit = wrongHit;
+      }
+
+      public static void setFirstHitBallNum(int firstHitBallNum) {
+            Rules.firstHitBallNum = firstHitBallNum;
+      }
+
+      public static void setFirstPottedBallNo(int firstPottedBallNo) {
+            Rules.firstPottedBallNo = firstPottedBallNo;
+      }
+
+      public static void setCutionHit(boolean cutionHit) {
+            Rules.cutionHit = cutionHit;
+      }
+      
 }

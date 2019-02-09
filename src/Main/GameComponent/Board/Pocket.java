@@ -1,5 +1,8 @@
-package Main;
+package Main.GameComponent.Board;
 
+import Main.GameComponent.Ball.Ball;
+import Main.Rules;
+import Main.Value;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -58,7 +61,7 @@ public class Pocket {
       public void checkPocketed(Ball ball, Pocket pocket) {
             if (checkPocketedValidity(ball)) {
                   if (!ball.isPocketed()) {
-                        if(Rules.firstPottedBallNo == -1 && ball.getID()!=0) Rules.firstPottedBallNo = ball.getID();
+                        if(Rules.getFirstPottedBallNo() == -1 && ball.getID()!=0) Rules.setFirstPottedBallNo(ball.getID());
                         Rules.getPocketedBallNum().add(ball.getID());
                         
                         ball.setPocketed(true);

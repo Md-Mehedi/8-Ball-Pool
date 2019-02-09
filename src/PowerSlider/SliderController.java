@@ -1,6 +1,6 @@
 package PowerSlider;
 
-import Main.CueStick;
+import Main.GameComponent.CueStick.CueStick;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

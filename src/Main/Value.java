@@ -8,7 +8,7 @@ public class Value {
 
       public static boolean WORK_WITH_NETWORK = false;
       
-      public static double SCALE = 17/1.7;
+      public static double SCALE = 8;
 
       public static double SCENE_WIDTH = 1910 * SCALE/17;
       public static double SCENE_HIGHT = 990 * SCALE/17;

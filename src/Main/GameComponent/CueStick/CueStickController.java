@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package Main.GameComponent.CueStick;
 
+import Main.Value;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;

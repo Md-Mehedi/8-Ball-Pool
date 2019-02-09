@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package Main.GameComponent.Board;
 
+import Main.Value;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -36,11 +37,18 @@ public class BoardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        container.setPrefSize(Value.BOARD_X, Value.BOARD_Y);
-        container.setMaxSize(Value.BOARD_X, Value.BOARD_Y);
-        container.setMinSize(Value.BOARD_X, Value.BOARD_Y);
+        container.setPrefSize(Value.SCENE_WIDTH, Value.SCENE_HIGHT);
+        container.setMaxSize(Value.SCENE_WIDTH, Value.SCENE_HIGHT);
+        container.setMinSize(Value.SCENE_WIDTH, Value.SCENE_HIGHT);
         imageView.setFitHeight(Value.BOARD_Y);
         imageView.setFitWidth(Value.BOARD_X);
+        imageView.setLayoutX(Value.BOARD_POSITION_CENTER_X);
+        imageView.setLayoutY(Value.BOARD_POSITION_CENTER_Y);
+//        container.setPrefSize(Value.BOARD_X, Value.BOARD_Y);
+//        container.setMaxSize(Value.BOARD_X, Value.BOARD_Y);
+//        container.setMinSize(Value.BOARD_X, Value.BOARD_Y);
+//        imageView.setFitHeight(Value.BOARD_Y);
+//        imageView.setFitWidth(Value.BOARD_X);
         imageView.setImage(new Image(getClass().getResourceAsStream(Value.BOARD_PICTURE_LOCATION)));
     }    
 

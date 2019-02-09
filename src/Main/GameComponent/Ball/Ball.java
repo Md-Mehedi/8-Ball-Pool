@@ -1,5 +1,7 @@
-package Main;
+package Main.GameComponent.Ball;
 
+import Main.Rules;
+import Main.Value;
 import static java.lang.Math.atan;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -187,14 +189,14 @@ public class Ball {
             return ball.getLayoutY();
       }
 
-      void boundaryCollisionCheck(Point2D start, Point2D end) {
+      public void boundaryCollisionCheck(Point2D start, Point2D end) {
             if(pocketed) return;
             
             if ((velocityX.get() > 0 && end.getX() - radius - Value.CUTION_SIZE <= positionX.get())
                   || (velocityX.get() < 0 && start.getX() + radius + Value.CUTION_SIZE >= positionX.get())) {
                   if (positionY.get() > Value.pocketY1 && positionY.get() < Value.pocketY2) {
                         velocityX.set(-velocityX.get());
-                        Rules.cutionHit = true;
+                        Rules.setCutionHit(true);
                   }
             }
 
@@ -203,7 +205,7 @@ public class Ball {
                   if ((Value.pocketX1 < positionX.get() && positionX.get() < Value.pocketX2)
                         || (Value.pocketX3 < positionX.get() && positionX.get() < Value.pocketX4)) {
                         velocityY.set(-velocityY.get());
-                        Rules.cutionHit = true;
+                        Rules.setCutionHit(true);
                   }
             }
       }
@@ -221,26 +223,26 @@ public class Ball {
             accelerationY = Value.BOARD_FRICTION * sin(angle);
       }
 
-      DoubleProperty centerXProperty() {
+      public DoubleProperty centerXProperty() {
             return positionX;
       }
 
-      DoubleProperty centerYProperty() {
+      public DoubleProperty centerYProperty() {
             return positionY;
       }
 
-      double getVelocity() {
+      public double getVelocity() {
             return Math.sqrt(velocityX.get() * velocityX.get() + velocityY.get() * velocityY.get());
       }
 
-      double getAngle() {
+      public double getAngle() {
             if (velocityX.get() >= 0) {
                   return Math.atan(velocityY.get() / velocityX.get());
             }
             return Math.PI + Math.atan(velocityY.get() / velocityX.get());
       }
 
-      void setOpacity(double value) {
+      public void setOpacity(double value) {
             ball.setOpacity(value);
       }
 
@@ -249,12 +251,12 @@ public class Ball {
             return "Ball{" + "positionX=" + positionX.get() + ", positionY=" + positionY.get() + ", velocityX=" + velocityX.get() + ", velocityY=" + velocityY.get() + ", accelerationX=" + accelerationX + ", accelerationY=" + accelerationY + ", id=" + id + '}';
       }
 
-      void setVelocity(int i) {
+      public void setVelocity(int i) {
             velocityX.set(0);
             velocityY.set(0);
       }
 
-      void setAcceleration(int i) {
+      public void setAcceleration(int i) {
             accelerationX = 0;
             accelerationY = 0;
       }

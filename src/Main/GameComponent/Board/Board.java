@@ -1,5 +1,6 @@
-package Main;
+package Main.GameComponent.Board;
 
+import Main.Value;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +62,13 @@ public class Board {
             this.end = boardEnd;
       }
 
-      void drawBoard() throws IOException {
+      public void drawBoard() throws IOException {System.out.println("ok board");
             Parent board = (AnchorPane) FXMLLoader.load(getClass().getResource("Board.fxml"));
             pane.getChildren().add(board);
-            board.setLayoutX(Value.BOARD_POSITION_CENTER_X);
-            board.setLayoutY(Value.BOARD_POSITION_CENTER_Y);
+            board.setLayoutX(0);
+            board.setLayoutY(0);
+//            board.setLayoutX(Value.BOARD_POSITION_CENTER_X);
+//            board.setLayoutY(Value.BOARD_POSITION_CENTER_Y);
 
             preparePocket();
       }

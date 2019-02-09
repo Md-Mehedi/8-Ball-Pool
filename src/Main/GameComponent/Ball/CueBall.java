@@ -1,6 +1,9 @@
-package Main;
+package Main.GameComponent.Ball;
 
 import Application.PoolGame;
+import Main.GameBoard;
+import Main.GameComponent.CueStick.CueStick;
+import Main.Value;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
@@ -33,9 +36,15 @@ public class CueBall extends Ball {
       public static void setDraggable(boolean draggable) {
             CueBall.draggable = draggable;
       }
-      private double anchorX;
-      private double anchorY;
 
+      public static boolean isIsDragging() {
+            return isDragging;
+      }
+
+      public static void setIsDragging(boolean isDragging) {
+            CueBall.isDragging = isDragging;
+      }
+      
       public CueBall(Pane pane, int id) {
             super(pane, id);
             line = new Line(positionX.get(), positionY.get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
@@ -46,7 +55,7 @@ public class CueBall extends Ball {
 
       }
 
-      void makeHandler(ArrayList<Ball> allBalls) {
+      public void makeHandler(ArrayList<Ball> allBalls) {
 
             ball.setOnMouseReleased(event -> {
                   if (isDraggable() && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
