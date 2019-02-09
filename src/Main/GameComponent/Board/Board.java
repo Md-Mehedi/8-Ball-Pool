@@ -62,9 +62,9 @@ public class Board {
             this.end = boardEnd;
       }
 
-      public void drawBoard() throws IOException {System.out.println("ok board");
+      public void drawBoard() throws IOException {
             Parent board = (AnchorPane) FXMLLoader.load(getClass().getResource("Board.fxml"));
-            pane.getChildren().add(board);
+            pane.getChildren().add(board);System.out.println("ok board");
             board.setLayoutX(0);
             board.setLayoutY(0);
 //            board.setLayoutX(Value.BOARD_POSITION_CENTER_X);

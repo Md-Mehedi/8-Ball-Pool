@@ -134,22 +134,22 @@ public class GameBoard{
             for (int i = 1; i <  Value.BALL_TOTAL; i++) {
                   allBalls.add(new Ball(pane, i));
             }
-            allBalls.get(0).setValue(pane, cueBallPosition, "/PictureBall/Ball_0.jpg");
-            allBalls.get(1).setValue(pane, new Point2D(posX + difX, posY - difY), "/PictureBall/Ball_1.jpg");
-            allBalls.get(2).setValue(pane, new Point2D(posX + 4 * difX, posY - 2 * radius), "/PictureBall/Ball_2.jpg");
-            allBalls.get(3).setValue(pane, new Point2D(posX + 3 * difX, posY - difY), "/PictureBall/Ball_3.jpg");
-            allBalls.get(4).setValue(pane, new Point2D(posX + 4 * difX, posY + 2 * radius), "/PictureBall/Ball_4.jpg");
-            allBalls.get(5).setValue(pane, new Point2D(posX + 4 * difX, posY - 4 * radius), "/PictureBall/Ball_5.jpg");
-            allBalls.get(6).setValue(pane, new Point2D(posX + 2 * difX, posY - 2 * radius), "/PictureBall/Ball_6.jpg");
-            allBalls.get(7).setValue(pane, new Point2D(posX + 2 * difX, posY + 2 * radius), "/PictureBall/Ball_7.jpg");
-            allBalls.get(8).setValue(pane, new Point2D(posX + 2 * difX, posY), "/PictureBall/Ball_8.jpg");
-            allBalls.get(9).setValue(pane, new Point2D(posX + difX, posY + difY), "/PictureBall/Ball_9.jpg");
-            allBalls.get(10).setValue(pane, new Point2D(posX, posY), "/PictureBall/Ball_10.jpg");
-            allBalls.get(11).setValue(pane, new Point2D(posX + 4 * difX, posY + 4 * radius), "/PictureBall/Ball_11.jpg");
-            allBalls.get(12).setValue(pane, new Point2D(posX + 4 * difX, posY), "/PictureBall/Ball_12.jpg");
-            allBalls.get(13).setValue(pane, new Point2D(posX + 3 * difX, posY + difY + 2 * radius), "/PictureBall/Ball_13.jpg");
-            allBalls.get(14).setValue(pane, new Point2D(posX + 3 * difX, posY + difY), "/PictureBall/Ball_14.jpg");
-            allBalls.get(15).setValue(pane, new Point2D(posX + 3 * difX, posY - difY - 2 * radius), "/PictureBall/Ball_15.jpg");
+            allBalls.get(0).setValue(pane, cueBallPosition, "/Main/GameComponent/Ball/BallPicture/Ball_0.jpg");
+            allBalls.get(1).setValue(pane, new Point2D(posX + difX, posY - difY), "/Main/GameComponent/Ball/BallPicture/Ball_1.jpg");
+            allBalls.get(2).setValue(pane, new Point2D(posX + 4 * difX, posY - 2 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_2.jpg");
+            allBalls.get(3).setValue(pane, new Point2D(posX + 3 * difX, posY - difY), "/Main/GameComponent/Ball/BallPicture/Ball_3.jpg");
+            allBalls.get(4).setValue(pane, new Point2D(posX + 4 * difX, posY + 2 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_4.jpg");
+            allBalls.get(5).setValue(pane, new Point2D(posX + 4 * difX, posY - 4 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_5.jpg");
+            allBalls.get(6).setValue(pane, new Point2D(posX + 2 * difX, posY - 2 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_6.jpg");
+            allBalls.get(7).setValue(pane, new Point2D(posX + 2 * difX, posY + 2 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_7.jpg");
+            allBalls.get(8).setValue(pane, new Point2D(posX + 2 * difX, posY), "/Main/GameComponent/Ball/BallPicture/Ball_8.jpg");
+            allBalls.get(9).setValue(pane, new Point2D(posX + difX, posY + difY), "/Main/GameComponent/Ball/BallPicture/Ball_9.jpg");
+            allBalls.get(10).setValue(pane, new Point2D(posX, posY), "/Main/GameComponent/Ball/BallPicture/Ball_10.jpg");
+            allBalls.get(11).setValue(pane, new Point2D(posX + 4 * difX, posY + 4 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_11.jpg");
+            allBalls.get(12).setValue(pane, new Point2D(posX + 4 * difX, posY), "/Main/GameComponent/Ball/BallPicture/Ball_12.jpg");
+            allBalls.get(13).setValue(pane, new Point2D(posX + 3 * difX, posY + difY + 2 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_13.jpg");
+            allBalls.get(14).setValue(pane, new Point2D(posX + 3 * difX, posY + difY), "/Main/GameComponent/Ball/BallPicture/Ball_14.jpg");
+            allBalls.get(15).setValue(pane, new Point2D(posX + 3 * difX, posY - difY - 2 * radius), "/Main/GameComponent/Ball/BallPicture/Ball_15.jpg");
 
             //move();
       }

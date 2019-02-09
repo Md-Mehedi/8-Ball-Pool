@@ -8,7 +8,7 @@ public class Value {
 
       public static boolean WORK_WITH_NETWORK = false;
       
-      public static double SCALE = 8;
+      public static double SCALE = 17;
 
       public static double SCENE_WIDTH = 1910 * SCALE/17;
       public static double SCENE_HIGHT = 990 * SCALE/17;
@@ -34,7 +34,7 @@ public class Value {
       public static double BALL_MASS = 5.5;
       public static double BOARD_FRICTION = 0.2;
       public static int BALL_TOTAL = 16;
-      public static String BOARD_PICTURE_LOCATION = "/PictureBall/Board/Board-1.png";
+      public static String BOARD_PICTURE_LOCATION = "TablePicture/Board-1.png";
 
       public static double pocketX1 = SCENE_WIDTH/2 - 540*SCALE/17 + BALL_RADIUS;
       public static double pocketX2 = SCENE_WIDTH/2 - 30*SCALE/17;
@@ -42,7 +42,7 @@ public class Value {
       public static double pocketX4 = SCENE_WIDTH/2 + 540*SCALE/17 - BALL_RADIUS;
       public static double pocketY1 = BOARD_POSITION_CENTER_Y + 120*SCALE/17 - BALL_RADIUS;
       public static double pocketY2 = BOARD_POSITION_CENTER_Y +BOARD_Y - 120*SCALE/17 + BALL_RADIUS;
-      public static String CUE_PICTURE_LOCATION = "/PictureBall/Cue/Cue-4.png";
+      public static String CUE_PICTURE_LOCATION = "CueStickPicture/Cue-4.png";
       
       public static double slope(double x1, double y1, double x2, double y2) {
             if (x2 - x1 >= 0) {

@@ -9,7 +9,7 @@
    <children>
       <ImageView fx:id="imageView" fitHeight="714.0" fitWidth="1260.428" layoutX="324.78" layoutY="274.0" onMouseClicked="#imageClickAction" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../PictureBall/Board/Board-1.png" />
+            <Image url="@TablePicture/Board-1.png" />
          </image>
       </ImageView>
       <Label fx:id="label" layoutX="394.0" layoutY="405.0" prefHeight="50.0" prefWidth="250.0" textFill="#006aff" />

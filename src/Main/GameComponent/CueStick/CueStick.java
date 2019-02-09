@@ -40,7 +40,7 @@ public class CueStick{
       public CueStick(Pane pane, Point2D cueBallLocation) throws IOException {
 //        Parent container = FXMLLoader.load(getClass().getResource("CueStick.fxml"));
 
-            cue = new ImageView();
+cue = new ImageView();System.out.println("cue done");
             cue.setImage(new Image(getClass().getResourceAsStream(Value.CUE_PICTURE_LOCATION)));
             cue.setFitWidth(Value.CUE_LENGTH);
             cue.setFitHeight(Value.CUE_RADIUS * 2);
