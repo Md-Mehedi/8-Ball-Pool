@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
  */
 public class Board {
 
-      BoardController controller;
+      public static BoardController controller;
       Pane pane;
       List<Pocket> pockets;
       Point2D start;

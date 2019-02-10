@@ -9,6 +9,7 @@ package Main;
 import Application.PoolGame;
 import Main.GameComponent.Ball.Ball;
 import Main.GameComponent.Ball.CueBall;
+import Main.GameComponent.Board.Board;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ public class Rules {
       Player player2;
       Player turner;
       Player viewer;
+      Board board;
       CueBall cueBall;
       static boolean secondHitDone;
       static boolean cutionHit;
@@ -37,13 +39,14 @@ public class Rules {
       static int firstPottedBallNo = -1;
       
       
-      public Rules(Player player1 , Player player2, CueBall cueBall, ArrayList<Ball> allBalls) {
+      public Rules(Player player1 , Player player2, Board board, CueBall cueBall, ArrayList<Ball> allBalls) {
             this.allBalls = allBalls;
             pocketedBallNum = new ArrayList<>();
             turner = new Player();
             viewer = new Player();
             this.player1 = player1;
             this.player2 = player2;
+            this.board = board;
             this.cueBall = cueBall;
       }
 
@@ -93,6 +96,7 @@ public class Rules {
                   if(1<=firstPottedBallNo && firstPottedBallNo<=7){
                         turner.setBallType("solid");
                         viewer.setBallType("stripe");
+                        board.getController().setRemainngBall(player1.getBallType());
                   }
                   else if(9<=firstPottedBallNo && firstPottedBallNo<=15){
                         turner.setBallType("stripe");

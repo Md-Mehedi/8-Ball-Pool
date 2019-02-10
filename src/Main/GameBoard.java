@@ -27,7 +27,7 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = false  ;
+      public static boolean online = true  ; 
       public static boolean offline = !online;
       public static boolean practice;
       
@@ -79,7 +79,7 @@ public class GameBoard{
 //pane.getChildren().add(prepareLightSource());
             prepareBoard();
             addPowerSlider();
-            rules = new Rules(player1, player2, cueBall, allBalls);
+            rules = new Rules(player1, player2, board, cueBall, allBalls);
             //connection = new ConnectServer(allBalls, cue);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
@@ -116,7 +116,7 @@ public class GameBoard{
 
       public void prepareBoard() throws IOException {
             board.drawBoard();
-            board.getController().setRemainngBall("solid");
+//            board.getController().setRemainngBall("solid");
             prepareBall();
             prepareCue();
             cueBall.makeHandler(allBalls);
@@ -196,7 +196,6 @@ public class GameBoard{
                                           CueBall.setDraggable(false);
                                           Rules.cutionHit = false;
                                           checkedRule = false;
-                              board.translateMessage("You");
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());

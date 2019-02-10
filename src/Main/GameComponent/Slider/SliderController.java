@@ -1,4 +1,4 @@
-package Main.GameComponent.Slider;
+ package Main.GameComponent.Slider;
 
 import Main.GameComponent.CueStick.CueStick;
 import java.net.URL;
