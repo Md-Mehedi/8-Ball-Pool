@@ -70,6 +70,8 @@ public class GameBoard{
       public GameBoard(Stage stage, Pane pane) throws IOException {
             player1 = new Player();
             player2 = new Player();
+            System.out.println(player1.getName());
+            System.out.println(player2.getName());
             allBalls = new ArrayList<>();
             curStage = stage;
             this.pane = new Pane();
@@ -194,7 +196,7 @@ public class GameBoard{
                                           pocketingStatus = true;
                                           CueBall.setHitTime(false);
                                           CueBall.setDraggable(false);
-                                          Rules.cutionHit = false;
+                                          Rules.railHit = false;
                                           checkedRule = false;
                                     }
                                     if (slider.getRatio() > 0) {
@@ -228,11 +230,12 @@ public class GameBoard{
             gameLoop.start();
       }
       private void checkCueBallIsPotted() {
-            if (Ball.isCueBallPotted()) {
+            if (rules.isBallInHand()) {
                   pocketingStatus = false;
                   CueBall.setDraggable(true);
                   CueBall.setCueBallPotted(false);
                   cueBall.setPocketed(false);
+                  rules.setBallInHand(false);
 
                   ScaleTransition st = new ScaleTransition(Duration.seconds(1), cueBall.getSphere());
                   st.setFromZ(1);
@@ -322,4 +325,9 @@ public class GameBoard{
       public CueBall getCueBall() {
             return cueBall;
       }
+
+      public Board getBoard() {
+            return board;
+      }
+      
 }

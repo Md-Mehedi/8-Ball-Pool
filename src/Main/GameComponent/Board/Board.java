@@ -99,7 +99,7 @@ public class Board {
       }
       
       public void translateMessage(String message){
-            controller.setMessageAndStart(message);
+            controller.setMessage(message);
       }
 
       public BoardController getController() {

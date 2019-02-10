@@ -7,6 +7,15 @@ package Main;
 public class Player {
       private String name;
       private String pictureLocation;
+      private int cueNum;
+
+      public int getCueNum() {
+            return cueNum;
+      }
+
+      public void setCueNum(int cueNum) {
+            this.cueNum = cueNum;
+      }
       
       private boolean turn;
       private String ballType; //1 if striped, 0 if solid, null otherwise (if not set yet)
@@ -19,6 +28,15 @@ public class Player {
       
 
       public Player() {
+            name = "default";
+            canPocketEightBall = true;
+            eightBallPocketed = false;
+            ballType = null;
+            firstBallNumber = 1;
+            lastBallNumber = 15;
+      }
+      public Player(String name){
+            this.name = name;
             canPocketEightBall = true;
             eightBallPocketed = false;
             ballType = null;
@@ -85,6 +103,30 @@ public class Player {
       public boolean isFirstHitBallValid(int id){
             if(firstBallNumber<=id && id<=lastBallNumber) return true;
             return false;
+      }
+
+      public String getName() {
+            return name;
+      }
+
+      public void setName(String name) {
+            this.name = name;
+      }
+
+      public String getPictureLocation() {
+            return pictureLocation;
+      }
+
+      public void setPictureLocation(String pictureLocation) {
+            this.pictureLocation = pictureLocation;
+      }
+
+      public int getPottedBallCount() {
+            return pottedBallCount;
+      }
+
+      public void setPottedBallCount(int pottedBallCount) {
+            this.pottedBallCount = pottedBallCount;
       }
 
 }

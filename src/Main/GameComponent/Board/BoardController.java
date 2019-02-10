@@ -93,9 +93,9 @@ public class BoardController implements Initializable {
       @FXML
       private HBox player2RemainingHbox;
       @FXML
-      private Label player1Label;
+      private Label player1Message;
       @FXML
-      private Label player1Label1;
+      private Label player2message;
       
       
 
@@ -146,7 +146,7 @@ public class BoardController implements Initializable {
             label.setText(text);
       }
 
-      public void setMessageAndStart(String message) {
+      public void setMessage(String message) {
             messageField.setText(message);
             messageField.setVisible(true);
             setEffect();
@@ -156,7 +156,7 @@ public class BoardController implements Initializable {
       private void setEffect() {System.out.println(messageField);
             TranslateTransition translate = new TranslateTransition();
             translate.setNode(messageField);
-            translate.setDuration(Duration.seconds(3));
+            translate.setDuration(Duration.seconds(5));
             translate.setToY(-450);
             translate.setCycleCount(2);
             translate.setAutoReverse(true);
@@ -171,10 +171,10 @@ public class BoardController implements Initializable {
             
             FadeTransition fade = new FadeTransition();
             fade.setNode(messageField);
-            fade.setDuration(Duration.seconds(3));
+            fade.setDuration(Duration.seconds(5));
             fade.setFromValue(1);
             fade.setToValue(0);
-            fade.play();
+            //fade.play();
             
             
             System.out.println("started");
@@ -346,4 +346,21 @@ public class BoardController implements Initializable {
             });
             
       }
+
+      public HBox getPlayer1RemainingHbox() {
+            return player1RemainingHbox;
+      }
+
+      public HBox getPlayer2RemainingHbox() {
+            return player2RemainingHbox;
+      }
+      
+      public void setPlayer1Name(String name){
+            player1Name.setText(name);
+      }
+      
+      public void setPlayer2Name(String name){
+            player2Name.setText(name);
+      }
+      
 }

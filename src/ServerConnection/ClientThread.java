@@ -5,9 +5,9 @@
  */
 package ServerConnection;
 
+import Main.GameBoard;
 import Main.GameComponent.Ball.Ball;
 import Main.GameComponent.CueStick.CueStick;
-import Main.GameBoard;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -58,7 +58,7 @@ class ClientThread implements Runnable {
                         Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
                   }
 
-                  //System.out.println("message: " + messageFromServer);
+                  System.out.println("message: " + messageFromServer);
                   
                   splitString = messageFromServer.split("#");
                   checkMessage();
@@ -89,6 +89,8 @@ class ClientThread implements Runnable {
                   case "cueBallIsPotted": break;
                   case "test": test(); break;
                   case "print": print(); break;
+                  
+                  case "opponentData": readOponentData(); break;
                   default:
                         System.out.println("Unknown message");
             }
@@ -156,6 +158,16 @@ class ClientThread implements Runnable {
                   gameBoard.getAllBalls().get(i).setPositionX(x);
                   gameBoard.getAllBalls().get(i).setPositionY(y);
             }
+      }
+
+      private void readOponentData() {
+            gameBoard.getPlayer2().setName(splitString[1]);System.out.println("readingOpponentData");
+//            gameBoard.getPlayer2().setPictureLocation(splitString[2]);
+//            gameBoard.getPlayer2().setCueNum(Integer.parseInt(splitString[3]));
+            System.out.println(GameBoard.player1.getName());
+            System.out.println(GameBoard.player2.getName());
+            gameBoard.getBoard().getController().setPlayer1Name(GameBoard.player1.getName());
+            gameBoard.getBoard().getController().setPlayer2Name(GameBoard.player2.getName());
       }
 
 
