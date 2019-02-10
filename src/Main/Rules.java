@@ -269,7 +269,7 @@ public class Rules {
             return false;
       }
       
-      private void checkValidPocketing() {System.out.println(firstPottedBallNo);
+      private void checkValidPocketing() {
             if(isValidBallPocketed()){
                   onlineMessages("test", "isValidBallPocketed", "");
             } else{
@@ -283,10 +283,6 @@ public class Rules {
             for (Integer num : pocketedBallNum) {
                   System.out.println("Pocketed: " + num);
                   if (isContain(num)) {
-                        if(num == 8) {
-                              eightBallPotted = true;
-                              turner.setEightBallPocketed(true);
-                        }
                         return true;
                   }
             }
@@ -307,8 +303,13 @@ public class Rules {
       }
 
       private void checkGameOver() {
+            if(pocketedBallNum.contains(8)) {
+                  eightBallPotted = true;
+                  turner.setEightBallPocketed(true);
+            }
             if(!CueBall.isHitTime()){
-                  System.out.println(turner.isEightBallPocketed());
+                  System.out.println("turnerEightBallPot: "+ turner.isEightBallPocketed());
+                  System.out.println(player1.isCanPocketEightBall()+ "  NO  " + player2.isCanPocketEightBall());
                   if(player1.isCanPocketEightBall() && player1.isEightBallPocketed()){
                         winner = player1;
                   }
@@ -448,7 +449,10 @@ public class Rules {
             if(ballType.equals("solid")){
                   for(int i=1; i<=7; i++){
                         if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
-                        else{System.out.println("hocchena");}//remove from boardController.
+                        else{
+                              System.out.println("hocchena");
+                              
+                        }//remove from boardController.
                   }
             }
             else{

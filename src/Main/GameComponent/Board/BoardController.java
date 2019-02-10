@@ -143,7 +143,7 @@ public class BoardController implements Initializable {
       @FXML
       private void imageClickAction(MouseEvent event) {
             text = "X: " + event.getSceneX() + " , Y: " + event.getSceneY();
-            label.setText(text);
+            //label.setText(text);
       }
 
       public void setMessage(String message) {
