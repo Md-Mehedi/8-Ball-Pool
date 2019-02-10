@@ -175,9 +175,6 @@ public class BoardController implements Initializable {
             fade.setFromValue(1);
             fade.setToValue(0);
             //fade.play();
-            
-            
-            System.out.println("started");
       }
 
       @FXML

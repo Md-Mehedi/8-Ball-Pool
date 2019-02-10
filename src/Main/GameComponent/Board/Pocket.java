@@ -65,8 +65,8 @@ public class Pocket {
                         Rules.getPocketedBallNum().add(ball.getID());
                         
                         ball.setPocketed(true);
-                        ball.setVelocityX(4 * Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
-                        ball.setVelocityY(4 * Math.sin(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
+                        ball.setVelocityX(7 * Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
+                        ball.setVelocityY(7 * Math.sin(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
 
 //                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), ball.getSphere());
 ////                translateTransition.setFromX(ball.getSphere().getLayoutX());

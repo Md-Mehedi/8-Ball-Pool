@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Md Mehedi Hasan
@@ -8,6 +10,7 @@ public class Player {
       private String name;
       private String pictureLocation;
       private int cueNum;
+      private ArrayList<Integer> remaingBallList;
 
       public int getCueNum() {
             return cueNum;
@@ -16,8 +19,17 @@ public class Player {
       public void setCueNum(int cueNum) {
             this.cueNum = cueNum;
       }
+      public boolean isWin() {
+            return win;
+      }
+
+      public void setWin(boolean win) {
+            this.win = win;
+      }
       
       private boolean turn;
+      private boolean win;
+
       private String ballType; //1 if striped, 0 if solid, null otherwise (if not set yet)
       private int firstBallNumber;
       private int lastBallNumber;
@@ -28,6 +40,7 @@ public class Player {
       
 
       public Player() {
+            remaingBallList = new ArrayList<>();
             name = "default";
             canPocketEightBall = true;
             eightBallPocketed = false;
@@ -36,12 +49,17 @@ public class Player {
             lastBallNumber = 15;
       }
       public Player(String name){
+            remaingBallList = new ArrayList<>();
             this.name = name;
             canPocketEightBall = true;
             eightBallPocketed = false;
             ballType = null;
             firstBallNumber = 1;
             lastBallNumber = 15;
+      }
+
+      public ArrayList<Integer> getRemaingBallList() {
+            return remaingBallList;
       }
       
 

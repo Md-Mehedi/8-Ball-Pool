@@ -196,7 +196,7 @@ public class Ball {
                   || (velocityX.get() < 0 && start.getX() + radius + Value.CUTION_SIZE >= positionX.get())) {
                   if (positionY.get() > Value.pocketY1 && positionY.get() < Value.pocketY2) {
                         velocityX.set(-velocityX.get());
-                        Rules.setCutionHit(true);
+                        Rules.railCollidingBall.add(id);
                   }
             }
 
@@ -205,7 +205,7 @@ public class Ball {
                   if ((Value.pocketX1 < positionX.get() && positionX.get() < Value.pocketX2)
                         || (Value.pocketX3 < positionX.get() && positionX.get() < Value.pocketX4)) {
                         velocityY.set(-velocityY.get());
-                        Rules.setCutionHit(true);
+                        Rules.railCollidingBall.add(id);
                   }
             }
       }
