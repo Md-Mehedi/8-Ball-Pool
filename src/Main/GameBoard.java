@@ -192,7 +192,9 @@ public class GameBoard{
                                           allBalls.get(0).setVelocityX(cue.getVelocity().x);
                                           allBalls.get(0).setVelocityY(cue.getVelocity().y);
                                           slider.setReleasedRatio(0);
-                                          if(!CueBall.isHitTime()) Rules.secondHitDone = true;
+                                          
+                                          if(!CueBall.isHitTime()) rules.setCanSelectBallType(true);
+                                          
                                           pocketingStatus = true;
                                           CueBall.setHitTime(false);
                                           CueBall.setDraggable(false);
@@ -219,7 +221,7 @@ public class GameBoard{
                               if (allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()) {
                                     if((offline ||  online ) && !checkedRule) rules.checkRule();
                                     checkedRule = true;
-                                    checkCueBallIsPotted();
+                                    checkIfBallInHand();
                                     cue.setPosition(cueBallPosition);
                                     cue.setMoveable(true);
                                     
@@ -229,7 +231,7 @@ public class GameBoard{
             };
             gameLoop.start();
       }
-      private void checkCueBallIsPotted() {
+      private void checkIfBallInHand() {
             if (rules.isBallInHand()) {
                   pocketingStatus = false;
                   CueBall.setDraggable(true);
