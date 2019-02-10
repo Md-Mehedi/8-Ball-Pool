@@ -37,6 +37,7 @@ public class Rules {
       boolean pocketedBallFound;
       boolean isBallTypeSelected;
       boolean isValidHit = true;
+      boolean isValidBallPocketed;
       boolean wrongHit;
       static int firstHitBallNum = -1;
       static int firstPottedBallNo = -1;
@@ -282,11 +283,12 @@ public class Rules {
       private boolean isValidBallPocketed() {
             for (Integer num : pocketedBallNum) {
                   System.out.println("Pocketed: " + num);
+                  if(num != 0 && num != 8) board.getController().removeBallFromRemainingList(num, true);
                   if (isContain(num)) {
-                        return true;
+                        isValidBallPocketed = true;
                   }
             }
-            return false;
+            return isValidBallPocketed;
       }
       
       private void checkBallPocketed() {
@@ -451,14 +453,17 @@ public class Rules {
                         if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
                         else{
                               System.out.println("hocchena");
-                              
+                              board.getController().removeBallFromRemainingList(i, false);
                         }//remove from boardController.
                   }
             }
             else{
                   for(int i=9; i<=15; i++){
                         if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
-                        else{System.out.println("hocchena");}//remove from boardController.
+                        else{
+                              System.out.println("hocchena");
+                              board.getController().removeBallFromRemainingList(i, false);
+                        }//remove from boardController.
                   }
             }
       }

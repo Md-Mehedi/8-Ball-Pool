@@ -136,7 +136,7 @@
                               <Image url="@TablePicture/ReaminingBallStorage.png" />
                            </image>
                         </ImageView>
-                        <HBox fx:id="player1RemainingHbox" alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="492.0" spacing="12.0">
+                        <HBox fx:id="player1RemainingHbox" alignment="CENTER_LEFT" layoutX="13.0" prefHeight="70.0" prefWidth="492.0" spacing="12.0">
                            <children>
                               <Sphere radius="29.0" />
                               <Sphere radius="29.0" />
@@ -156,7 +156,7 @@
                               <Image url="@TablePicture/ReaminingBallStorage.png" />
                            </image>
                         </ImageView>
-                        <HBox fx:id="player2RemainingHbox" alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="492.0" spacing="12.0">
+                        <HBox fx:id="player2RemainingHbox" alignment="CENTER_RIGHT" layoutX="2.0" prefHeight="70.0" prefWidth="492.0" spacing="12.0">
                            <children>
                               <Sphere radius="29.0" />
                               <Sphere radius="29.0" />
