@@ -17,7 +17,6 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -78,20 +77,20 @@ public class GameBoard{
             board = new Board(pane);
             cueBallPosition = new Point2D(board.getStart().getX() +  Value.BOARD_X / 6, board.getStart().getY() +  Value.BOARD_Y / 2);
 //pane.getChildren().add(prepareLightSource());
-            addPowerSlider();System.out.println("Checked");
             prepareBoard();
+            addPowerSlider();
             rules = new Rules(player1, player2, cueBall, allBalls);
             //connection = new ConnectServer(allBalls, cue);
             animation();
 //        curStage.addEventHandler(KeyEvent.KEY_PRESSED, event->;);
 
-            Button bt = new Button("Enter");
-            pane.getChildren().add(bt);
-            bt.setLayoutX(1700/1.5);
-            bt.setLayoutY(100/1.5);
-            bt.setOnAction(event ->{
-                  System.out.println(allBalls);
-            });
+//            Button bt = new Button("Enter");
+//            pane.getChildren().add(bt);
+//            bt.setLayoutX(1700/1.5);
+//            bt.setLayoutY(100/1.5);
+//            bt.setOnAction(event ->{
+//                  System.out.println(allBalls);
+//            });
             
       }
 
@@ -117,6 +116,7 @@ public class GameBoard{
 
       public void prepareBoard() throws IOException {
             board.drawBoard();
+            board.getController().setRemainngBall("solid");
             prepareBall();
             prepareCue();
             cueBall.makeHandler(allBalls);
@@ -196,6 +196,7 @@ public class GameBoard{
                                           CueBall.setDraggable(false);
                                           Rules.cutionHit = false;
                                           checkedRule = false;
+                              board.translateMessage("You");
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());

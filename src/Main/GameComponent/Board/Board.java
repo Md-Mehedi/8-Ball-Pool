@@ -7,7 +7,6 @@ import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -16,6 +15,7 @@ import javafx.scene.layout.Pane;
  */
 public class Board {
 
+      BoardController controller;
       Pane pane;
       List<Pocket> pockets;
       Point2D start;
@@ -63,7 +63,13 @@ public class Board {
       }
 
       public void drawBoard() throws IOException {
-            Parent board = (AnchorPane) FXMLLoader.load(getClass().getResource("Board.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Board.fxml"));
+            Parent board = loader.load();
+            
+            System.out.println("Board created successfully.");
+            
+            controller = loader.getController();
+            
             pane.getChildren().add(board);System.out.println("ok board");
             board.setLayoutX(0);
             board.setLayoutY(0);
@@ -91,4 +97,17 @@ public class Board {
             pockets.get(4).setLayout(new Point2D((startX + endX) / 2, endY * .97));
             pockets.get(5).setLayout(new Point2D(endX, endY));
       }
+      
+      public void translateMessage(String message){
+            controller.setMessageAndStart(message);
+      }
+
+      public BoardController getController() {
+            return controller;
+      }
+
+      public void setController(BoardController controller) {
+            this.controller = controller;
+      }
+      
 }

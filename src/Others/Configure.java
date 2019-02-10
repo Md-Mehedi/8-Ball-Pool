@@ -23,7 +23,7 @@ public class Configure {
       FileReader reader;
       FileWriter writer;
 
-      public static boolean soundMode = true;
+      public static boolean soundMode = false;
       public static boolean musicMode = false;
       public static String CUE_PICTURE_LOCATION = "/PictureBall/Cue/Cue-4.png";
       public static String BOARD_PICTURE_LOCATION = "/PictureBall/Board/Board-1.png";

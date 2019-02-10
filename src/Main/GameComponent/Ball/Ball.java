@@ -64,7 +64,7 @@ public class Ball {
             ball.setRotate(90);
             ball.setRotationAxis(Rotate.Y_AXIS);
 
-            image = new Image(getClass().getResourceAsStream("/PictureBall/Ball_Illumination_Map.jpg"));
+            image = new Image(getClass().getResourceAsStream("/Main/GameComponent/Ball/BallPicture/Ball_Illumination_Map.jpg"));
             PhongMaterial material = new PhongMaterial();
             material.setSelfIlluminationMap(image);
             ball.setMaterial(material);
