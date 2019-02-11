@@ -2,12 +2,10 @@ package Main.GameComponent.Ball;
 
 import Application.PoolGame;
 import Main.GameBoard;
-import Main.GameComponent.CueStick.CueStick;
 import Main.Value;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 
 /**
  *
@@ -19,7 +17,6 @@ public class CueBall extends Ball {
       private static boolean hitTime = true;
       static boolean isDragging;
       private boolean possible = true;
-      private Line line;
 
       public static boolean isHitTime() {
             return hitTime;
@@ -47,8 +44,6 @@ public class CueBall extends Ball {
       
       public CueBall(Pane pane, int id) {
             super(pane, id);
-            line = new Line(positionX.get(), positionY.get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
-            pane.getChildren().add(line);
       }
 
       public void makeUnpotted() {
@@ -99,21 +94,6 @@ public class CueBall extends Ball {
                         }
                   }
             });
-      }
-
-      public void updateHintLine() {
-            line.setStartX(positionX.get());
-            line.setStartY(positionY.get());
-            line.setEndX(positionX.get() + 1000 * Math.cos(Math.toRadians(CueStick.getAngle())));
-            line.setEndY(positionY.get() + 1000 * Math.sin(Math.toRadians(CueStick.getAngle())));
-      }
-
-      public void setLine(Line line) {
-            this.line = line;
-      }
-
-      public Line getLine() {
-            return line;
       }
 
       public static boolean isDragging() {

@@ -83,7 +83,7 @@ public class Board {
             for (int i = 0; i < 6; i++) {
                   double radius = Value.POCKET_RADIUS;
                   if(i == 1 || i == 4) radius = Value.POCKET_RADIUS/2.7;
-                  pockets.add(new Pocket(pane, radius, new Point2D(0, 0)));
+                  pockets.add(new Pocket(pane, i, radius, new Point2D(0, 0)));
             }
             double ratio = 4.5;
             double startX = start.getX() + Value.CUTION_SIZE / ratio;

@@ -15,12 +15,14 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class Pocket {
-
+      
+      int id;
       double radius;
       Point2D location = new Point2D(0, 0);
       Circle pocket;
 
-      Pocket(Pane pane, double POCKET_RADIUS, Point2D location) {
+      Pocket(Pane pane, int id, double POCKET_RADIUS, Point2D location) {
+            this.id = id;
             this.location = location;
             radius = POCKET_RADIUS;
             pocket = new Circle(POCKET_RADIUS);
@@ -65,8 +67,10 @@ public class Pocket {
                         Rules.getPocketedBallNum().add(ball.getID());
                         
                         ball.setPocketed(true);
-                        ball.setVelocityX(7 * Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
-                        ball.setVelocityY(7 * Math.sin(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
+                        double v = 6;
+                        if(id == 1 || id == 4) v = 3;
+                        ball.setVelocityX(v * Math.cos(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
+                        ball.setVelocityY(v * Math.sin(Math.toRadians(Value.slope(ball.getSphere().getLayoutX(), ball.getSphere().getLayoutY(), pocket.getPocket().getLayoutX(), pocket.getPocket().getLayoutY()))));
 
 //                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), ball.getSphere());
 ////                translateTransition.setFromX(ball.getSphere().getLayoutX());

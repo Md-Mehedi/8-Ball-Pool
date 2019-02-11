@@ -19,6 +19,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -27,7 +28,7 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = true  ; 
+      public static boolean online = false; 
       public static boolean offline = !online;
       public static boolean practice;
       
@@ -44,11 +45,12 @@ public class GameBoard{
       Board board;
       CueBall cueBall;
       SliderController slider;
-      boolean pocketingStatus = true;
+      boolean pocketingStatus = false;
       static boolean checkedRule = true;
       public static Player player1;
       public static Player player2;
       Rules rules;
+      private Line line;
       //ConnectServer connection;
 
       public ArrayList<Ball> getAllBalls() {
@@ -121,6 +123,8 @@ public class GameBoard{
 //            board.getController().setRemainngBall("solid");
             prepareBall();
             prepareCue();
+            line = new Line(cueBall.getPositionX().get(), cueBall.getPositionY().get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
+            pane.getChildren().add(line);
             cueBall.makeHandler(allBalls);
       }
 
@@ -209,8 +213,8 @@ public class GameBoard{
                               
                               cue.getCue().setVisible(!CueBall.isDragging() && !moving);
                               slider.setVisible(!CueBall.isDragging() && !moving && (offline || practice || (online && player1.getTurn())));
-                              cueBall.getLine().setVisible(!CueBall.isDragging() && !moving);
-                              cueBall.updateHintLine();
+                              line.setVisible(!CueBall.isDragging() && !moving);
+                              updateHintLine();
 
                               lastUpdateTime.set(now);
                               cueBallPosition = allBalls.get(0).getPosition();
@@ -310,6 +314,24 @@ public class GameBoard{
             }
             
             slider.setSlidable(true);
+      }
+      
+      private void updateHintLine(){
+            
+            line.setStartX(cueBall.getPositionX().get());
+            line.setStartY(cueBall.getPositionY().get());
+            
+            for(int i=2; i<Value.BOARD_X; i+=2){
+                  double endX = cueBall.getPositionX().get() + i * Math.cos(Math.toRadians(CueStick.getAngle()));
+                  double endY = cueBall.getPositionY().get()+ i * Math.sin(Math.toRadians(CueStick.getAngle()));
+                  
+                  for(int j=1; j<16; j++){
+                        
+                  }
+                  line.setEndX(endX);
+                  line.setEndY(endY);
+            }
+            
       }
 
       public SliderController getSlider() {

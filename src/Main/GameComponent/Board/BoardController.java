@@ -324,6 +324,16 @@ public class BoardController implements Initializable {
 
             return transition;
       }
+      public void addEightBallToRemainingList(boolean isPlayer1){
+            HBox hbox;
+            if(isPlayer1) hbox = player1RemainingHbox;
+            else hbox = player2RemainingHbox;
+            
+            Sphere s = new Sphere(29);
+            makeBallAndUpdateList(8, s);
+            hbox.getChildren().add(s);
+            makeScaleTransition(s, 0, 1);
+      }
 
       public void removeBallFromRemainingList(Integer i, boolean transition) {
             if (transition) {

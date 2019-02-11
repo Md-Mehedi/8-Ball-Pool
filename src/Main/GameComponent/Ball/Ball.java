@@ -5,6 +5,7 @@ import Main.Value;
 import static java.lang.Math.atan;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import javafx.animation.RotateTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
@@ -13,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 /**
  *
@@ -113,6 +115,8 @@ public class Ball {
             updateAccleration();
             velocityX.set(velocityX.get() - accelerationX * elapsedSeconds);
             velocityY.set(velocityY.get() - accelerationY * elapsedSeconds);
+            
+//            if(id != 0) updateRotation((velocityX.get() * elapsedSeconds), (velocityY.get() * elapsedSeconds));
             positionX.set(positionX.get() + (velocityX.get() * elapsedSeconds));
             positionY.set(positionY.get() + (velocityY.get() * elapsedSeconds));
       }
@@ -260,5 +264,17 @@ public class Ball {
             accelerationX = 0;
             accelerationY = 0;
       }
+
+      private void updateRotation(double difX, double difY) {
+            RotateTransition trans = new RotateTransition(Duration.ONE, ball);
+            trans.setFromAngle(ball.getRotate());
+            trans.setToAngle(ball.getRotate() + difX * 90 /radius);
+            trans.play();
+            
+//            ball.setRotationAxis(Rotate.Y_AXIS);
+//            ball.setRotate(10* difX * 90 /radius);
+//            ball.setRotationAxis(Rotate.X_AXIS);
+//            ball.setRotate(difY * 90 / radius);
+      } 
 
 }

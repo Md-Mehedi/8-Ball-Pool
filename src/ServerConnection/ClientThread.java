@@ -166,9 +166,9 @@ class ClientThread implements Runnable {
 //            gameBoard.getPlayer2().setCueNum(Integer.parseInt(splitString[3]));
             System.out.println(GameBoard.player1.getName());
             System.out.println(GameBoard.player2.getName());
-            gameBoard.getBoard().getController().setPlayer1Name(GameBoard.player1.getName());
-            gameBoard.getBoard().getController().setPlayer2Name(GameBoard.player2.getName());
-            gameBoard.getRules().onlineMessages("ballBreaking", GameBoard.player1.getTurn() ? "You" : GameBoard.player2.getName(), "");
+//            gameBoard.getBoard().getController().setPlayer1Name(GameBoard.player1.getName());
+//            gameBoard.getBoard().getController().setPlayer2Name(GameBoard.player2.getName());
+//            gameBoard.getRules().onlineMessages("ballBreaking", GameBoard.player1.getTurn() ? "You" : GameBoard.player2.getName(), "");
       
       }
 

@@ -11,8 +11,6 @@ import Main.GameComponent.Ball.CueBall;
 import Main.GameComponent.Board.Board;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -67,6 +65,7 @@ public class Rules {
       }
 
       public void checkRule() {
+            checkGameOver();
             checkCueBallPocketed();
             if(isBallTypeSelected) checkValidHitting();
             if(isValidHit) checkRailCollision();
@@ -74,7 +73,6 @@ public class Rules {
             if(!isBallTypeSelected) setBallType();
             if(!isBallTypeSelected && railCollide) checkBallPocketed();
             if(isBallTypeSelected) checkCan8ballPot();
-            checkGameOver();
             
             
             pocketedBallNum.clear();
@@ -83,27 +81,13 @@ public class Rules {
             if(CueBall.isHitTime()) canSelectBallType = true;
             CueBall.setHitTime(false);
             railCollide = true;
-                 
-
-//            if(cueBall.isPocketed()) secondHitDone = false;
-//            if(cueBall.isPocketed() || !cutionHit){
-//                  board.getController().setMessageAndStart("Cue ball is potted.");
-//                  swapTurn();
+            ballInHand = false;
+            
+//            try {
+//                  Thread.sleep(1000);
+//            } catch (InterruptedException ex) {
+//                  Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-//            
-////            addPottedBall();
-////            checkIfGameOver();
-//            
-//            checkValidHitting();
-//            setBallType();
-//            checkPocketedBall();
-//            
-//            
-            try {
-                  Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                  Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-            }
       }
 
       private void swapTurn() {
@@ -185,6 +169,7 @@ public class Rules {
                         }
                         swapTurn();
                   }
+                  isValidBallPocketed();
                   railCollide = true;
                   canSelectBallType = false;
                   firstHitBallNum = -1;
@@ -225,7 +210,7 @@ public class Rules {
       }
       
       
-      private void setBallType() {
+      private void setBallType() {System.out.println("canSelectBallType: "+canSelectBallType);
             if(canSelectBallType && !pocketedBallNum.isEmpty()){System.out.println("firstBall: "+firstPottedBallNo);
                   if(player1.getTurn()){
                         if(1<=firstPottedBallNo && firstPottedBallNo<=7) isSolid = true;
@@ -258,6 +243,10 @@ public class Rules {
                         ballInHand = true;
                         swapTurn();
                   }
+                  else if(firstHitBallNum == 8 && turner.isCanPocketEightBall()){
+                        onlineMessages(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+                        swapTurn();
+                  }
                   else isValidHit = true;
                   firstHitBallNum = -1;
             }
@@ -281,6 +270,7 @@ public class Rules {
       
       
       private boolean isValidBallPocketed() {
+            isValidBallPocketed = false;
             for (Integer num : pocketedBallNum) {
                   System.out.println("Pocketed: " + num);
                   if(num != 0 && num != 8) board.getController().removeBallFromRemainingList(num, true);
@@ -307,9 +297,9 @@ public class Rules {
       private void checkGameOver() {
             if(pocketedBallNum.contains(8)) {
                   eightBallPotted = true;
-                  turner.setEightBallPocketed(true);
             }
-            if(!CueBall.isHitTime()){
+            if(!CueBall.isHitTime() && eightBallPotted){
+                  turner.setEightBallPocketed(true);
                   System.out.println("turnerEightBallPot: "+ turner.isEightBallPocketed());
                   System.out.println(player1.isCanPocketEightBall()+ "  NO  " + player2.isCanPocketEightBall());
                   if(player1.isCanPocketEightBall() && player1.isEightBallPocketed()){
@@ -324,10 +314,13 @@ public class Rules {
                   else if(!player2.isCanPocketEightBall() && player2.isEightBallPocketed()){
                         winner = player1;
                   }
+                  if(CueBall.isCueBallPotted() && player1.isEightBallPocketed()) winner = player2;
+                  else if(CueBall.isCueBallPotted() && player2.isEightBallPocketed()) winner = player1;
                   if(winner.equals(player1) || winner.equals(player2)){
                         onlineMessages("gameOver", winner);
                   }
             }
+            eightBallPotted = false;
       }
       
       public Player getPlayer1() {
