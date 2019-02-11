@@ -24,7 +24,7 @@ public class Main extends Application {
             Configure.readFromFile();
             if (Configure.musicMode) {
                   SoundmusicPlayer.setMusic(true);
-            }   
+            }
             
             PoolGame.start(stage);
             

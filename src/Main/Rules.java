@@ -81,7 +81,6 @@ public class Rules {
             if(CueBall.isHitTime()) canSelectBallType = true;
             CueBall.setHitTime(false);
             railCollide = true;
-            ballInHand = false;
             
 //            try {
 //                  Thread.sleep(1000);

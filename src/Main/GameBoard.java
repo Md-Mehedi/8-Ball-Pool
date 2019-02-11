@@ -6,6 +6,7 @@ import Main.GameComponent.Ball.CueBall;
 import Main.GameComponent.Board.Board;
 import Main.GameComponent.CueStick.CueStick;
 import Main.GameComponent.Slider.SliderController;
+import static java.awt.geom.Point2D.distance;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -28,7 +29,7 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = false; 
+      public static boolean online = true; 
       public static boolean offline = !online;
       public static boolean practice;
       
@@ -51,6 +52,7 @@ public class GameBoard{
       public static Player player2;
       Rules rules;
       private Line line;
+      private Line smallLine;
       //ConnectServer connection;
 
       public ArrayList<Ball> getAllBalls() {
@@ -124,7 +126,9 @@ public class GameBoard{
             prepareBall();
             prepareCue();
             line = new Line(cueBall.getPositionX().get(), cueBall.getPositionY().get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
-            pane.getChildren().add(line);
+            smallLine = new Line(cueBall.getPositionX().get(), cueBall.getPositionY().get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
+            smallLine.setVisible(false);
+            pane.getChildren().addAll(line, smallLine);
             cueBall.makeHandler(allBalls);
       }
 
@@ -200,6 +204,7 @@ public class GameBoard{
                                           if(!CueBall.isHitTime()) Rules.secondHitDone = true;
                                           pocketingStatus = true;
                                           checkedRule = false;
+                                          rules.setBallInHand(false);
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
@@ -324,12 +329,16 @@ public class GameBoard{
             for(int i=2; i<Value.BOARD_X; i+=2){
                   double endX = cueBall.getPositionX().get() + i * Math.cos(Math.toRadians(CueStick.getAngle()));
                   double endY = cueBall.getPositionY().get()+ i * Math.sin(Math.toRadians(CueStick.getAngle()));
-                  
+                  boolean ballFound = false;
                   for(int j=1; j<16; j++){
-                        
+                        if(distance(endX, endY, allBalls.get(j).getPosition().getX(), allBalls.get(j).getPosition().getY()) <= 2*Value.BALL_RADIUS){
+                              ballFound = true;
+                              break;
+                        }
                   }
                   line.setEndX(endX);
                   line.setEndY(endY);
+                  if(ballFound) break;
             }
             
       }

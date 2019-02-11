@@ -21,6 +21,7 @@ public class Value {
       public static double BOARD_POSITION_CENTER_X = SCENE_WIDTH / 2 - BOARD_X / 2;
       public static double BOARD_POSITION_CENTER_Y = SCENE_HIGHT / 2 - BOARD_Y / 2 + 8*SCALE;
 
+//      public static double BALL_RADIUS = 2.25  * SCALE;
       public static double BALL_RADIUS = 2.25 / 2.2 * SCALE;
       public static double POCKET_RADIUS = 6 * SCALE;
       public static double CUE_LENGTH = 40 * SCALE;
