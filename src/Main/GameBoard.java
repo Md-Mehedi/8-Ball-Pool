@@ -29,7 +29,7 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = true; 
+      public static boolean online = false; 
       public static boolean offline = !online;
       public static boolean practice;
       
@@ -53,6 +53,7 @@ public class GameBoard{
       Rules rules;
       private Line line;
       private Line smallLine;
+      private Line cueBallLine;
       //ConnectServer connection;
 
       public ArrayList<Ball> getAllBalls() {
@@ -127,8 +128,8 @@ public class GameBoard{
             prepareCue();
             line = new Line(cueBall.getPositionX().get(), cueBall.getPositionY().get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
             smallLine = new Line(cueBall.getPositionX().get(), cueBall.getPositionY().get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
-            smallLine.setVisible(false);
-            pane.getChildren().addAll(line, smallLine);
+            cueBallLine = new Line(cueBall.getPositionX().get(), cueBall.getPositionY().get(), 1000 * Math.cos(CueStick.angle), 100 * Math.cos(CueStick.angle));
+            pane.getChildren().addAll(line, smallLine, cueBallLine);
             cueBall.makeHandler(allBalls);
       }
 
@@ -201,10 +202,11 @@ public class GameBoard{
                                           allBalls.get(0).setVelocityY(cue.getVelocity().y);
                                           slider.setReleasedRatio(0);
                                           
-                                          if(!CueBall.isHitTime()) Rules.secondHitDone = true;
+                                          smallLine.setVisible(false);
+                                          
+                                          CueBall.setDraggable(false);
                                           pocketingStatus = true;
                                           checkedRule = false;
-                                          rules.setBallInHand(false);
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
@@ -229,7 +231,6 @@ public class GameBoard{
                                     checkCueBallIsPotted();
                                     cue.setPosition(cueBallPosition);
                                     cue.setMoveable(true);
-                                    
                               }
                         } 
                   }
@@ -237,7 +238,7 @@ public class GameBoard{
             gameLoop.start();
       }
       private void checkCueBallIsPotted() {
-            if (rules.isBallInHand()) {
+            if (rules.isBallInHand()) {System.out.println("cueBallIsDragging.");
                   pocketingStatus = false;
                   CueBall.setDraggable(true);
                   CueBall.setCueBallPotted(false);
@@ -310,7 +311,7 @@ public class GameBoard{
                   Parent sliderPane = (AnchorPane)sliderLoader.load();
                   pane.getChildren().add(sliderPane);
                   slider = sliderLoader.getController();
-                  sliderPane.setLayoutX( Value.SCENE_WIDTH / 10 * 9);
+                  sliderPane.setLayoutX( Value.SCENE_WIDTH / 12);
                   sliderPane.setLayoutY( Value.SCENE_HIGHT / 2 - slider.getSize() / 2);
                   slider.setContainerYPosition(sliderPane.getLayoutY());
                   
@@ -330,17 +331,42 @@ public class GameBoard{
                   double endX = cueBall.getPositionX().get() + i * Math.cos(Math.toRadians(CueStick.getAngle()));
                   double endY = cueBall.getPositionY().get()+ i * Math.sin(Math.toRadians(CueStick.getAngle()));
                   boolean ballFound = false;
+                  boolean railFound = false;
                   for(int j=1; j<16; j++){
                         if(distance(endX, endY, allBalls.get(j).getPosition().getX(), allBalls.get(j).getPosition().getY()) <= 2*Value.BALL_RADIUS){
+                              showHintLine(allBalls.get(j).getPosition().getX(), allBalls.get(j).getPosition().getY(), endX, endY);
                               ballFound = true;
                               break;
                         }
                   }
+                  if(board.getStart().getX()+Value.BALL_RADIUS+Value.CUTION_SIZE >= endX
+                        || board.getEnd().getX()-Value.BALL_RADIUS-Value.CUTION_SIZE <=endX
+                        || board.getStart().getY()+Value.BALL_RADIUS + Value.CUTION_SIZE>= endY
+                        || board.getEnd().getY()-Value.BALL_RADIUS-Value.CUTION_SIZE <=endY) railFound = true;
                   line.setEndX(endX);
                   line.setEndY(endY);
-                  if(ballFound) break;
+                  if(ballFound && !moving && !CueBall.isDragging()) {
+                        smallLine.setVisible(true);
+                        cueBallLine.setVisible(true);
+                  }
+                  else{
+                        smallLine.setVisible(false);
+                        cueBallLine.setVisible(false);
+                  }
+                  if(ballFound || railFound) break;
             }
-            
+      }
+      
+      public void showHintLine(double startX, double startY, double endX, double endY){
+            double angle = Value.slope(startX, startY, endX, endY) + 180;
+            smallLine.setStartX(startX);
+            smallLine.setStartY(startY);
+            smallLine.setEndX(startX + 80*Math.cos(Math.toRadians(angle)));
+            smallLine.setEndY(startY + 80*Math.sin(Math.toRadians(angle)));
+            cueBallLine.setStartX(endX);
+            cueBallLine.setStartY(endY);
+            cueBallLine.setEndX(endX + 80*Math.cos(Math.toRadians(angle-90)));
+            cueBallLine.setEndY(endY + 80*Math.sin(Math.toRadians(angle-90)));
       }
 
       public SliderController getSlider() {

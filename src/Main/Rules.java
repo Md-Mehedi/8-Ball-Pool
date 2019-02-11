@@ -29,6 +29,7 @@ public class Rules {
       Board board;
       CueBall cueBall;
       boolean isSolid;
+      boolean isMessageShown;
       boolean canSelectBallType;
       boolean railCollide =true;
       static boolean secondHitDone;
@@ -65,22 +66,26 @@ public class Rules {
       }
 
       public void checkRule() {
+            if(!CueBall.isHitTime()) canSelectBallType = true;
+            ballInHand = false;
+            
+            if(isBallTypeSelected) removePocketedBall();
             checkGameOver();
             checkCueBallPocketed();
-            if(isBallTypeSelected) checkValidHitting();
-            if(isValidHit) checkRailCollision();
-            if(isBallTypeSelected && isValidHit && railCollide) checkValidPocketing();
-            if(!isBallTypeSelected) setBallType();
-            if(!isBallTypeSelected && railCollide) checkBallPocketed();
+            if(isBallTypeSelected && !isMessageShown) checkValidHitting();
+            if(isValidHit  && !isMessageShown) checkRailCollision();
+            if(isBallTypeSelected && isValidHit && railCollide && !isMessageShown) checkValidPocketing();
+            if(!isBallTypeSelected && !isMessageShown) setBallType();
+            if(!isBallTypeSelected && railCollide && !isMessageShown) checkBallPocketed();
             if(isBallTypeSelected) checkCan8ballPot();
             
             
             pocketedBallNum.clear();
             firstPottedBallNo = -1;
             firstHitBallNum = -1;
-            if(CueBall.isHitTime()) canSelectBallType = true;
             CueBall.setHitTime(false);
             railCollide = true;
+            isMessageShown = false;
             
 //            try {
 //                  Thread.sleep(1000);
@@ -101,7 +106,6 @@ public class Rules {
       }
       
       public void updateTurner() {
-            System.out.println(player1.getTurn() + " " + player2.getTurn());
             turner = player1.getTurn() ? player1 : player2;
             viewer = player1.getTurn() ? player2 : player1;
       }
@@ -124,6 +128,7 @@ public class Rules {
             if (!player2Name.equals("You") && !player2Name.equals("you")) {
                   player2Name = "'" + player2Name + "'";
             }
+            isMessageShown = true;
             switch (messageType) {
                   case "cueBallPotted":
                         board.getController().setMessage(player1Name + " potted the cue ball. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
@@ -168,7 +173,6 @@ public class Rules {
                         }
                         swapTurn();
                   }
-                  isValidBallPocketed();
                   railCollide = true;
                   canSelectBallType = false;
                   firstHitBallNum = -1;
@@ -245,6 +249,7 @@ public class Rules {
                   else if(firstHitBallNum == 8 && turner.isCanPocketEightBall()){
                         onlineMessages(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
                         swapTurn();
+                        isValidHit = true;
                   }
                   else isValidHit = true;
                   firstHitBallNum = -1;
@@ -272,7 +277,6 @@ public class Rules {
             isValidBallPocketed = false;
             for (Integer num : pocketedBallNum) {
                   System.out.println("Pocketed: " + num);
-                  if(num != 0 && num != 8) board.getController().removeBallFromRemainingList(num, true);
                   if (isContain(num)) {
                         isValidBallPocketed = true;
                   }
@@ -444,7 +448,6 @@ public class Rules {
                   for(int i=1; i<=7; i++){
                         if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
                         else{
-                              System.out.println("hocchena");
                               board.getController().removeBallFromRemainingList(i, false);
                         }//remove from boardController.
                   }
@@ -453,10 +456,15 @@ public class Rules {
                   for(int i=9; i<=15; i++){
                         if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
                         else{
-                              System.out.println("hocchena");
                               board.getController().removeBallFromRemainingList(i, false);
                         }//remove from boardController.
                   }
+            }
+      }
+
+      private void removePocketedBall() {
+            for(Integer num : pocketedBallNum){
+                  if(num != 0 && num != 8) board.getController().removeBallFromRemainingList(num, true);
             }
       }
 

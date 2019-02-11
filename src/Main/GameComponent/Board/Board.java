@@ -66,11 +66,9 @@ public class Board {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Board.fxml"));
             Parent board = loader.load();
             
-            System.out.println("Board created successfully.");
-            
             controller = loader.getController();
             
-            pane.getChildren().add(board);System.out.println("ok board");
+            pane.getChildren().add(board);
             board.setLayoutX(0);
             board.setLayoutY(0);
 //            board.setLayoutX(Value.BOARD_POSITION_CENTER_X);

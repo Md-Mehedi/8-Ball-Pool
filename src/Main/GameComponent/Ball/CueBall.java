@@ -64,8 +64,8 @@ public class CueBall extends Ball {
                         //PoolGame.connection.sendData("cueBallIsDragging");
                   }
             });
-            ball.setOnMouseDragged(event -> {
-                  if (isDraggable() && (GameBoard.offline || GameBoard.practice || GameBoard.online && GameBoard.player1.getTurn())) {
+            ball.setOnMouseDragged(event -> {System.out.println(isDraggable());
+                  if (isDraggable() && (GameBoard.offline || GameBoard.practice || (GameBoard.online && GameBoard.player1.getTurn()))) {
                         possible = true;
                         for (int i = 1; i < 16; i++) {
                               Ball b = allBalls.get(i);
