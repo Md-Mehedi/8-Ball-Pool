@@ -1,5 +1,6 @@
 package Main.GameComponent.Board;
 
+import Main.GameBoard;
 import Main.GameComponent.Ball.Ball;
 import Main.Rules;
 import Main.Value;
@@ -86,6 +87,7 @@ public class Pocket {
                         transition.setOnFinished(event -> {
                               ball.setVelocity(0);
                               ball.setAcceleration(0);
+                              if(ball.getID()!=0) GameBoard.getPane().getChildren().remove(ball);
                         });
                         //translateTransition.play();
 

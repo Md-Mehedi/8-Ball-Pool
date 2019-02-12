@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class Rules {
 
+      static boolean gameOver;
       static List<Integer> pocketedBallNum;
       public static List<Integer> railCollidingBall;
       ArrayList<Ball> allBalls;
@@ -32,7 +33,6 @@ public class Rules {
       boolean isMessageShown;
       boolean canSelectBallType;
       boolean railCollide =true;
-      static boolean secondHitDone;
       boolean pocketedBallFound;
       boolean isBallTypeSelected;
       boolean isValidHit = true;
@@ -71,7 +71,7 @@ public class Rules {
             
             if(isBallTypeSelected) removePocketedBall();
             checkGameOver();
-            checkCueBallPocketed();
+            if(!isMessageShown) checkCueBallPocketed();
             if(isBallTypeSelected && !isMessageShown) checkValidHitting();
             if(isValidHit  && !isMessageShown) checkRailCollision();
             if(isBallTypeSelected && isValidHit && railCollide && !isMessageShown) checkValidPocketing();
@@ -292,12 +292,20 @@ public class Rules {
       }
       
       private void checkCan8ballPot() {
-            player1.setCanPocketEightBall(player1.getRemaingBallList().isEmpty());
-            player2.setCanPocketEightBall(player2.getRemaingBallList().isEmpty());
+            if(player1.getRemaingBallList().isEmpty()){
+                  player1.setCanPocketEightBall(true);
+                  board.getController().addEightBallToRemainingList(true);
+                  player1.getRemaingBallList().add(8);
+            }
+            if(player2.getRemaingBallList().isEmpty()){
+                  player2.setCanPocketEightBall(true);
+                  board.getController().addEightBallToRemainingList(false);
+                  player2.getRemaingBallList().add(8);
+            }
 //            onlineMessages("test", player1.isCanPocketEightBall()+"  "+player2.isCanPocketEightBall(),"");
       }
 
-      private void checkGameOver() {
+      private void checkGameOver() {System.out.println(pocketedBallNum.contains(8) +" GO " + CueBall.isHitTime());
             if(pocketedBallNum.contains(8)) {
                   eightBallPotted = true;
             }
@@ -321,6 +329,8 @@ public class Rules {
                   else if(CueBall.isCueBallPotted() && player2.isEightBallPocketed()) winner = player1;
                   if(winner.equals(player1) || winner.equals(player2)){
                         onlineMessages("gameOver", winner);
+                        isMessageShown = true;
+                        gameOver = true;
                   }
             }
             eightBallPotted = false;
@@ -344,10 +354,6 @@ public class Rules {
 
       public CueBall getCueBall() {
             return cueBall;
-      }
-
-      public static boolean isSecondHitDone() {
-            return secondHitDone;
       }
 
       public static int getFirstHitBallNum() {
@@ -466,6 +472,10 @@ public class Rules {
             for(Integer num : pocketedBallNum){
                   if(num != 0 && num != 8) board.getController().removeBallFromRemainingList(num, true);
             }
+      }
+
+      boolean isGameOver() {
+            return gameOver;
       }
 
 

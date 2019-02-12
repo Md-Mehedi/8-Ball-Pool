@@ -19,6 +19,7 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -94,6 +95,10 @@ public class BoardController implements Initializable {
       private Label player1Message;
       @FXML
       private Label player2message;
+      @FXML
+      private ImageView validHitImage;
+      @FXML
+      private ImageView invalidHitImage;
 
       /**
        * Initializes the controller class.
@@ -376,6 +381,35 @@ public class BoardController implements Initializable {
                         player2RemainingHbox.getChildren().remove(remainingBallList.get(i));
                   }
             }
+      }
+
+      public ImageView getValidHitImage() {
+            return validHitImage;
+      }
+
+      public void setValidHitImage(ImageView validHitImage) {
+            this.validHitImage = validHitImage;
+      }
+
+      public ImageView getInvalidHitImage() {
+            return invalidHitImage;
+      }
+
+      public void setInvalidHitImage(ImageView invalidHitImage) {
+            this.invalidHitImage = invalidHitImage;
+      }
+      
+      public void setImagePostion(ImageView image, Point2D positionOfCenter){
+            double x = positionOfCenter.getX() - image.getFitWidth()/2;
+            double y = positionOfCenter.getY() - image.getFitHeight()/2;
+            image.setLayoutX(x);
+            image.setLayoutY(y);
+      }
+      public void setValidHitImagePostion(double x, double y){
+            setImagePostion(validHitImage, new Point2D(x, y));
+      }
+      public void setInvalidHitImagePostion(double x, double y){
+            setImagePostion(invalidHitImage, new Point2D(x, y));
       }
 
 }

@@ -36,7 +36,7 @@ public class GameBoard{
 
       public ArrayList<Ball> allBalls;
 
-      Pane pane;
+      static Pane pane;
       AnimationTimer gameLoop;
       Point2D cueBallPosition;
       Stage curStage;
@@ -326,14 +326,15 @@ public class GameBoard{
             
             line.setStartX(cueBall.getPositionX().get());
             line.setStartY(cueBall.getPositionY().get());
-            
+            int j=-1;
             for(int i=2; i<Value.BOARD_X; i+=2){
                   double endX = cueBall.getPositionX().get() + i * Math.cos(Math.toRadians(CueStick.getAngle()));
                   double endY = cueBall.getPositionY().get()+ i * Math.sin(Math.toRadians(CueStick.getAngle()));
                   boolean ballFound = false;
                   boolean railFound = false;
-                  for(int j=1; j<16; j++){
-                        if(distance(endX, endY, allBalls.get(j).getPosition().getX(), allBalls.get(j).getPosition().getY()) <= 2*Value.BALL_RADIUS){
+                  boolean wrongBall = false;
+                  for(j=1; j<16; j++){
+                        if(distance(endX, endY, allBalls.get(j).getPosition().getX(), allBalls.get(j).getPosition().getY()) < 2*Value.BALL_RADIUS){
                               showHintLine(allBalls.get(j).getPosition().getX(), allBalls.get(j).getPosition().getY(), endX, endY);
                               ballFound = true;
                               break;
@@ -348,25 +349,51 @@ public class GameBoard{
                   if(ballFound && !moving && !CueBall.isDragging()) {
                         smallLine.setVisible(true);
                         cueBallLine.setVisible(true);
+                        if(!rules.getTurner().getRemaingBallList().contains(j) && rules.isIsBallTypeSelected()){
+                              wrongBall = true;
+                        }
                   }
                   else{
                         smallLine.setVisible(false);
                         cueBallLine.setVisible(false);
+                  }
+                  if(wrongBall){
+                        board.getController().getInvalidHitImage().setVisible(true);
+                        board.getController().setInvalidHitImagePostion(endX, endY);
+                        board.getController().getValidHitImage().setVisible(false);
+                        smallLine.setVisible(false);
+                        cueBallLine.setVisible(false);
+                  } else {
+                        board.getController().getInvalidHitImage().setVisible(false);
+                        board.getController().getValidHitImage().setVisible(true);
+                        board.getController().setValidHitImagePostion(endX, endY);
+                  }
+                  if(moving || CueBall.isDragging() || rules.isGameOver()){
+                        board.getController().getInvalidHitImage().setVisible(false);
+                        board.getController().getValidHitImage().setVisible(false);
                   }
                   if(ballFound || railFound) break;
             }
       }
       
       public void showHintLine(double startX, double startY, double endX, double endY){
-            double angle = Value.slope(startX, startY, endX, endY) + 180;
+            double angleOfSmallLine = Value.slope(startX, startY, endX, endY) + 180;
+            double slopeOfBallAndCueBall = Value.slope(startX, startY, cueBall.getPosition().getX(), cueBall.getPosition().getY());
+            double slopeOfLineEndAndCueBall = Value.slope(endX, endY, cueBall.getPosition().getX(), cueBall.getPosition().getY());
+            double offset=0;
+            if(slopeOfBallAndCueBall>slopeOfLineEndAndCueBall) offset = -90;
+            else if(slopeOfBallAndCueBall==slopeOfLineEndAndCueBall) offset = 0;
+            else offset = 90;
+            
+            
             smallLine.setStartX(startX);
             smallLine.setStartY(startY);
-            smallLine.setEndX(startX + 80*Math.cos(Math.toRadians(angle)));
-            smallLine.setEndY(startY + 80*Math.sin(Math.toRadians(angle)));
+            smallLine.setEndX(startX + 80*Math.cos(Math.toRadians(angleOfSmallLine)));
+            smallLine.setEndY(startY + 80*Math.sin(Math.toRadians(angleOfSmallLine)));
             cueBallLine.setStartX(endX);
             cueBallLine.setStartY(endY);
-            cueBallLine.setEndX(endX + 80*Math.cos(Math.toRadians(angle-90)));
-            cueBallLine.setEndY(endY + 80*Math.sin(Math.toRadians(angle-90)));
+            cueBallLine.setEndX(endX + 80*Math.cos(Math.toRadians(angleOfSmallLine+offset)));
+            cueBallLine.setEndY(endY + 80*Math.sin(Math.toRadians(angleOfSmallLine+offset)));
       }
 
       public SliderController getSlider() {
@@ -385,4 +412,7 @@ public class GameBoard{
             return board;
       }
       
+      public static Pane getPane() {
+            return pane;
+      }
 }
