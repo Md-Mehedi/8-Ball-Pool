@@ -94,7 +94,7 @@ public class BoardController implements Initializable {
       @FXML
       private Label player1Message;
       @FXML
-      private Label player2message;
+      private Label player2Message;
       @FXML
       private ImageView validHitImage;
       @FXML
@@ -146,32 +146,42 @@ public class BoardController implements Initializable {
             //label.setText(text);
       }
 
-      public void setMessage(String message) {
+      public void setOnlineMessage(String message) {
             messageField.setText(message);
             messageField.setVisible(true);
-            setEffect();
+            setEffect(messageField);
 
       }
+      
+      public void setLeftMessage(String message){
+            player1Message.setText(message);
+            player1Message.setVisible(true);
+            setEffect(player1Message);
+      }
+      public void setRightMessage(String message){System.out.println(message);
+            player2Message.setText(message);
+            player2Message.setVisible(true);
+            setEffect(player2Message);
+      }
 
-      private void setEffect() {
-            System.out.println(messageField);
+      private void setEffect(Label label) {
             TranslateTransition translate = new TranslateTransition();
-            translate.setNode(messageField);
-            translate.setDuration(Duration.seconds(5));
+            translate.setNode(label);
+            translate.setDuration(Duration.seconds(4));
             translate.setToY(-450);
-            translate.setCycleCount(2);
-            translate.setAutoReverse(true);
+//            translate.setCycleCount(2);
+//            translate.setAutoReverse(true);
             translate.play();
-//            translate.setOnFinished(event ->{
-//                  TranslateTransition translate1 = new TranslateTransition();
-//                  translate1.setNode(messageField);
-//                  translate1.setDuration(Duration.seconds(3));
-//                  translate1.setToY(0);
-//                  translate1.play();
-//            });
+            translate.setOnFinished(event ->{
+                  TranslateTransition translate1 = new TranslateTransition();
+                  translate1.setNode(label);
+                  translate1.setDuration(Duration.seconds(.5));
+                  translate1.setToY(0);
+                  translate1.play();
+            });
 
             FadeTransition fade = new FadeTransition();
-            fade.setNode(messageField);
+            fade.setNode(label);
             fade.setDuration(Duration.seconds(5));
             fade.setFromValue(1);
             fade.setToValue(0);
