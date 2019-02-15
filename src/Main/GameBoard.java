@@ -30,8 +30,8 @@ import javafx.util.Duration;
  */
 public class GameBoard{
       public static boolean online = false; 
-      public static boolean offline = online;
-      public static boolean practice =true;
+      public static boolean offline = !online;
+      public static boolean practice;
       
 
       public ArrayList<Ball> allBalls;
@@ -75,8 +75,6 @@ public class GameBoard{
       public GameBoard(Stage stage, Pane pane) throws IOException {
             player1 = new Player();
             player2 = new Player();
-            player1.setName("Player1");
-            player2.setName("Player2");
             System.out.println(player1.getName());
             System.out.println(player2.getName());
             allBalls = new ArrayList<>();
@@ -207,13 +205,12 @@ public class GameBoard{
                                           smallLine.setVisible(false);
                                           
                                           CueBall.setDraggable(false);
-                                          if(practice) rules.setBallInHand(false);
                                           pocketingStatus = true;
                                           checkedRule = false;
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
-                                          if(online && player1.getTurn()) PoolGame.connection.sendCueLength(slider.getRatio());
+                                          if(Value.WORK_WITH_NETWORK && online && player1.getTurn()) PoolGame.connection.sendCueLength(slider.getRatio());
                                     }
                                     long elapsedTime = now - lastUpdateTime.get();
                                     
@@ -230,7 +227,6 @@ public class GameBoard{
                               cueBallPosition = allBalls.get(0).getPosition();
                               if (allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()) {
                                     if((offline ||  online ) && !checkedRule) rules.checkRule();
-                                    if(practice && cueBall.isPocketed()) rules.setBallInHand(true);
                                     checkedRule = true;
                                     checkCueBallIsPotted();
                                     cue.setPosition(cueBallPosition);
