@@ -32,7 +32,7 @@ public class Rules {
       boolean isSolid;
       boolean isMessageShown;
       boolean canSelectBallType;
-      boolean railCollide =true;
+      boolean railCollide = true;
       boolean pocketedBallFound;
       boolean isBallTypeSelected;
       boolean isValidHit = true;
@@ -63,30 +63,65 @@ public class Rules {
             this.player2 = player2;
             this.board = board;
             this.cueBall = cueBall;
+            if(GameBoard.online) {
+                  player1.setTurn(true);
+                  showMessage("center", (player1.getTurn()? "You  are " : this.player2.getName()+" is " ) + "breaking...");
+            }
       }
 
       public void checkRule() {
-            if(!CueBall.isHitTime()) canSelectBallType = true;
+            if (!CueBall.isHitTime()) {
+                  canSelectBallType = true;
+            }
             ballInHand = false;
-            
-            if(isBallTypeSelected) removePocketedBall();
+
+            if (isBallTypeSelected) {
+                  removePocketedBall();
+            }
             checkGameOver();
-            if(!isMessageShown) checkCueBallPocketed();
-            if(isBallTypeSelected && !isMessageShown) checkValidHitting();
-            if(isValidHit  && !isMessageShown) checkRailCollision();
-            if(isBallTypeSelected && isValidHit && railCollide && !isMessageShown) checkValidPocketing();
-            if(!isBallTypeSelected && !isMessageShown) setBallType();
-            if(!isBallTypeSelected && railCollide && !isMessageShown) checkBallPocketed();
-            if(isBallTypeSelected) checkCan8ballPot();
-            
-            
+            if (!isMessageShown) {
+                  checkCueBallPocketed();
+            }
+            if(!isBallTypeSelected && firstHitBallNum==8){
+                        if (player1.getTurn()) {
+                                    if(GameBoard.online) centerMessage("wrongHit", "You", player2.getName(), turner.getBallType());
+                                    else if(GameBoard.offline) centerMessage("wrongHit", player1.getName(), player2.getName(), turner.getBallType());
+                              
+                        } else {
+                                    if(GameBoard.online) centerMessage("wrongHit", player2.getName(), "You", turner.getBallType());
+                                    else if(GameBoard.offline) centerMessage("wrongHit", player2.getName(), player1.getName(), turner.getBallType());
+                              
+                        }
+                        ballInHand = true;
+                        swapTurn();
+                        isMessageShown = true;
+            }
+            if (isBallTypeSelected && !isMessageShown) {
+                  checkValidHitting();
+            }
+            if (isValidHit && !isMessageShown) {
+                  checkRailCollision();
+            }
+            if (isBallTypeSelected && isValidHit && railCollide && !isMessageShown) {
+                  checkValidPocketing();
+            }
+            if (!isBallTypeSelected && !isMessageShown) {
+                  setBallType();
+            }
+            if (!isBallTypeSelected && railCollide && !isMessageShown) {
+                  checkBallPocketed();
+            }
+            if (isBallTypeSelected) {
+                  checkCan8ballPot();
+            }
+
             pocketedBallNum.clear();
             firstPottedBallNo = -1;
             firstHitBallNum = -1;
             CueBall.setHitTime(false);
             railCollide = true;
             isMessageShown = false;
-            
+
 //            try {
 //                  Thread.sleep(1000);
 //            } catch (InterruptedException ex) {
@@ -104,24 +139,26 @@ public class Rules {
 
 //            player1.getTurn() ? turner = player1 : turner = player2;
       }
-      
+
       public void updateTurner() {
+            System.out.println(player1.getTurn()+" "+player2.getTurn());
             turner = player1.getTurn() ? player1 : player2;
             viewer = player1.getTurn() ? player2 : player1;
       }
-      
-      private void onlineMessages(String type, Player winner) {
-            switch(type){
-                  case "gameOver": 
-                        board.getController().setMessage("You " + (winner.equals(player1) ? "win!!!" : "lose!!"));
+
+      private void centerMessage(String type, Player winner) {
+            switch (type) {
+                  case "gameOver":
+                        board.getController().setOnlineMessage("You " + (winner.equals(player1) ? "win!!!" : "lose!!"));
                         break;
             }
       }
 
-      public void onlineMessages(String messageType, String player1Name, String player2Name){
-             onlineMessages(messageType, player1Name, player2Name, null);
+      public void centerMessage(String messageType, String player1Name, String player2Name) {
+            centerMessage(messageType, player1Name, player2Name, null);
       }
-      private void onlineMessages(String messageType, String player1Name, String player2Name, String player1BallType) {
+
+      private void centerMessage(String messageType, String player1Name, String player2Name, String player1BallType) {
             if (!player1Name.equals("You") && !player1Name.equals("you")) {
                   player1Name = "'" + player1Name + "'";
             }
@@ -131,48 +168,84 @@ public class Rules {
             isMessageShown = true;
             switch (messageType) {
                   case "cueBallPotted":
-                        board.getController().setMessage(player1Name + " potted the cue ball. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
+                        board.getController().setOnlineMessage(player1Name + " potted the cue ball. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
                         break;
                   case "railHit":
-                        board.getController().setMessage("No balls hit the rail after first contact. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " ball in hand.");
+                        board.getController().setOnlineMessage("No balls hit the rail after first contact. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " ball in hand.");
                         break;
-                  case "wrongHit": 
-                        board.getController().setMessage(player1Name + " need to hit a " + player1BallType + " ball. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
+                  case "wrongHit":
+                        board.getController().setOnlineMessage(player1Name + " need to hit a " + player1BallType + " ball. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
                         break;
-                  case "ballType": 
-                        board.getController().setMessage(player1Name + " are " + player1BallType + "!!!");
+                  case "ballType":
+                        board.getController().setOnlineMessage(player1Name + " are " + player1BallType + "!!!");
                         break;
-                  case "swapFrom1": 
-                        board.getController().setMessage("You loss the turn.");
+                  case "swapFrom1":
+                        board.getController().setOnlineMessage("You loss the turn.");
                         break;
-                  case "swapFrom2": 
-                        board.getController().setMessage("It's your turn.");
+                  case "swapFrom2":
+                        board.getController().setOnlineMessage("It's your turn.");
                         break;
-                  case "ballBreaking": 
-                        board.getController().setMessage(player1Name + (player1Name.equals("You") ? " are " : " is ") + "breaking." );
+                  case "ballBreaking":
+                        board.getController().setOnlineMessage(player1Name + (player1Name.equals("You") ? " are " : " is ") + "breaking.");
                         break;
-                  case "illigalBreak": 
-                        board.getController().setMessage(player1Name + " made an illigal break. \n"+ player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
+                  case "illigalBreak":
+                        board.getController().setOnlineMessage(player1Name + " made an illigal break. \n" + player2Name + (player2Name.equals("You") ? " have" : " has") + " the ball in hand.");
                         break;
-                  case "test": 
-                        board.getController().setMessage(player1Name);
+                  case "test":
+                        board.getController().setOnlineMessage(player1Name);
                         break;
-                  default: System.out.println("Message is not working...");
+                  default:
+                        System.out.println("Message is not working...");
             }
 
+      }
+      
+
+      private void rightMessage(String messageType, Player winner) {
+            showMessage("right", winner.equals(player2) ? "You win!!!" : "You loss...");
+      }
+
+      private void leftMessage(String messageType, Player winner) {
+            showMessage("left", winner.equals(player1) ? "You win!!!" : "You loss...");
+      }
+
+      private void createMessage(String labelType, String messageType) {
+            switch(messageType){
+                  case "lostTurn":
+                        showMessage(labelType, "You loss the turn");
+                        break;
+                  case "getTurn":
+                        showMessage(labelType, "It's yout turn");
+                        break;
+                  default: System.out.println("leftMessageIsNotKnown");
+            }
+      }
+      
+      private void showMessage(String labelType, String message){
+            System.out.println(labelType+ " : " +message);
+            if(labelType.equals("center")) board.getController().setOnlineMessage(message);
+            else if(labelType.equals("left")) board.getController().setLeftMessage(message);
+            else if(labelType.equals("right")) board.getController().setRightMessage(message);
+                  
       }
 
       private void checkCueBallPocketed() {
             if (cueBall.isPocketed()) {
                   ballInHand = true;
-                  if (GameBoard.online) {
-                        if (player1.getTurn()) {
-                              onlineMessages("cueBallPotted", "You", player2.getName());
-                        } else {
-                              onlineMessages("cueBallPotted", player2.getName(), "You");
+                  if (player1.getTurn()) {
+                        if (GameBoard.online) {
+                              centerMessage("cueBallPotted", "You", player2.getName());
+                        } else if (GameBoard.offline) {
+                              centerMessage("cueBallPotted", player1.getName(), player2.getName());
                         }
-                        swapTurn();
+                  } else {
+                        if (GameBoard.online) {
+                              centerMessage("cueBallPotted", player2.getName(), "You");
+                        } else if (GameBoard.offline) {
+                              centerMessage("cueBallPotted", player2.getName(), player1.getName());
+                        }
                   }
+                  swapTurn();
                   railCollide = true;
                   canSelectBallType = false;
                   firstHitBallNum = -1;
@@ -180,78 +253,108 @@ public class Rules {
       }
 
       private void checkRailCollision() {
-            System.out.println("pocketedBallNum: "+pocketedBallNum);
-            if(CueBall.isHitTime() && railCollidingBall.size()<4 && pocketedBallNum.isEmpty()){
+            System.out.println("pocketedBallNum: " + pocketedBallNum);
+            if (CueBall.isHitTime() && railCollidingBall.size() < 4 && pocketedBallNum.isEmpty()) {
                   ballInHand = true;
                   railCollide = false;
-                  if (GameBoard.online) {
-                        if (player1.getTurn()) {
-                              onlineMessages("illigalBreak", "You", player2.getName());
-                        } else {
-                              onlineMessages("illigalBreak", player2.getName(), "You");
+                  if (player1.getTurn()) {
+                        if (GameBoard.online) {
+                              centerMessage("illigalBreak", "You", player2.getName());
+                        } else if (GameBoard.offline) {
+                              centerMessage("illigalBreak", player1.getName(), player2.getName());
                         }
-                        swapTurn();
+                  } else {
+                        if (GameBoard.online) {
+                              centerMessage("illigalBreak", player2.getName(), "You");
+                        } else if (GameBoard.offline) {
+                              centerMessage("illigalBreak", player2.getName(), "You");
+                        }
                   }
+                  swapTurn();
                   pocketedBallNum.clear();
                   canSelectBallType = false;
-            }
-            else if (railCollidingBall.isEmpty() && pocketedBallNum.isEmpty()) {
+            } else if (railCollidingBall.isEmpty() && pocketedBallNum.isEmpty()) {
                   ballInHand = true;
                   railCollide = false;
-                  if (GameBoard.online) {
-                        if (player1.getTurn()) {
-                              onlineMessages("railHit", "You", player2.getName());
-                        } else {
-                              onlineMessages("railHit", player2.getName(), "You");
-                        }
-                        swapTurn();
+                  if (player1.getTurn()) {
+                        if(GameBoard.online) centerMessage("railHit", "You", player2.getName());
+                        else if(GameBoard.offline) centerMessage("railHit", "You", player2.getName());
+                  } else {
+                        if(GameBoard.online) centerMessage("railHit", player2.getName(), "You");
+                        else if(GameBoard.offline) centerMessage("railHit", player2.getName(), "You");
                   }
+                  swapTurn();
                   pocketedBallNum.clear();
                   canSelectBallType = false;
             }
             railCollidingBall.clear();
       }
-      
-      
-      private void setBallType() {System.out.println("canSelectBallType: "+canSelectBallType);
-            if(canSelectBallType && !pocketedBallNum.isEmpty()){System.out.println("firstBall: "+firstPottedBallNo);
-                  if(player1.getTurn()){
-                        if(1<=firstPottedBallNo && firstPottedBallNo<=7) isSolid = true;
-                        else if(9<=firstPottedBallNo && firstPottedBallNo<=15) isSolid = false;
-                  }
-                  else {
-                        if(1<=firstPottedBallNo && firstPottedBallNo<=7) isSolid = false;
-                        else if(9<=firstPottedBallNo && firstPottedBallNo<=15) isSolid = true;
+
+      private void setBallType() {
+            System.out.println("canSelectBallType: " + canSelectBallType);
+            if (canSelectBallType && !pocketedBallNum.isEmpty()) {
+                  System.out.println("firstBall: " + firstPottedBallNo);
+                  if (player1.getTurn()) {
+                        if (1 <= firstPottedBallNo && firstPottedBallNo <= 7) {
+                              isSolid = true;
+                        } else if (9 <= firstPottedBallNo && firstPottedBallNo <= 15) {
+                              isSolid = false;
+                        }
+                  } else {
+                        if (1 <= firstPottedBallNo && firstPottedBallNo <= 7) {
+                              isSolid = false;
+                        } else if (9 <= firstPottedBallNo && firstPottedBallNo <= 15) {
+                              isSolid = true;
+                        }
                   }
                   player1.setBallType(isSolid ? "solid" : "stripe");
                   player2.setBallType(!isSolid ? "solid" : "stripe");
-                  System.out.println("Player1 ball type: "+player1.getBallType());
+                  System.out.println("Player1 ball type: " + player1.getBallType());
                   board.getController().setRemainngBall(player1.getBallType());
                   createRemainingBallList(player1, player1.getBallType());
                   createRemainingBallList(player2, player2.getBallType());
-                  
-                  onlineMessages("ballType", "You", " ", player1.getBallType());
+
+                  if (GameBoard.online) {
+                        centerMessage("ballType", "You", " ", player1.getBallType());
+                  }
+                  else if(GameBoard.offline){
+                        showMessage("left", "You are "+player1.getBallType());
+                        showMessage("right", "You are "+player2.getBallType());
+                  }
                   isBallTypeSelected = true;
                   firstHitBallNum = -1;
             }
       }
-      
+
       private void checkValidHitting() {
             System.out.println(firstHitBallNum);
             isValidHit = false;
-            if(firstHitBallNum!=-1){
-                  if(!isContain(firstHitBallNum)){
-                        if(player1.getTurn()) onlineMessages("wrongHit", "You", player2.getName(), turner.getBallType());
-                        else onlineMessages("wrongHit", player2.getName(), "You", turner.getBallType());
+            if (firstHitBallNum != -1) {
+                  if (!isContain(firstHitBallNum)) {
+                        if (player1.getTurn()) {
+                                    if(GameBoard.online) centerMessage("wrongHit", "You", player2.getName(), turner.getBallType());
+                                    else if(GameBoard.offline) centerMessage("wrongHit", player1.getName(), player2.getName(), turner.getBallType());
+                              
+                        } else {
+                                    if(GameBoard.online) centerMessage("wrongHit", player2.getName(), "You", turner.getBallType());
+                                    else if(GameBoard.offline) centerMessage("wrongHit", player2.getName(), player1.getName(), turner.getBallType());
+                              
+                        }
                         ballInHand = true;
                         swapTurn();
-                  }
-                  else if(firstHitBallNum == 8 && turner.isCanPocketEightBall()){
-                        onlineMessages(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+                  } else if (firstHitBallNum == 8 && turner.isCanPocketEightBall()) {
+                        if (GameBoard.online) {
+                              centerMessage(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+                        }
+                        else if(GameBoard.offline){
+                              createMessage("left", player1.getTurn()? "lostTurn" : "getTurn");
+                              createMessage("right", !player1.getTurn()? "lostTurn" : "getTurn");
+                        }
                         swapTurn();
                         isValidHit = true;
+                  } else {
+                        isValidHit = true;
                   }
-                  else isValidHit = true;
                   firstHitBallNum = -1;
             }
       }
@@ -262,17 +365,24 @@ public class Rules {
             }
             return false;
       }
-      
+
       private void checkValidPocketing() {
-            if(isValidBallPocketed()){
-                  onlineMessages("test", "isValidBallPocketed", "");
-            } else{
-                  onlineMessages(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+            if (isValidBallPocketed()) {
+                  if (GameBoard.online) {
+                        //centerMessage("test", "isValidBallPocketed", "");
+                  }
+            } else {
+                  if (GameBoard.online) {
+                        centerMessage(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+                  }
+                  else if(GameBoard.offline){
+                        createMessage("left", player1.getTurn()? "lostTurn" : "getTurn");
+                        createMessage("right", !player1.getTurn()? "lostTurn" : "getTurn");
+                  }
                   swapTurn();
             }
       }
-      
-      
+
       private boolean isValidBallPocketed() {
             isValidBallPocketed = false;
             for (Integer num : pocketedBallNum) {
@@ -283,21 +393,27 @@ public class Rules {
             }
             return isValidBallPocketed;
       }
-      
+
       private void checkBallPocketed() {
-            if(pocketedBallNum.isEmpty()){
-                  onlineMessages(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+            if (pocketedBallNum.isEmpty()) {
+                  if (GameBoard.online) {
+                        centerMessage(player1.getTurn() ? "swapFrom1" : "swapFrom2", "", "");
+                  }
+                  else if(GameBoard.offline){
+                        createMessage("left", player1.getTurn()? "lostTurn" : "getTurn");
+                        createMessage("right", !player1.getTurn()? "lostTurn" : "getTurn");
+                  }
                   swapTurn();
             }
       }
-      
+
       private void checkCan8ballPot() {
-            if(player1.getRemaingBallList().isEmpty()){
+            if (player1.getRemaingBallList().isEmpty()) {
                   player1.setCanPocketEightBall(true);
                   board.getController().addEightBallToRemainingList(true);
                   player1.getRemaingBallList().add(8);
             }
-            if(player2.getRemaingBallList().isEmpty()){
+            if (player2.getRemaingBallList().isEmpty()) {
                   player2.setCanPocketEightBall(true);
                   board.getController().addEightBallToRemainingList(false);
                   player2.getRemaingBallList().add(8);
@@ -305,37 +421,44 @@ public class Rules {
 //            onlineMessages("test", player1.isCanPocketEightBall()+"  "+player2.isCanPocketEightBall(),"");
       }
 
-      private void checkGameOver() {System.out.println(pocketedBallNum.contains(8) +" GO " + CueBall.isHitTime());
-            if(pocketedBallNum.contains(8)) {
+      private void checkGameOver() {
+            System.out.println(pocketedBallNum.contains(8) + " GO " + CueBall.isHitTime());
+            if (pocketedBallNum.contains(8)) {
                   eightBallPotted = true;
             }
-            if(!CueBall.isHitTime() && eightBallPotted){
+            if (!CueBall.isHitTime() && eightBallPotted) {
                   turner.setEightBallPocketed(true);
-                  System.out.println("turnerEightBallPot: "+ turner.isEightBallPocketed());
-                  System.out.println(player1.isCanPocketEightBall()+ "  NO  " + player2.isCanPocketEightBall());
-                  if(player1.isCanPocketEightBall() && player1.isEightBallPocketed()){
+                  System.out.println("turnerEightBallPot: " + turner.isEightBallPocketed());
+                  System.out.println(player1.isCanPocketEightBall() + "  NO  " + player2.isCanPocketEightBall());
+                  if (player1.isCanPocketEightBall() && player1.isEightBallPocketed()) {
                         winner = player1;
-                  }
-                  else if(!player1.isCanPocketEightBall() && player1.isEightBallPocketed()){
+                  } else if (!player1.isCanPocketEightBall() && player1.isEightBallPocketed()) {
                         winner = player2;
                   }
-                  if(player2.isCanPocketEightBall() && player2.isEightBallPocketed()){
+                  if (player2.isCanPocketEightBall() && player2.isEightBallPocketed()) {
                         winner = player2;
-                  }
-                  else if(!player2.isCanPocketEightBall() && player2.isEightBallPocketed()){
+                  } else if (!player2.isCanPocketEightBall() && player2.isEightBallPocketed()) {
                         winner = player1;
                   }
-                  if(CueBall.isCueBallPotted() && player1.isEightBallPocketed()) winner = player2;
-                  else if(CueBall.isCueBallPotted() && player2.isEightBallPocketed()) winner = player1;
-                  if(winner.equals(player1) || winner.equals(player2)){
-                        onlineMessages("gameOver", winner);
+                  if (CueBall.isCueBallPotted() && player1.isEightBallPocketed()) {
+                        winner = player2;
+                  } else if (CueBall.isCueBallPotted() && player2.isEightBallPocketed()) {
+                        winner = player1;
+                  }
+                  if (winner.equals(player1) || winner.equals(player2)) {
+                        if (GameBoard.online) {
+                              centerMessage("gameOver", winner);
+                        } else if (GameBoard.offline) {
+                              leftMessage("gameOver", winner);
+                              rightMessage("gameOver", winner);
+                        }
                         isMessageShown = true;
                         gameOver = true;
                   }
             }
             eightBallPotted = false;
       }
-      
+
       public Player getPlayer1() {
             return player1;
       }
@@ -363,7 +486,6 @@ public class Rules {
       public static int getFirstPottedBallNo() {
             return firstPottedBallNo;
       }
-
 
 //      private void addPottedBall() {
 //            for(Integer num : pocketedBallNum){
@@ -428,11 +550,11 @@ public class Rules {
       boolean isBallInHand() {
             return ballInHand;
       }
-      
-      void setBallInHand(boolean b){
+
+      void setBallInHand(boolean b) {
             ballInHand = b;
       }
-      
+
       public static List<Integer> getPocketedBallNum() {
             return pocketedBallNum;
       }
@@ -450,18 +572,19 @@ public class Rules {
       }
 
       private void createRemainingBallList(Player player, String ballType) {
-            if(ballType.equals("solid")){
-                  for(int i=1; i<=7; i++){
-                        if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
-                        else{
+            if (ballType.equals("solid")) {
+                  for (int i = 1; i <= 7; i++) {
+                        if (!allBalls.get(i).isPocketed()) {
+                              player.getRemaingBallList().add(i);
+                        } else {
                               board.getController().removeBallFromRemainingList(i, false);
                         }//remove from boardController.
                   }
-            }
-            else{
-                  for(int i=9; i<=15; i++){
-                        if(!allBalls.get(i).isPocketed()) player.getRemaingBallList().add(i);
-                        else{
+            } else {
+                  for (int i = 9; i <= 15; i++) {
+                        if (!allBalls.get(i).isPocketed()) {
+                              player.getRemaingBallList().add(i);
+                        } else {
                               board.getController().removeBallFromRemainingList(i, false);
                         }//remove from boardController.
                   }
@@ -469,16 +592,15 @@ public class Rules {
       }
 
       private void removePocketedBall() {
-            for(Integer num : pocketedBallNum){
-                  if(num != 0 && num != 8) board.getController().removeBallFromRemainingList(num, true);
+            for (Integer num : pocketedBallNum) {
+                  if (num != 0 && num != 8) {
+                        board.getController().removeBallFromRemainingList(num, true);
+                  }
             }
       }
 
       boolean isGameOver() {
             return gameOver;
       }
-
-
-
 
 }

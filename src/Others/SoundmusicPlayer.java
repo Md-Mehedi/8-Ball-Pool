@@ -31,6 +31,7 @@ public class SoundmusicPlayer extends BorderPane{
     public  void setSoundClick(boolean condition){
         if(condition==true){
             soundMediaPlayer.play();
+            soundMediaPlayer.setVolume(4);
         }
         
 //        soundMediaPlayer.stop();
@@ -39,7 +40,7 @@ public class SoundmusicPlayer extends BorderPane{
 //        }
     }
     public void setSoundStop(){
-        //soundMediaPlayer.stop();
+        soundMediaPlayer.stop();
     }
 }
      

@@ -1,18 +1,25 @@
 package FXML;
 
+import Application.Main;
 import Others.Configure;
 import Others.SoundmusicPlayer;
 import Others.Transition;
+import ServerConnection.ConnectServer;
 import com.jfoenix.controls.JFXButton;
+import java.io.BufferedReader;
 import java.io.IOException;
-import static java.lang.System.exit;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -34,25 +41,46 @@ public class StartPageController implements Initializable {
     @FXML
     private AnchorPane subPane;
     
+     @FXML
+    private ImageView backGroundImage;
+    @FXML
+    private ImageView playerIcon;
+    @FXML
+    private Label playerNameLabel;
     
     private Parent startGamePage;
     private Parent optionPage;
     
-    private StartGamePageController startGamePageController;
+    private SelectionPageController selectionPageController;
     private OptionPageController optionPageController;
     
     private ImageView parentBackgroundImageView;
     
-    //private BufferedReader readFromServer;
-    //private PrintWriter writeToServer;
-    @FXML
-    private ImageView backGroundImage;
+    private BufferedReader readFromServer;
+    private PrintWriter writeToServer;
+    
+    private ConnectServer connection;
+
+      public ConnectServer getConnection() {
+            return connection;
+      }
+
+      public void setConnection(ConnectServer connection) {
+            this.connection = connection;
+        try {
+            writeToServer = new PrintWriter(connection.getSocket().getOutputStream());
+            readFromServer = new BufferedReader(new InputStreamReader(connection.getSocket().getInputStream()));
+        } catch (IOException ex) {
+            Logger.getLogger(StartPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+   
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //writeToServer = new PrintWriter(Main.socket.getOutputStream());
-        //readFromServer = new BufferedReader(new InputStreamReader(Main.socket.getInputStream()));
-
+    public void initialize(URL url, ResourceBundle rb) {System.out.println("startPage");
+//          playerIcon.setImage(Main.image);
+       playerNameLabel.setText(Main.username);
+        
     }
 
     @FXML
@@ -61,13 +89,13 @@ public class StartPageController implements Initializable {
             player.setSoundClick(true);
         }
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartGamePage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectionPage.fxml"));
         startGamePage = (AnchorPane)loader.load();    
         rootpane.getChildren().add(startGamePage);  
         Transition.scaleTransition((Pane) startGamePage, 0.0, 0.9);
         backGroundImage.setEffect(new BoxBlur(20,20,3));           
-        startGamePageController = loader.getController();
-        startGamePageController.setParentBackground(backGroundImage);
+        selectionPageController = loader.getController();
+        selectionPageController.setParentBackground(backGroundImage);
     }
 
     @FXML
@@ -94,18 +122,26 @@ public class StartPageController implements Initializable {
         }
         Configure.writeToFile();
         System.out.println("Exit The Game");
-        //writeToServer.println("logout#"+Main.username);
-        //writeToServer.flush();
-        exit(1);
+//        writeToServer.println("logout#"+Main.username);
+//        writeToServer.flush();
+        System.exit(1);
     }
     @FXML
       public void ReleasedAction()
       {
-            //player.setSoundStop();
+            player.setSoundStop();
       }
 
-    void setParentBackground(ImageView backgroundImage) {
+    public void setParentBackground(ImageView backgroundImage) {
         parentBackgroundImageView= backgroundImage;//To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ImageView getPlayerIcon() {
+        return playerIcon;
+    }
+
+    public void setPlayerIcon() {
+        this.playerIcon.setImage(Main.image);
     }
     
 }

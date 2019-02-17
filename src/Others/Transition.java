@@ -17,7 +17,7 @@ import javafx.util.Duration;
 public class Transition {
    
     public static void scaleTransition(Pane pane, double FromValue, double ToValue){
-        ScaleTransition scale = new ScaleTransition(Duration.seconds(.5), pane);
+        ScaleTransition scale = new ScaleTransition(Duration.seconds(.8), pane);
         scale.setFromX(FromValue);
         scale.setFromY(FromValue);
         scale.setToX(ToValue);

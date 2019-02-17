@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="675.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.UselessController">
+   <children>
+      <ImageView fitHeight="685.0" fitWidth="1350.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../picturepackage/SelectonPageImage.jpg" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" layoutX="-3.0" layoutY="311.0" pannable="true" prefHeight="330.0" prefWidth="1360.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="311.0">
+         <content>
+            <AnchorPane fx:id="hbox" onMouseDragged="#hboxDraggedAction" onMousePressed="#hboxPressAction" prefHeight="330.0" prefWidth="1350.0">
+               <children>
+                  <ImageView fitHeight="330.0" fitWidth="1350.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../picturepackage/tablebackground.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="1810.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="460.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="910.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="230.0" fitWidth="400.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="2260.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="400.0" layoutX="1360.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../picturepackage/ChooseMode.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

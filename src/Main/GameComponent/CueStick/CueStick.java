@@ -41,7 +41,7 @@ public class CueStick{
 //        Parent container = FXMLLoader.load(getClass().getResource("CueStick.fxml"));
 
 cue = new ImageView();System.out.println("cue done");
-            cue.setImage(new Image(getClass().getResourceAsStream(Value.CUE_PICTURE_LOCATION)));
+            cue.setImage(new Image(Value.CUE_PICTURE_LOCATION));
             cue.setFitWidth(Value.CUE_LENGTH);
             cue.setFitHeight(Value.CUE_RADIUS * 2);
             cue.setLayoutX(cueBallLocation.getX() - 2 * Value.BALL_RADIUS);
@@ -49,10 +49,6 @@ cue = new ImageView();System.out.println("cue done");
 
             pane.getChildren().add(cue);
             
-            label.setLayoutX(500);
-            label.setLayoutY(50);
-            label.setText("At first...");
-            pane.getChildren().add(label);
 
 //        Rectangle rec = new Rectangle(Value.CUE_LENGTH, Value.CUE_RADIUS*2);
 //        rec.setLayoutX(cue.getLayoutX());
@@ -111,7 +107,6 @@ cue = new ImageView();System.out.println("cue done");
             pane.getScene().setOnMouseExited(event -> {
             });
             pane.getScene().setOnMouseDragged((event) -> {
-
                   if (moveable && !CueBall.isDragging() && (GameBoard.offline || GameBoard.practice || (GameBoard.online && GameBoard.player1.getTurn()))) {
                         double newX = 0;
                         double newY = 0;
@@ -167,7 +162,7 @@ cue = new ImageView();System.out.println("cue done");
             return cue.getLayoutY();
       }
 
-      public void setAngle(double cueAngle) {
+      public static void  setAngle(double cueAngle) {
             angle = cueAngle;
       }
 
@@ -182,9 +177,14 @@ cue = new ImageView();System.out.println("cue done");
             previousAngle = Value.slope(previousSceneX.get(), previousSceneY.get(), cueBallLocation.getX(), cueBallLocation.getY());
             newAngle = Value.slope(newX, newY, cueBallLocation.getX(), cueBallLocation.getY());
             angleDifference = newAngle - previousAngle;
-//            if (Math.abs(angleDifference) < 0.00000001) {
-//                  angleDifference = 0;
-//            }
+            
+//            angleDifference = angleDifference*100000;
+//            int x = (int) angleDifference;
+//            angleDifference = x/100000.0;
+            
+            if (Math.abs(angleDifference) < 0.000001) {
+                  angleDifference = 0;
+            }
             Rotate rotate = new Rotate(angleDifference);
             rotate.pivotXProperty().bind(new SimpleDoubleProperty(cue.getFitWidth()));
             rotate.pivotYProperty().bind(new SimpleDoubleProperty(cue.getFitHeight() / 2));
@@ -192,7 +192,7 @@ cue = new ImageView();System.out.println("cue done");
 
             double dis = 2 * Value.BALL_RADIUS;
             setLayout(dis, cueBallLocation.getX(), cueBallLocation.getY());
-
+         
             angle += angleDifference;
             if (angle > 360) {
                   angle -= 360;

@@ -5,32 +5,41 @@
  */
 package Main.GameComponent.Board;
 
+import Main.GameBoard;
 import Main.Value;
 import Others.Configure;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -94,17 +103,22 @@ public class BoardController implements Initializable {
       @FXML
       private Label player1Message;
       @FXML
-      private Label player2message;
+      private Label player2Message;
       @FXML
       private ImageView validHitImage;
       @FXML
       private ImageView invalidHitImage;
+      @FXML
+      private VBox infoAndBallContainer;
 
       /**
        * Initializes the controller class.
        */
       @Override
       public void initialize(URL url, ResourceBundle rb) {
+            
+            if(GameBoard.practice) infoAndBallContainer.setVisible(false);
+            
             remainingBallList = new HashMap<>();
 
             container.setPrefSize(Value.SCENE_WIDTH, Value.SCENE_HIGHT);
@@ -114,11 +128,12 @@ public class BoardController implements Initializable {
             board.setFitWidth(Value.BOARD_X);
             board.setLayoutX(Value.BOARD_POSITION_CENTER_X);
             board.setLayoutY(Value.BOARD_POSITION_CENTER_Y);
-            board.setImage(new Image(getClass().getResourceAsStream(Value.BOARD_PICTURE_LOCATION)));
+            board.setImage(new Image(Value.BOARD_PICTURE_LOCATION));
             background.setVisible(true);
 
             makeNodeList();
             onOffButtonColorCheck();
+            updateUserInfo();
 
             player1RemainingHbox.getChildren().clear();
             player2RemainingHbox.getChildren().clear();
@@ -146,36 +161,46 @@ public class BoardController implements Initializable {
             //label.setText(text);
       }
 
-      public void setMessage(String message) {
+      public void setOnlineMessage(String message) {
             messageField.setText(message);
             messageField.setVisible(true);
-            setEffect();
+            setEffect(messageField);
 
       }
+      
+      public void setLeftMessage(String message){
+            player1Message.setText(message);
+            player1Message.setVisible(true);
+            setEffect(player1Message);
+      }
+      public void setRightMessage(String message){System.out.println(message);
+            player2Message.setText(message);
+            player2Message.setVisible(true);
+            setEffect(player2Message);
+      }
 
-      private void setEffect() {
-            System.out.println(messageField);
+      private void setEffect(Label label) {
             TranslateTransition translate = new TranslateTransition();
-            translate.setNode(messageField);
-            translate.setDuration(Duration.seconds(5));
+            translate.setNode(label);
+            translate.setDuration(Duration.seconds(4));
             translate.setToY(-450);
-            translate.setCycleCount(2);
-            translate.setAutoReverse(true);
+//            translate.setCycleCount(2);
+//            translate.setAutoReverse(true);
             translate.play();
-//            translate.setOnFinished(event ->{
-//                  TranslateTransition translate1 = new TranslateTransition();
-//                  translate1.setNode(messageField);
-//                  translate1.setDuration(Duration.seconds(3));
-//                  translate1.setToY(0);
-//                  translate1.play();
-//            });
+            translate.setOnFinished(event ->{
+                  TranslateTransition translate1 = new TranslateTransition();
+                  translate1.setNode(label);
+                  translate1.setDuration(Duration.seconds(.5));
+                  translate1.setToY(0);
+                  translate1.play();
+            });
 
             FadeTransition fade = new FadeTransition();
-            fade.setNode(messageField);
-            fade.setDuration(Duration.seconds(5));
+            fade.setNode(label);
+            fade.setDuration(Duration.seconds(4));
             fade.setFromValue(1);
             fade.setToValue(0);
-            //fade.play();
+            fade.play();
       }
 
       @FXML
@@ -198,7 +223,14 @@ public class BoardController implements Initializable {
 
       @FXML
       private void cancelButtonAction(ActionEvent event) {
-            System.exit(1);
+            try {
+                  Parent root = FXMLLoader.load(getClass().getResource("/FXML/StartPage.fxml"));
+                  Stage curStage = (Stage) container.getScene().getWindow();
+                  Scene scene = new Scene(root);
+                  curStage.setScene(scene);
+            } catch (IOException ex) {
+                  Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
+            }
       }
 
       @FXML
@@ -412,4 +444,6 @@ public class BoardController implements Initializable {
             setImagePostion(invalidHitImage, new Point2D(x, y));
       }
 
+      private void updateUserInfo() {
+      }
 }

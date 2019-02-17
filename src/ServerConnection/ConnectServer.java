@@ -14,27 +14,26 @@ import java.util.logging.Logger;
  */
 public class ConnectServer {
 
-      private Socket socket;
+      private static Socket socket;
       BufferedReader readFromServer;
       PrintWriter writeToServer;
       String messageFromServer;
-      ClientThread wt;
+      static ClientThread wt;
       double cueRatio = 0;
 
-      public ConnectServer(GameBoard gb) {
+      public ConnectServer() {
             try {
                   socket = new Socket("localhost", 13019);
             } catch (IOException ex) {
                   Logger.getLogger(ConnectServer.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println("Connected to server.");
-            wt = new ClientThread(socket, gb);
-            Thread t = new Thread(wt);
-            t.start();
       }
 
       public void sendData(String message) {
-            wt.sendMessage(message);
+                        System.out.println("sendData: "+message);
+                        wt.sendMessage(message);
+            
       }
 
       public void sendAllBallData() {
@@ -47,5 +46,21 @@ public class ConnectServer {
                   cueRatio = ratio;
             }
       }
+      
+      public void setGameBoard(GameBoard gb){
+            
+      }
 
+      public Socket getSocket() {
+            return socket;
+      }
+
+      public void createThread(GameBoard gameBoard) {
+            System.out.println("in clientServer: "+gameBoard);
+            wt = new ClientThread(socket, gameBoard);
+            Thread t = new Thread(wt);
+            t.start();
+            
+      }
+      
 }

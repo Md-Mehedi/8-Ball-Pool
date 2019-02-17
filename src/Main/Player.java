@@ -1,6 +1,7 @@
 package Main;
 
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Player {
       private String name;
-      private String pictureLocation;
+      private Image pictureLocation;
       private int cueNum;
       private ArrayList<Integer> remaingBallList;
 
@@ -42,7 +43,7 @@ public class Player {
       public Player() {
             remaingBallList = new ArrayList<>();
             name = "default";
-            canPocketEightBall = true;
+            canPocketEightBall = false;
             eightBallPocketed = false;
             ballType = null;
             firstBallNumber = 1;
@@ -131,11 +132,11 @@ public class Player {
             this.name = name;
       }
 
-      public String getPictureLocation() {
+      public Image getPictureLocation() {
             return pictureLocation;
       }
 
-      public void setPictureLocation(String pictureLocation) {
+      public void setPicture(Image pictureLocation) {
             this.pictureLocation = pictureLocation;
       }
 

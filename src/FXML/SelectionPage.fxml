@@ -6,6 +6,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,7 +37,7 @@
          <content>
             <AnchorPane layoutX="50.0" layoutY="5.0" prefHeight="330.0" prefWidth="2750.0">
                <children>
-                  <ImageView fitHeight="340.0" fitWidth="2750.0" layoutY="-10.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="tableBackground" fitHeight="340.0" fitWidth="2750.0" layoutY="-10.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../picturepackage/tablebackground.p.png" />
                      </image>
@@ -43,7 +46,7 @@
                      <children>
                         <AnchorPane prefHeight="330.0" prefWidth="400.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                              <Label fx:id="tableLabel1" contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Candy Table" textFill="#f5f2f2">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
@@ -57,7 +60,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="330.0" prefWidth="400.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Royal Tiger" textFill="#f5f2f2">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
@@ -71,7 +74,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="330.0" prefWidth="400.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Zoomby Table" textFill="#f5f2f2">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
@@ -80,12 +83,22 @@
                                  <image>
                                     <Image url="@../picturepackage/Board-3.jpg" />
                                  </image>
+                                 <effect>
+                                    <Lighting diffuseConstant="1.5" surfaceScale="0.0">
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
                               </ImageView>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="330.0" prefWidth="400.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="The Mummy" textFill="#f5f2f2">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
@@ -99,7 +112,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="330.0" prefWidth="400.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Kungfu Table" textFill="#f5f2f2">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
@@ -113,7 +126,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="330.0" prefWidth="400.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Green Forrest" textFill="#f5f2f2">
+                              <Label contentDisplay="CENTER" layoutX="104.0" layoutY="249.0" prefHeight="58.0" prefWidth="165.0" text="Mechanics" textFill="#f5f2f2">
                                  <font>
                                     <Font size="27.0" />
                                  </font>
@@ -138,7 +151,7 @@
          <content>
             <AnchorPane prefHeight="1450.0" prefWidth="1000.0">
                <children>
-                  <ImageView fitHeight="1450.0" fitWidth="1005.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="cueBackground" fitHeight="1450.0" fitWidth="1005.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../picturepackage/cueBoardBackground.jpg" />
                      </image>

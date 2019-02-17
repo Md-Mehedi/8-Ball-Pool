@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.transform.Rotate;
 
 /**
@@ -36,9 +37,10 @@ class ClientThread implements Runnable {
 
 
       ClientThread(Socket socket, GameBoard gb) {
+            System.out.println("inClientThread");
+            this.gameBoard = gb;
             splitString = new String[35];
             this.socket = socket;
-            gameBoard = gb;
             try {
                   writeToServer = new PrintWriter(this.socket.getOutputStream());
                   readFromServer = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -52,7 +54,7 @@ class ClientThread implements Runnable {
             while(true){
             while (true) {
                   try {
-                        //System.out.println("ready to read");
+                        System.out.println("ready to read");
                         messageFromServer = readFromServer.readLine();
                   } catch (IOException ex) {
                         Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,7 +80,15 @@ class ClientThread implements Runnable {
                         gameBoard.getRules().getPlayer2().setTurn(true);
                         gameBoard.getRules().updateTurner();
                         break;
-                  case "updateCueLength": gameBoard.getCue().updateLength(Double.parseDouble(splitString[1])); break;
+                  case "updateCueLength": 
+                        Platform.runLater(new Runnable() {
+                              @Override
+                              public void run() {
+                                    gameBoard.getCue().updateLength(Double.parseDouble(splitString[1])); 
+                              }
+                        });
+                        
+                        break;
                   case "setReleasedRatio": gameBoard.getSlider().setReleasedRatio(Double.parseDouble(splitString[1])); break;
                   case "setCueBallPosition": setCueBallPosition(); break;
                   case "setBallPostion": setBallPosition();
@@ -87,6 +97,7 @@ class ClientThread implements Runnable {
                   case "cueBallIsDragging": gameBoard.getCueBall().setDragging(true); break;
                   case "cueBallNotDragging": gameBoard.getCueBall().setDragging(false); break;
                   case "cueBallIsPotted": break;
+                  case "cueAngle":  CueStick.setAngle(Double.parseDouble(splitString[1])); break;
                   case "test": test(); break;
                   case "print": print(); break;
                   
@@ -115,10 +126,15 @@ class ClientThread implements Runnable {
       }
 
       private void setCueDragEvent() {
-            Double x = Double.parseDouble(splitString[1]);
-            Double y = Double.parseDouble(splitString[2]);
-            if(splitString[0].equals("CueEventScene")) gameBoard.getCue().setData(x, y);
-            else gameBoard.getCue().setPreviousScene(x, y);
+            Platform.runLater(new Runnable() {
+                  @Override
+                  public void run() {
+                        Double x = Double.parseDouble(splitString[1]);
+                        Double y = Double.parseDouble(splitString[2]);
+                        if(splitString[0].equals("CueEventScene")) gameBoard.getCue().setData(x, y);
+                        else gameBoard.getCue().setPreviousScene(x, y);
+                  }
+            });
             
       }
 
@@ -171,6 +187,9 @@ class ClientThread implements Runnable {
 //            gameBoard.getRules().onlineMessages("ballBreaking", GameBoard.player1.getTurn() ? "You" : GameBoard.player2.getName(), "");
       
       }
-
+      
+      public void setGameBoard(GameBoard gb){
+            gameBoard = gb;
+      }
 
 }

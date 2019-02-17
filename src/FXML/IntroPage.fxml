@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="introPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.IntroPageController">
+<AnchorPane id="AnchorPane" fx:id="introPane" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.IntroPageController">
    <children>
       <ImageView fx:id="backGroundImage" fitHeight="800.0" fitWidth="1500.0" pickOnBounds="true">
          <image>
-            <Image url="@../picturepackage/IntroPage.jpg" />
+            <Image url="@../../picturepackage/IntroPage.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="loadIcon" fitHeight="150.0" fitWidth="200.0" layoutX="674.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../picturepackage/loading%20icon.png" />
+            <Image url="@../../picturepackage/loading%20icon.png" />
          </image>
       </ImageView>
    </children>

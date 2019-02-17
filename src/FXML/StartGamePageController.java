@@ -1,5 +1,6 @@
 package FXML;
 
+import Application.PoolGame;
 import Main.GameBoard;
 import Others.Configure;
 import Others.SoundmusicPlayer;
@@ -18,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class StartGamePageController implements Initializable {
 
@@ -36,8 +38,8 @@ public class StartGamePageController implements Initializable {
       @FXML
       private ImageView backGroundImage;
       private ImageView parentBackgroundImageView;
-      private Parent selectionPage;
-      private SelectionPageController selectionPageController;
+      private Parent offlinePlayerPage;
+      private OfflinePlayerPageController offlinePlayerPageController;
       
       private Parent playerPage;
       private PlayerPageController playerPageController;
@@ -50,49 +52,54 @@ public class StartGamePageController implements Initializable {
 
       @FXML
       private void offlinePlayAction(ActionEvent event) throws IOException {
-            if (Configure.soundMode == true) {
-                  player.setSoundClick(true);
-            }
             GameBoard.offline = true;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectionPage.fxml"));
-        selectionPage = (AnchorPane)loader.load();
-        choosemodepane.getChildren().add(selectionPage);
-        backGroundImage.setEffect(new BoxBlur(20,20,3));       
-        Transition.scaleTransition((Pane) selectionPage, 0.0,1);
+            GameBoard.online = false;
+            GameBoard.practice = false;
+           if (Configure.soundMode == true) {
+                  player.setSoundClick(true);
+           }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("OfflinePlayerPage.fxml"));
+        offlinePlayerPage = (AnchorPane)loader.load();
+        choosemodepane.getChildren().add(offlinePlayerPage);
+        Transition.scaleTransition((Pane) offlinePlayerPage, 0.0,1);
         
-        selectionPageController= loader.getController();
-        selectionPageController.setParentBackground(backGroundImage);
+        offlinePlayerPageController= loader.getController();
       }
 
       @FXML
       private void onlinePlayAction(ActionEvent event) throws IOException {
-            if (Configure.soundMode == true) {
-                  player.setSoundClick(true);
-            }
             GameBoard.online = true;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerPage.fxml"));
-        playerPage = (AnchorPane)loader.load();
-        choosemodepane.getChildren().add(playerPage);
-        backGroundImage.setEffect(new BoxBlur(20,20,3));       
-        Transition.scaleTransition((Pane) playerPage, 0.0,1);
+            GameBoard.offline = false;
+            GameBoard.practice = false;
+          if (Configure.soundMode == true) { 
+                player.setSoundClick(true);
+          }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("OfflinePlayerPage.fxml"));
+        offlinePlayerPage = (AnchorPane)loader.load();
+        choosemodepane.getChildren().add(offlinePlayerPage);
+        Transition.scaleTransition((Pane) offlinePlayerPage, 0.0,1);
         
-        playerPageController= loader.getController();
-        playerPageController.setParentBackground(backGroundImage);
+        offlinePlayerPageController= loader.getController();
+        offlinePlayerPageController.readOponnentData();
       }
 
       @FXML
       private void practiceAction(ActionEvent event) throws IOException {
-            if (Configure.soundMode == true) {
-                  player.setSoundClick(true);
-            }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectionPage.fxml"));
-        selectionPage = (AnchorPane)loader.load();
-        choosemodepane.getChildren().add(selectionPage);
-        backGroundImage.setEffect(new BoxBlur(20,20,3));       
-        Transition.scaleTransition((Pane) selectionPage, 0.0,1);
-        
-        selectionPageController= loader.getController();
-        selectionPageController.setParentBackground(backGroundImage);
+          if (Configure.soundMode == true) {   
+                player.setSoundClick(true);  
+          }
+            GameBoard.practice = true;
+            GameBoard.online = false;
+            GameBoard.offline = false;System.out.println("hocchena");
+            PoolGame.start((Stage) choosemodepane.getScene().getWindow());
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectionPage.fxml"));
+//        selectionPage = (AnchorPane)loader.load();
+//        choosemodepane.getChildren().add(selectionPage);
+//        backGroundImage.setEffect(new BoxBlur(20,20,3));       
+//        Transition.scaleTransition((Pane) selectionPage, 0.0,1);
+//        
+//        selectionPageController= loader.getController();
+//        selectionPageController.setParentBackground(backGroundImage);
       }
 
       @FXML
@@ -109,7 +116,6 @@ public class StartGamePageController implements Initializable {
 //            curStage.setScene(scene);
       }
 
-      @FXML
       private void onlineRealeasedAction(MouseEvent event) {
             player.setSoundStop();
       }
@@ -118,23 +124,22 @@ public class StartGamePageController implements Initializable {
             parentBackgroundImageView = backgroundImage;
       }
       
-      @FXML
       private void offlineReleasedAction(MouseEvent event) {
             player.setSoundStop();
       }
 
-      @FXML
       private void practiceReleasedAction(MouseEvent event) {
             player.setSoundStop();
       }
 
-      @FXML
       private void backReleasedAction(MouseEvent event) {
             player.setSoundStop();
       }
+      @FXML
       public void ReleasedAction()
       {
             player.setSoundStop();
       }
-
+      
+     
 }

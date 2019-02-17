@@ -1,5 +1,6 @@
 package Main;
 
+import Application.Main;
 import Application.PoolGame;
 import Main.GameComponent.Ball.Ball;
 import Main.GameComponent.Ball.CueBall;
@@ -29,8 +30,8 @@ import javafx.util.Duration;
  * @author Md Mehedi Hasan
  */
 public class GameBoard{
-      public static boolean online = false; 
-      public static boolean offline = !online;
+      public static boolean online;
+      public static boolean offline;
       public static boolean practice;
       
 
@@ -43,7 +44,7 @@ public class GameBoard{
       CueStick cue;
       int cueAngle;
       public static boolean moving = false;
-      Board board;
+      static Board board;
       CueBall cueBall;
       SliderController slider;
       boolean pocketingStatus = false;
@@ -72,11 +73,8 @@ public class GameBoard{
             this.cue = cue;
       }
 
-      public GameBoard(Stage stage, Pane pane) throws IOException {
-            player1 = new Player();
-            player2 = new Player();
-            System.out.println(player1.getName());
-            System.out.println(player2.getName());
+      public GameBoard(Stage stage, Pane pane) throws IOException {System.out.println("in gameboard");
+            
             allBalls = new ArrayList<>();
             curStage = stage;
             this.pane = new Pane();
@@ -123,6 +121,13 @@ public class GameBoard{
 
       public void prepareBoard() throws IOException {
             board.drawBoard();
+            
+            player1.setName(Main.username);
+            board.getController().setPlayer1Name(player1.getName());
+            player1.setPicture(Main.image);
+            board.getController().setPlayer2Name(player2.getName());
+//            board.getController().setPlayer2Image(player2.getImage());
+            
 //            board.getController().setRemainngBall("solid");
             prepareBall();
             prepareCue();
@@ -192,12 +197,15 @@ public class GameBoard{
                   public void handle(long now) {//PoolGame.connection.sendData("test#10");
                         
 //                        System.out.println(cue.getCue().getLayoutX());
-                        
+System.out.println(CueStick.getAngle());
                         if (true) {
                               if (lastUpdateTime.get() > 0) {
                                     cue.setVelocity(slider.getReleasedRatio() *  Value.CUE_MAXIMUM_VELOCITY, Math.toRadians(CueStick.getAngle()));
                                     if (slider.getReleasedRatio() > 0) {
-                                          if(online && player1.getTurn()) PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
+                                          if(online && player1.getTurn()) {
+                                                PoolGame.connection.sendData("setReleasedRatio#"+slider.getReleasedRatio());
+//                                                PoolGame.connection.sendData("cueAngle#"+CueStick.getAngle()+180);
+                                          }
                                           allBalls.get(0).setVelocityX(cue.getVelocity().x);
                                           allBalls.get(0).setVelocityY(cue.getVelocity().y);
                                           slider.setReleasedRatio(0);
@@ -205,19 +213,19 @@ public class GameBoard{
                                           smallLine.setVisible(false);
                                           
                                           CueBall.setDraggable(false);
+                                          if(practice) rules.setBallInHand(false);
                                           pocketingStatus = true;
                                           checkedRule = false;
                                     }
                                     if (slider.getRatio() > 0) {
                                           cue.updateLength(slider.getRatio());
-                                          if(Value.WORK_WITH_NETWORK && online && player1.getTurn()) PoolGame.connection.sendCueLength(slider.getRatio());
+                                          if(online && player1.getTurn()) PoolGame.connection.sendCueLength(slider.getRatio());
                                     }
                                     long elapsedTime = now - lastUpdateTime.get();
                                     
                                     elapsedTime = 15000000;
                                     makeCollision(elapsedTime);
                               }
-                              
                               cue.getCue().setVisible(!CueBall.isDragging() && !moving);
                               slider.setVisible(!CueBall.isDragging() && !moving && (offline || practice || (online && player1.getTurn())));
                               line.setVisible(!CueBall.isDragging() && !moving);
@@ -227,6 +235,7 @@ public class GameBoard{
                               cueBallPosition = allBalls.get(0).getPosition();
                               if (allBalls.get(0).getVelocity() < 0.1 && !moving && cue.isMoveable()) {
                                     if((offline ||  online ) && !checkedRule) rules.checkRule();
+                                    if(practice && cueBall.isPocketed()) rules.setBallInHand(true);
                                     checkedRule = true;
                                     checkCueBallIsPotted();
                                     cue.setPosition(cueBallPosition);
@@ -408,7 +417,7 @@ public class GameBoard{
             return cueBall;
       }
 
-      public Board getBoard() {
+      public static Board getBoard() {
             return board;
       }
       

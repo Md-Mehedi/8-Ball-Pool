@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 
 
 public class UselessController implements Initializable {
-
+    
     @FXML
     private AnchorPane hbox;
     private double prevposition;

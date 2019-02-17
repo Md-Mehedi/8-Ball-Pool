@@ -97,7 +97,7 @@ public class Board {
       }
       
       public void translateMessage(String message){
-            controller.setMessage(message);
+            controller.setOnlineMessage(message);
       }
 
       public BoardController getController() {

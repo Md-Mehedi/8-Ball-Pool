@@ -1,25 +1,24 @@
 
 package FXML;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import Application.Main;
+import Application.PoolGame;
 import Others.Configure;
 import Others.SoundmusicPlayer;
 import Others.Transition;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.effect.BoxBlur;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class PlayerPageController implements Initializable {
 
@@ -46,7 +45,6 @@ public class PlayerPageController implements Initializable {
     private SelectionPageController selectionPageController;
     
     private Others.SoundmusicPlayer player=new SoundmusicPlayer();
-
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,7 +65,6 @@ public class PlayerPageController implements Initializable {
                   player.setSoundClick(true);
             }
             Transition.scaleTransition(playerPagePane, .9, 0);
-            parentBackGroundImageView.setEffect(new BoxBlur(0, 0, 0));
     }
 
     @FXML
@@ -75,14 +72,15 @@ public class PlayerPageController implements Initializable {
          if (Configure.soundMode == true) {
                   player.setSoundClick(true);
             }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectionPage.fxml"));
-        selectionPage = (AnchorPane)loader.load();
-        playerPagePane.getChildren().add(selectionPage);
-        backGroundImage.setEffect(new BoxBlur(20,20,3));       
-        Transition.scaleTransition((Pane) selectionPage, 0.0,1);
-        
-        selectionPageController= loader.getController();
-        selectionPageController.setParentBackground(backGroundImage);
+         PoolGame.start((Stage)playerPagePane.getScene().getWindow());
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectionPage.fxml"));
+//        selectionPage = (AnchorPane)loader.load();
+//        playerPagePane.getChildren().add(selectionPage);
+//        backGroundImage.setEffect(new BoxBlur(20,20,3));       
+//        Transition.scaleTransition((Pane) selectionPage, 0.0,1);
+//        
+//        selectionPageController= loader.getController();
+//        selectionPageController.setParentBackground(backGroundImage);
     }
     
 }

@@ -1,6 +1,7 @@
 package Application;
 
-import Main.*;
+import Main.GameBoard;
+import Main.Value;
 import ServerConnection.ConnectServer;
 import java.io.IOException;
 import javafx.scene.Scene;
@@ -17,8 +18,10 @@ public class PoolGame{
     public static Pane playfield;
     public static Scene scene;
     public static ConnectServer connection;
+    public static GameBoard gb;
 
     public static void start(Stage primaryStage) throws IOException {
+        PoolGame.connection = Main.connection;
         
         AnchorPane root = new AnchorPane(); 
         playfield = new Pane();
@@ -35,9 +38,9 @@ public class PoolGame{
 //playfield.getChildren().add(box);
         scene = new Scene(root,Value.SCENE_WIDTH,Value.SCENE_HIGHT);
         
-        
+        System.out.println("in start");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("8 Ball   Game");
+        primaryStage.setTitle("8 Ball Game");
         primaryStage.setResizable(false);
         primaryStage.setX(0);
         primaryStage.setY(0);
@@ -45,8 +48,7 @@ public class PoolGame{
             
         primaryStage.show();
         
-        GameBoard gb = new GameBoard(primaryStage, playfield);
-        if(GameBoard.online) connection = new ConnectServer(gb);
+        gb = new GameBoard(primaryStage, playfield);
     }
     public Scene getScene(){
         return scene;
@@ -103,5 +105,7 @@ public class PoolGame{
 //           ServerConnection.ConnectServer.main();
         //launch(args);
     }
-
+    public static GameBoard getGameBoard(){
+          return gb;
+    }
 }

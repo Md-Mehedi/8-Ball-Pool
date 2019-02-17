@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="choosemodepane" prefHeight="800.0" prefWidth="1500.0" styleClass="bodybg" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.StartGamePageController">
+   <children>
+      <ImageView fx:id="backGroundImage" fitHeight="802.0" fitWidth="1499.0" pickOnBounds="true">
+         <image>
+            <Image url="@../picturepackage/ChooseMode.jpg" />
+         </image>
+      </ImageView>
+      <HBox layoutX="345.0" layoutY="423.0" spacing="30.0">
+         <children>
+            <JFXButton fx:id="offlinePlayButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="236.0" layoutY="322.0" onAction="#offlinePlayAction" onMouseReleased="#offlineReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Offline Play" textAlignment="CENTER" textFill="#6e5050">
+               <font>
+                  <Font name="System Italic" size="36.0" />
+               </font>
+               <styleClass>
+                  <String fx:value=".button:hover" />
+                  <String fx:value=".button:pressed" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton fx:id="onlinePlayButton" buttonType="RAISED" ellipsisString="" layoutX="507.0" layoutY="322.0" onAction="#onlinePlayAction" onMouseReleased="#onlineRealeasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Online Play" textFill="#6e5050">
+               <font>
+                  <Font name="System Italic" size="36.0" />
+               </font>
+               <styleClass>
+                  <String fx:value=".button:hover" />
+                  <String fx:value=".button:pressed" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton fx:id="practiceButton" buttonType="RAISED" ellipsisString="" layoutX="807.0" layoutY="322.0" onAction="#practiceAction" onMouseReleased="#practiceReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Practice" textFill="#6e5050">
+               <font>
+                  <Font name="System Italic" size="36.0" />
+               </font>
+               <styleClass>
+                  <String fx:value=".button:hover" />
+                  <String fx:value=".button:pressed" />
+               </styleClass>
+            </JFXButton>
+         </children>
+      </HBox>
+      <JFXButton fx:id="backButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="85.0" layoutY="689.0" onAction="#backAction" onMouseReleased="#backReleasedAction" prefHeight="77.0" prefWidth="154.0" ripplerFill="#80b907" style="-fx-background-color: #73c8a9;" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Back" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Italic" size="36.0" />
+         </font>
+         <styleClass>
+            <String fx:value=".button:hover" />
+            <String fx:value=".button:pressed" />
+         </styleClass>
+      </JFXButton>
+   </children>
+</AnchorPane>

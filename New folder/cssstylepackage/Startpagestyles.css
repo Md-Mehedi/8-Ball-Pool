@@ -1,0 +1,34 @@
+.bodybg{
+    -fx-background-image: url("/picturepackage/FrontPageImage.jpg");
+    -fx-background-size: 100% 100%;
+}
+
+.button{
+    -fx-font-weight: italic;
+    -fx-background-color: #ff3300;
+    -fx-background-radius: 22;
+    -fx-font-size:36;
+    -fx-text-fill: #330000;  
+    
+}
+.button:hover{
+    -fx-font-weight: italic;
+    -fx-background-color: #330000;
+    -fx-background-radius: 22;
+    -fx-font-size:36;
+    -fx-text-fill: #ff3300; 
+    -fx-border-color: #2196f3;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+}
+.button:pressed{
+    -fx-font-weight: italic;
+    -fx-background-color: #00ccff;
+    -fx-background-radius: 22;
+    -fx-font-size:36;
+    -fx-text-fill:  #330000; 
+    -fx-border-color: #2196f3;
+    -fx-border-radius: 20;
+    -fx-border-width: 3;
+} 
+

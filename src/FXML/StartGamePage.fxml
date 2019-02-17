@@ -17,7 +17,7 @@
       </ImageView>
       <HBox layoutX="345.0" layoutY="423.0" spacing="30.0">
          <children>
-            <JFXButton fx:id="offlinePlayButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="236.0" layoutY="322.0" onAction="#offlinePlayAction" onMouseReleased="#offlineReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Offline Play" textAlignment="CENTER" textFill="#6e5050">
+            <JFXButton fx:id="offlinePlayButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="236.0" layoutY="322.0" onAction="#offlinePlayAction" onMouseReleased="#ReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Offline Play" textAlignment="CENTER" textFill="#6e5050">
                <font>
                   <Font name="System Italic" size="36.0" />
                </font>
@@ -26,7 +26,7 @@
                   <String fx:value=".button:pressed" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="onlinePlayButton" buttonType="RAISED" ellipsisString="" layoutX="507.0" layoutY="322.0" onAction="#onlinePlayAction" onMouseReleased="#onlineRealeasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Online Play" textFill="#6e5050">
+            <JFXButton fx:id="onlinePlayButton" buttonType="RAISED" ellipsisString="" layoutX="507.0" layoutY="322.0" onAction="#onlinePlayAction" onMouseReleased="#ReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Online Play" textFill="#6e5050">
                <font>
                   <Font name="System Italic" size="36.0" />
                </font>
@@ -35,7 +35,7 @@
                   <String fx:value=".button:pressed" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="practiceButton" buttonType="RAISED" ellipsisString="" layoutX="807.0" layoutY="322.0" onAction="#practiceAction" onMouseReleased="#practiceReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Practice" textFill="#6e5050">
+            <JFXButton fx:id="practiceButton" buttonType="RAISED" ellipsisString="" layoutX="807.0" layoutY="322.0" onAction="#practiceAction" onMouseReleased="#ReleasedAction" prefHeight="139.0" prefWidth="242.0" ripplerFill="#80b907" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Practice" textFill="#6e5050">
                <font>
                   <Font name="System Italic" size="36.0" />
                </font>
@@ -46,7 +46,7 @@
             </JFXButton>
          </children>
       </HBox>
-      <JFXButton fx:id="backButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="85.0" layoutY="689.0" onAction="#backAction" onMouseReleased="#backReleasedAction" prefHeight="77.0" prefWidth="154.0" ripplerFill="#80b907" style="-fx-background-color: #73c8a9;" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Back" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton fx:id="backButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="85.0" layoutY="689.0" onAction="#backAction" onMouseReleased="#ReleasedAction" prefHeight="77.0" prefWidth="154.0" ripplerFill="#80b907" style="-fx-background-color: #73c8a9;" stylesheets="@../cssstylepackage/ModeChoosingStyles.css" text="Back" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Italic" size="36.0" />
          </font>
